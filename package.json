@@ -45,6 +45,8 @@
   "dependencies": {
     "@types/arcgis-js-api": "^4.14.0",
     "calcite-web": "github:Esri/calcite-web#v1.2.5",
+    "classnames": "^2.2.6",
+    "esri-global-nav": "github:Esri/global-nav",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }

@@ -10,11 +10,17 @@ module.exports =  (env, options)=> {
     const devMode = options.mode === 'development' ? true : false;
 
     return {
-        entry: path.resolve(__dirname, './src/index.tsx'),
+        entry: {
+            common: path.resolve(__dirname, "./src/pages/index.tsx"),
+            overview: path.resolve(__dirname, "./src/pages/Overview/index.tsx"),
+            browse: path.resolve(__dirname, "./src/pages/Browse/index.tsx"),
+            issues: path.resolve(__dirname, "./src/pages/Issues/index.tsx"),
+            resources: path.resolve(__dirname, "./src/pages/Resources/index.tsx"),
+        },
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: '[name].[contenthash].js',
-            chunkFilename: '[name].[contenthash].js',
+            // chunkFilename: '[name].[contenthash].js',
         },
         devtool: 'source-map',
         resolve: {
@@ -76,8 +82,71 @@ module.exports =  (env, options)=> {
                 chunkFilename: devMode ? '[name].css' : '[name].[contenthash].css',
             }),
             new HtmlWebpackPlugin({
-                template: './src/index.template.html',
+                template: path.resolve(__dirname, './src/layouts/index.html'),
                 filename: 'index.html',
+                chunks: []
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, './src/layouts/site.layout.html'),
+                filename: 'overview/index.html',
+                chunks: ['common', 'overview'],
+                minify: {
+                    html5                          : true,
+                    collapseWhitespace             : true,
+                    minifyCSS                      : true,
+                    minifyJS                       : true,
+                    minifyURLs                     : false,
+                    removeComments                 : true,
+                    removeEmptyAttributes          : true,
+                    removeOptionalTags             : true,
+                    removeRedundantAttributes      : true,
+                    removeScriptTypeAttributes     : true,
+                    removeStyleLinkTypeAttributese : true,
+                    useShortDoctype                : true
+                }
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, './src/layouts/site.layout.html'),
+                filename: 'browse/index.html',
+                chunks: ['common', 'browse'],
+                minify: {
+                    html5                          : true,
+                    collapseWhitespace             : true,
+                    minifyCSS                      : true,
+                    minifyJS                       : true,
+                    minifyURLs                     : false,
+                    removeComments                 : true,
+                    removeEmptyAttributes          : true,
+                    removeOptionalTags             : true,
+                    removeRedundantAttributes      : true,
+                    removeScriptTypeAttributes     : true,
+                    removeStyleLinkTypeAttributese : true,
+                    useShortDoctype                : true
+                }
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, './src/layouts/site.layout.html'),
+                filename: 'issues/index.html',
+                chunks: ['common', 'issues'],
+                minify: {
+                    html5                          : true,
+                    collapseWhitespace             : true,
+                    minifyCSS                      : true,
+                    minifyJS                       : true,
+                    minifyURLs                     : false,
+                    removeComments                 : true,
+                    removeEmptyAttributes          : true,
+                    removeOptionalTags             : true,
+                    removeRedundantAttributes      : true,
+                    removeScriptTypeAttributes     : true,
+                    removeStyleLinkTypeAttributese : true,
+                    useShortDoctype                : true
+                }
+            }),
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, './src/layouts/site.layout.html'),
+                filename: 'resources/index.html',
+                chunks: ['common', 'resources'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -96,20 +165,6 @@ module.exports =  (env, options)=> {
             new CleanWebpackPlugin()
         ],
         optimization: {
-            splitChunks: {
-                cacheGroups: {
-                    default: false,
-                    vendors: false,
-                    // vendor chunk
-                    vendor: {
-                        // sync + async chunks
-                        chunks: 'all',
-                        name: 'vendor',
-                        // import file path containing node_modules
-                        test: /node_modules/
-                    }
-                }
-            },
             minimizer: [
                 new TerserPlugin({
                     extractComments: true,
