@@ -19,38 +19,26 @@ const PageLayout: React.FC<Props> = ({
     }, []);
 
     const getNavLinksData = ()=>{
-
-        const currentPathName = window.location.pathname.substring(1);
-
         const links = [
             {
                 label: 'Overview',
-                path: 'overview',
-                isActive: false
+                path: '../overview',
             },
             {
                 label: 'Explore',
-                path: 'browse',
-                isActive: false
+                path: '../browse',
             },
             {
                 label: 'Issues',
-                path: 'issues',
-                isActive: false
+                path: '../issues',
             },
             {
                 label: 'Resources',
-                path: 'resources',
-                isActive: false
+                path: '../resources',
             }
         ];
 
-        return links.map(link=>{
-            const { path } = link;
-            link.isActive = path === currentPathName;
-            link.path = '../' + path;
-            return link;
-        })
+        return links;
     };
 
     return (
