@@ -382,12 +382,12 @@ const DEFAULT_MENU_DATA = {
 					href: "https://community.esri.com/"
 				}
 			],
-			// user: {
-			// 	name: 'Cassidy Bishop',
-			// 	id: 'iamoktatester@gmail.com',
-			// 	group: 'Riverside City Mgmt.',
-			// 	image: '//placehold.it/300x300'
-			// }
+			user: {
+				name: 'Cassidy Bishop',
+				id: 'iamoktatester@gmail.com',
+				group: 'Riverside City Mgmt.',
+				image: '//placehold.it/300x300'
+			}
 			// user: null
 		}
 	},

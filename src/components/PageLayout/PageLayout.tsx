@@ -1,6 +1,10 @@
 import * as React from 'react';
 
 import {
+    SiteContext
+} from '../../contexts/SiteContextProvider';
+
+import {
     SiteNav
 } from '../../components';
 
@@ -14,8 +18,19 @@ const PageLayout: React.FC<Props> = ({
     children
 }: Props)=>{
 
+    const { esriOAuthUtils } = React.useContext(SiteContext);
+
     React.useEffect(()=>{
-        initEsriGlobalNav();
+
+        initEsriGlobalNav({
+            userData: esriOAuthUtils.getUserData(),
+            signIn: ()=>{
+                esriOAuthUtils.sigIn();
+            },
+            signOut: ()=>{
+                esriOAuthUtils.signOut();
+            }
+        });
     }, []);
 
     const getNavLinksData = ()=>{
