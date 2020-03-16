@@ -10,13 +10,7 @@ module.exports =  (env, options)=> {
     const devMode = options.mode === 'development' ? true : false;
 
     return {
-        entry: {
-            common: path.resolve(__dirname, "./src/pages/index.tsx"),
-            overview: path.resolve(__dirname, "./src/pages/Overview/index.tsx"),
-            browse: path.resolve(__dirname, "./src/pages/Browse/index.tsx"),
-            issues: path.resolve(__dirname, "./src/pages/Issues/index.tsx"),
-            resources: path.resolve(__dirname, "./src/pages/Resources/index.tsx"),
-        },
+        entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: '[name].[contenthash].js',
@@ -28,9 +22,13 @@ module.exports =  (env, options)=> {
         },
         module: {
             rules: [
+                // {
+                //     test: /\.(ts|tsx)$/,
+                //     loader: 'ts-loader'
+                // },
                 {
                     test: /\.(ts|tsx)$/,
-                    loader: 'ts-loader'
+                    loader: 'babel-loader'
                 },
                 {
                     test: /\.s?[ac]ss$/,
@@ -89,7 +87,6 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 filename: 'overview/index.html',
-                chunks: ['common', 'overview'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -108,7 +105,6 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 filename: 'browse/index.html',
-                chunks: ['common', 'browse'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -127,7 +123,6 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 filename: 'issues/index.html',
-                chunks: ['common', 'issues'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -146,7 +141,6 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 filename: 'resources/index.html',
-                chunks: ['common', 'resources'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,

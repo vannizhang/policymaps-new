@@ -3,7 +3,9 @@ import './styles/index.scss';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import PolicyMapsSite from './pages';
+
 ReactDOM.render(
-    <h5>hello world</h5>, 
+    <PolicyMapsSite />, 
     document.getElementById('root')
 );

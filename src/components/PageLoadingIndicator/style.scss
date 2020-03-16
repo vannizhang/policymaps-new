@@ -1,0 +1,11 @@
+.loading-indicator-container{
+    height: 75vh;
+    width: 100%;
+
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+}
