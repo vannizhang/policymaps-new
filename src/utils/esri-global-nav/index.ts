@@ -32,9 +32,7 @@ export const initEsriGlobalNav = ({
     signOut = null
 }: initEsriGlobalNavOptions)=>{
 
-    console.log(userData)
-
-    if(!userData.image){
+    if(userData && !userData.image){
         userData.image = placeHolderUserThumbnail;
     }
 

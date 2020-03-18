@@ -67,9 +67,6 @@ export default class OAuthUtils {
             // Once loaded, user is signed in
             await this.userPortal.load();
 
-            console.log('credential', credential);
-            console.log('portal', this.userPortal);
-
             return {
                 credential,
                 portal: this.userPortal
@@ -83,7 +80,6 @@ export default class OAuthUtils {
     }
 
     sigIn() {
-        console.log(this);
         this.esriId
             .getCredential(this.oauthInfo.portalUrl + '/sharing')
             .then((res: ICredential) => {
