@@ -1,5 +1,5 @@
 {
-  "name": "project-name",
+  "name": "policymaps-new",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vannizhang/React-TypeScript-App-Template.git"
+    "url": "git+https://github.com/vannizhang/policymaps-new.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vannizhang/{project-name}/issues"
+    "url": "https://github.com/vannizhang/policymaps-new/issues"
   },
-  "homepage": "https://github.com/vannizhang/{project-name}#readme",
+  "homepage": "https://github.com/vannizhang/policymaps-new#readme",
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
