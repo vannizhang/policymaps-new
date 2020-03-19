@@ -38,7 +38,6 @@ interface AgolItem {
 interface CategorySchemaDataItem {
     title: string;
     categories: CategorySchemaMainCategory[];
-    selected?: boolean;
 };
 
 interface CategorySchemaMainCategory {
@@ -49,7 +48,8 @@ interface CategorySchemaMainCategory {
 
 interface CategorySchemaSubCategory {
     title: string;
-    categories: []
+    categories: [];
+    selected?: boolean;
 };
 
 interface Props {
@@ -97,9 +97,23 @@ export default class AgolGroupData {
         this.queryParams.sortField = val;
     };
 
-    updateSelectedCategory(){
+    updateSelectedCategory(titleForSelectedMainCategory?:string, titlesForSelectedSubCategories?:string[]){
+
+        this.categorySchema.categories.forEach(mainCategory=>{
+            mainCategory.selected = ( titleForSelectedMainCategory && titleForSelectedMainCategory === mainCategory.title )
+                ? true 
+                : false;
+
+            mainCategory.categories.forEach(subcategory=>{
+
+                subcategory.selected = ( titlesForSelectedSubCategories && titlesForSelectedSubCategories.indexOf(subcategory.title) > -1 ) 
+                    ? true 
+                    : false;
+            });
+        });
 
     }
+
 
     // updateDate(val?:DateFilter){
     //     this.queryParams.date = val;
