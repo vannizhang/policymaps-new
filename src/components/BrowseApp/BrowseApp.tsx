@@ -45,8 +45,13 @@ const BrowseApp:React.FC<{}>= ()=>{
     }={})=>{
 
         const start = ( searchNextSet && searchResponse ) 
-            ? searchResponse.start
+            ? searchResponse.nextStart
             : 1; 
+        
+        if(searchNextSet && start === -1){
+            console.error('no more items to load');
+            return;
+        }
 
         const response = await agolGroupData.search({
             start,
@@ -87,8 +92,17 @@ const BrowseApp:React.FC<{}>= ()=>{
     return (
         <>
             <div className='side-nav'>
+                <div 
+                    onClick={()=>{
+                        searchItems({
+                            searchNextSet: true
+                        });
+                    }}
+                >click to load more</div>
                 <CardList 
+                    title={'Search Results'}
                     data={webMapItems}
+                    itemCount={ searchResponse ? searchResponse.total : 0 }
                 />
             </div>
         </>
