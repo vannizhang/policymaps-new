@@ -4,40 +4,21 @@ type ContentType = 'maps' | 'layers' | 'apps' | 'tools' | 'files' | 'webmap';
 type SortField = 'relevance' | 'name' | 'modified';
 type DateFilter = '';
 
+interface Props {
+    groupId: string;
+    categorySchema: CategorySchemaDataItem;
+    agolHost?: string;
+    // default query params
+    queryParams?: QueryParams; 
+};
+
 interface QueryParams {
-    searchTerm: string;
-    contentType: ContentType | '';
-    sortField: SortField | '';
+    searchTerm?: string;
+    contentType?: ContentType | '';
+    sortField?: SortField | '';
     date?: DateFilter; 
     isEsriOnlyContent?: boolean;
     isAuthoritativeOnly?: boolean;
-};
-
-interface SearchResponse {
-    query: string;
-    total: number;
-    start: number;
-    num: number;
-    nextStart: number;
-    results: AgolItem[];
-};
-
-interface AgolItem {
-    title: string;
-    type: string;
-    owner?: string;
-    typeKeywords?: string[];
-    description?: string;
-    snippet?: string;
-    documentation?: string;
-    extent?: number[][];
-    categories?: string[];
-    culture?: string;
-    properties?: any;
-    url?: string;
-    tags?: string[];
-    thumbnail?: string;
-    [key: string]: any;
 };
 
 interface CategorySchemaDataItem {
@@ -57,30 +38,45 @@ interface CategorySchemaSubCategory {
     selected?: boolean;
 };
 
-interface Props {
-    groupId: string;
-    categorySchema: CategorySchemaDataItem;
-    agolHost?: string;
+export interface AgolItem {
+    title: string;
+    type: string;
+    owner?: string;
+    typeKeywords?: string[];
+    description?: string;
+    snippet?: string;
+    documentation?: string;
+    extent?: number[][];
+    categories?: string[];
+    culture?: string;
+    properties?: any;
+    url?: string;
+    tags?: string[];
+    thumbnail?: string;
+    [key: string]: any;
+};
+
+export interface SearchResponse {
+    query: string;
+    total: number;
+    start: number;
+    num: number;
+    nextStart: number;
+    results: AgolItem[];
 };
 
 export default class GroupData { 
     private AgolGroupId: string;
     private AgolHost: string;
     private categorySchema: CategorySchemaDataItem;
-
-    private queryParams:QueryParams = {
-        searchTerm: '',
-        contentType: '',
-        sortField: '',
-        // date: '',
-        // isEsriOnlyContent: false,
-        // isAuthoritativeOnly: false,
-    };
+    private queryParams:QueryParams;
 
     constructor(props: Props){
         this.AgolGroupId = props.groupId;
         this.AgolHost = props.agolHost || 'https://www.arcgis.com';
         this.categorySchema = props.categorySchema;
+
+        this.queryParams = props.queryParams || {}
     };
 
     updateSearchTerm(val=''){
