@@ -2,13 +2,13 @@ import * as React from 'react';
 
 import { getCategorySchema } from '../../utils/category-schema-manager';
 
-import AgolGroupData from '../../utils/AGOL-Group-Data';
+import ArcGISOnlineGroupData from '../../utils/arcgis-online-group-data';
 
 import { Tier } from '../../AppConfig';
 
 const BrowseApp:React.FC<{}>= ()=>{
 
-    let agolGroupData:AgolGroupData;
+    let agolGroupData:ArcGISOnlineGroupData;
 
     React.useEffect(()=>{
 
@@ -19,12 +19,12 @@ const BrowseApp:React.FC<{}>= ()=>{
             });
             // console.log(categorySchemaRes);
 
-            agolGroupData = new AgolGroupData({
+            agolGroupData = new ArcGISOnlineGroupData({
                 groupId: Tier.PROD.AGOL_GROUP_ID,
                 categorySchema: categorySchemaRes[0]
             });
 
-            const searchRes = await agolGroupData.search(30);
+            const searchRes = await agolGroupData.search();
             // console.log(searchRes);
 
         })();

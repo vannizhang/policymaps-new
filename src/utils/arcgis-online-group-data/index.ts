@@ -63,7 +63,7 @@ interface Props {
     agolHost?: string;
 };
 
-export default class AgolGroupData { 
+export default class GroupData { 
     private AgolGroupId: string;
     private AgolHost: string;
     private categorySchema: CategorySchemaDataItem;
