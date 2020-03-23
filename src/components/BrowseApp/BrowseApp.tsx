@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { getCategorySchema } from '../../utils/category-schema-manager';
 
-import ArcGISOnlineGroupData, { SearchResponse, AgolItem } from '../../utils/arcgis-online-group-data';
+import ArcGISOnlineGroupData, { SearchResponse } from '../../utils/arcgis-online-group-data';
 
 import { 
     Tier
@@ -18,6 +18,11 @@ import CardList from './CardList';
 import { 
     MapView
 } from '../index';
+
+import {
+    formatAsAgolItem,
+    AgolItem
+} from '../../utils/arcgis-online-item';
 
 const BrowseApp:React.FC<{}>= ()=>{
 
@@ -89,9 +94,15 @@ const BrowseApp:React.FC<{}>= ()=>{
     
         if(searchResponse){
 
+            const { results } = searchResponse;
+
+            results.forEach(item=>{
+                item = formatAsAgolItem(item);
+            });
+
             const items = ( searchResponse.start === 1 )
-                ? searchResponse.results 
-                : [ ...webMapItems, ...searchResponse.results ];
+                ? results 
+                : [ ...webMapItems, ...results ];
 
             setWebMapItems(items);
 

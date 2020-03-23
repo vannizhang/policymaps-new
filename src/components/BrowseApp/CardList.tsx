@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+import {
+    RegularCard
+} from '../';
+
 import { AgolItem } from '../../utils/arcgis-online-group-data';
 
 interface Props {
@@ -23,22 +27,38 @@ const CardList: React.FC<Props> = ({
     const getList = ()=>{
         const cards = data.map((item, index)=>{
             return ( 
-                <div key={`list-item-${index}`}>{item.title}</div> 
+                <div className='block trailer-half'>
+                    <RegularCard 
+                        key={`list-item-${index}`}
+                        title={item.title}
+                        description={item.snippet}
+                        link={item.agolItemUrl}
+                        itemId={item.id}
+                        imageUrl={item.thumbnailUrl}
+                    />
+                </div>
             );
         });
 
         return (
-            <div className='card-list'>{ cards }</div>
+            <div className='card-list block-group block-group-2-up tablet-block-group-2-up phone-block-group-1-up'>
+                { cards }
+            </div>
         );
     };
 
     return (
         <>
-            <div style={{
-                'display': 'flex',
-                'alignItems': 'center'
-            }}> 
-                <div className='font-size--3' onClick={toggleList}>
+            <div 
+                className='trailer-half'
+                style={{
+                    'display': 'flex',
+                    'alignItems': 'center',
+                    'cursor': 'pointer'
+                }}
+                onClick={toggleList}
+            > 
+                <div className='font-size--3' >
                     {
                         !isHide 
                         ? <span className="icon-ui-minus"></span> 

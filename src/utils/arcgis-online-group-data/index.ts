@@ -39,6 +39,7 @@ interface CategorySchemaSubCategory {
 };
 
 export interface AgolItem {
+    id: string;
     title: string;
     type: string;
     owner?: string;
