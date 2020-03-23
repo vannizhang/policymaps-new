@@ -22,7 +22,7 @@ const CardList: React.FC<Props> = ({
     itemCount = 0
 }:Props)=>{
 
-    const { activeWebmapId, setActiveWebmapId } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem, setActiveWebmapItem } = React.useContext(BrowseAppContext);
 
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 
@@ -43,10 +43,11 @@ const CardList: React.FC<Props> = ({
                         link={item.agolItemUrl}
                         itemId={item.id}
                         imageUrl={item.thumbnailUrl}
+                        item={item}
 
-                        viewOnMap={ item.id === activeWebmapId }
+                        viewOnMap={ item.id === activeWebmapItem.id }
 
-                        viewBtnOnClick={setActiveWebmapId}
+                        viewBtnOnClick={(setActiveWebmapItem)}
                     />
                 </div>
             );

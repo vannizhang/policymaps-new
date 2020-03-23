@@ -1,33 +1,68 @@
 import * as React from 'react';
 
+import { 
+    AgolItem,
+    queryItemsByIds
+} from '../utils/arcgis-online-group-data';
+
+import { Tier } from '../AppConfig';
+
 interface BrowseAppContextProps {
-    activeWebmapId: string;
-    setActiveWebmapId: (itemId:string)=>void;
+    activeWebmapItem: AgolItem;
+    setActiveWebmapItem: (item:AgolItem)=>void;
+
+    itemCollections: AgolItem[],
+    toggleFromItemCollections: (item:AgolItem)=>void;
     // children: React.ReactNode;
 };
 
 interface BrowseAppContextProviderProps {
     // children: React.ReactNode;
-    webMapId: string;
+    defaultWebmapId: string;
 };
 
 export const BrowseAppContext = React.createContext<BrowseAppContextProps>(null);
 
 export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = ({ 
-    webMapId,
+    defaultWebmapId,
     children,
 })=>{
 
-    const [ activeWebmapId, setActiveWebmapId ]  = React.useState<string>(webMapId);
+    const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
+
+    const [ itemCollections, setItemCollections ] = React.useState<AgolItem[]>(null);
+
+    const toggleFromItemCollections = (item:AgolItem)=>{
+
+    };
 
     const value = {
-        activeWebmapId,
-        setActiveWebmapId
+        activeWebmapItem,
+        setActiveWebmapItem,
+        itemCollections,
+        toggleFromItemCollections
     };
+
+    // fetch items required to init the browse app (active web map, items in collection)
+    const fetchData = async()=>{
+        const results = await queryItemsByIds({
+            itemIds: [defaultWebmapId],
+            groupId: Tier.PROD.AGOL_GROUP_ID
+        });
+        // console.log(results)
+
+        const defaultWebmap = results.filter(d=>d.id === defaultWebmapId)[0];
+        
+        setActiveWebmapItem(defaultWebmap);
+    };
+
+    React.useEffect(()=>{
+        fetchData();
+    }, []);
 
     return (
         <BrowseAppContext.Provider value={value}>
-            { children }
+            { activeWebmapItem ? children : null }
         </BrowseAppContext.Provider>
     );
 }

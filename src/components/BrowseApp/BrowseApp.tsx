@@ -23,7 +23,7 @@ import {
 import {
     formatAsAgolItem,
     AgolItem
-} from '../../utils/arcgis-online-item';
+} from '../../utils/arcgis-online-item-formatter';
 
 import { 
     getCategorySchema 
@@ -122,7 +122,7 @@ const BrowseApp:React.FC<{}>= ()=>{
 
     return (
         <BrowseAppContextProvider
-            webMapId={MapConfig.DEFAULT_WEBMAP_ID}
+            defaultWebmapId={MapConfig.DEFAULT_WEBMAP_ID}
         >
             <div style={{
                 "position": "absolute",
@@ -167,9 +167,7 @@ const BrowseApp:React.FC<{}>= ()=>{
                     "flexShrink": 0,
                     "flexBasis": "200px"
                 }}>
-                    <MapView 
-                        // webmapId={MapConfig.DEFAULT_WEBMAP_ID}
-                    />
+                    <MapView />
                 </div>
 
             </div>

@@ -3,18 +3,21 @@ import * as React from 'react';
 import classnames from 'classnames';
 import { stringFns } from 'helper-toolkit-ts';
 
+import { AgolItem } from '../../../utils/arcgis-online-group-data';
+
 interface Props {
     title: string;
     link: string;
     description: string;
     itemId: string;
     imageUrl: string;
+    item?: AgolItem;
 
     viewOnMap?: boolean;
     selected?: boolean;
 
-    viewBtnOnClick?: (itemId: string)=>void;
-    selectBtnOnClick?: (itemId: string)=>void;
+    viewBtnOnClick?: (item: AgolItem)=>void;
+    selectBtnOnClick?: (item: AgolItem)=>void;
 }
 
 const RegularCard:React.FC<Props> = ({
@@ -23,6 +26,7 @@ const RegularCard:React.FC<Props> = ({
     description,
     itemId,
     imageUrl,
+    item,
 
     viewOnMap=false,
     selected=false,
@@ -33,13 +37,13 @@ const RegularCard:React.FC<Props> = ({
 
     const viewBtnOnClickHandler = ()=>{
         if(viewBtnOnClick){
-            viewBtnOnClick(itemId);
+            viewBtnOnClick(item);
         }
     };
 
     const selectBtnOnClickHandler = ()=>{
         if(selectBtnOnClick){
-            selectBtnOnClick(itemId);
+            selectBtnOnClick(item);
         }
     };
 

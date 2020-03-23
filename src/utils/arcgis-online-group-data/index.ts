@@ -1,4 +1,6 @@
 import axios from 'axios';
+import queryItemsByIds from './queryItemsByIds';
+export { queryItemsByIds };
 
 type ContentType = 'maps' | 'layers' | 'apps' | 'tools' | 'files' | 'webmap';
 type SortField = 'relevance' | 'name' | 'modified';
@@ -65,6 +67,11 @@ export interface SearchResponse {
     nextStart: number;
     results: AgolItem[];
 };
+
+export const getUrlForSearchOperation = (agolGroupId:string, agolHost='https://www.arcgis.com'): string=>{
+    const requestURL = `${agolHost}/sharing/rest/content/groups/${agolGroupId}/search`;
+    return requestURL;
+}
 
 export default class GroupData { 
     private AgolGroupId: string;
@@ -257,7 +264,9 @@ export default class GroupData {
 
         const params = this.getQueryParams({ start, num });
 
-        const requestURL = `${this.AgolHost}/sharing/rest/content/groups/${this.AgolGroupId}/search?${params}`;
+        const urlForSearchOperation = getUrlForSearchOperation(this.AgolGroupId, this.AgolHost)
+
+        const requestURL = `${urlForSearchOperation}?${params}`;
 
         const { data } = await axios.get<SearchResponse>(requestURL);
         // console.log(data);

@@ -14,7 +14,7 @@ import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 
 interface Props {
-    webmapId: string;
+    webmapId?: string;
     children?: React.ReactNode;
 };
 
@@ -23,7 +23,7 @@ const MapView:React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { activeWebmapId } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -46,7 +46,7 @@ const MapView:React.FC<Props> = ({
                 container: mapDivRef.current,
                 map: new WebMap({
                     portalItem: {
-                        id: activeWebmapId
+                        id: activeWebmapItem.id
                     }  
                 }),
             });
@@ -72,8 +72,8 @@ const MapView:React.FC<Props> = ({
 
             mapView.map = new WebMap({
                 portalItem: {
-                    id: activeWebmapId
-                }  
+                    id: activeWebmapItem.id
+                }
             });
 
         } catch(err){   
@@ -88,7 +88,7 @@ const MapView:React.FC<Props> = ({
             updateWebMap();
         }
 
-    }, [ activeWebmapId ])
+    }, [ activeWebmapItem ])
 
     React.useEffect(()=>{
         loadCss();
