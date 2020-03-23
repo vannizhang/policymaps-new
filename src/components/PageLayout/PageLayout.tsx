@@ -11,10 +11,12 @@ import {
 import { initEsriGlobalNav } from '../../utils/esri-global-nav';
 
 interface Props {
+    shouldHideEsriFooter?: boolean;
     children?: React.ReactNode;
 }
 
 const PageLayout: React.FC<Props> = ({
+    shouldHideEsriFooter,
     children
 }: Props)=>{
 
@@ -67,7 +69,10 @@ const PageLayout: React.FC<Props> = ({
 
             { children }
 
-            <div className="esri-footer-barrier"></div>
+            <div className="esri-footer-barrier" style={{
+                "display": shouldHideEsriFooter ? "none" : "block"
+            }}></div>
+            
         </>
     )
 };

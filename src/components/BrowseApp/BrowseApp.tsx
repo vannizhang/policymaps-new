@@ -4,9 +4,20 @@ import { getCategorySchema } from '../../utils/category-schema-manager';
 
 import ArcGISOnlineGroupData, { SearchResponse, AgolItem } from '../../utils/arcgis-online-group-data';
 
-import { Tier } from '../../AppConfig';
+import { 
+    Tier
+} from '../../AppConfig';
+
+import {
+    MapConfig,
+    UIConfig
+} from './Config';
 
 import CardList from './CardList';
+
+import { 
+    MapView
+} from '../index';
 
 const BrowseApp:React.FC<{}>= ()=>{
 
@@ -90,8 +101,27 @@ const BrowseApp:React.FC<{}>= ()=>{
     }, [ searchResponse ]);
 
     return (
-        <>
-            <div className='side-nav'>
+        <div style={{
+            "position": "absolute",
+            "top": "118px",
+            "left": "0",
+            "bottom": "0",
+            "width": "100%",
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignContent": "stretch",
+            "alignItems": "stretch"
+        }}>
+            <div className='side-bar' style={{
+                "display": !isSidebarHide ? "block" : "none",
+                "width": UIConfig["side-bar-width"],
+                "boxSizing": "border-box",
+                "padding": "1rem",
+                "overflowY": "auto",
+                "boxShadow": "0 2px 6px rgba(0,0,0,.24)"
+            }}>
                 <div 
                     onClick={()=>{
                         searchItems({
@@ -99,13 +129,27 @@ const BrowseApp:React.FC<{}>= ()=>{
                         });
                     }}
                 >click to load more</div>
+
                 <CardList 
                     title={'Search Results'}
                     data={webMapItems}
                     itemCount={ searchResponse ? searchResponse.total : 0 }
                 />
+
             </div>
-        </>
+
+            <div style={{
+                "position": "relative",
+                "flexGrow": 1,
+                "flexShrink": 0,
+                "flexBasis": "200px"
+            }}>
+                <MapView 
+                    webmapId={MapConfig.DEFAULT_WEBMAP_ID}
+                />
+            </div>
+
+        </div>
     );
 };
 

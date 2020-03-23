@@ -1,3 +1,4 @@
+import './style.scss';
 import * as React from 'react';
 
 import { 
@@ -9,7 +10,9 @@ export default class BrowsePage extends React.PureComponent {
 
     render(){
         return (
-            <PageLayout>
+            <PageLayout
+                shouldHideEsriFooter={true}
+            >
                 <BrowseApp />
             </PageLayout>
         )
