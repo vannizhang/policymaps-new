@@ -13,8 +13,8 @@ interface Props {
     viewOnMap?: boolean;
     selected?: boolean;
 
-    onView?: (itemId: string)=>void;
-    onSelect?: (itemId: string)=>void;
+    viewBtnOnClick?: (itemId: string)=>void;
+    selectBtnOnClick?: (itemId: string)=>void;
 }
 
 const RegularCard:React.FC<Props> = ({
@@ -27,19 +27,19 @@ const RegularCard:React.FC<Props> = ({
     viewOnMap=false,
     selected=false,
     
-    onView,
-    onSelect
+    viewBtnOnClick,
+    selectBtnOnClick
 }: Props)=>{
 
-    const viewBtnOnClick = ()=>{
-        if(onView){
-            onView(itemId);
+    const viewBtnOnClickHandler = ()=>{
+        if(viewBtnOnClick){
+            viewBtnOnClick(itemId);
         }
     };
 
-    const selectBtnOnClick = ()=>{
-        if(onSelect){
-            onSelect(itemId);
+    const selectBtnOnClickHandler = ()=>{
+        if(selectBtnOnClick){
+            selectBtnOnClick(itemId);
         }
     };
 
@@ -52,7 +52,7 @@ const RegularCard:React.FC<Props> = ({
                 style={{
                     cursor: "pointer"
                 }}
-                onClick={viewBtnOnClick}
+                onClick={viewBtnOnClickHandler}
             >
                 <img className="card-image" src={imageUrl} />
             </figure>
@@ -85,7 +85,7 @@ const RegularCard:React.FC<Props> = ({
                             "width": "48%",
                             "margin": "0 .1rem",
                         }}
-                        onClick={viewBtnOnClick}
+                        onClick={viewBtnOnClickHandler}
                     >View</div>
 
                     <div 
@@ -96,7 +96,7 @@ const RegularCard:React.FC<Props> = ({
                             "width": "48%",
                             "margin": "0 .1rem"
                         }}
-                        onClick={selectBtnOnClick}
+                        onClick={selectBtnOnClickHandler}
                     >Collect</div>
                 </div>
             </div>

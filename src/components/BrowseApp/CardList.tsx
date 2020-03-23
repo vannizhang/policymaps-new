@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+import { 
+    BrowseAppContext 
+} from '../../contexts/BrowseAppProvider';
+
 import {
     RegularCard
 } from '../';
@@ -18,6 +22,8 @@ const CardList: React.FC<Props> = ({
     itemCount = 0
 }:Props)=>{
 
+    const { activeWebmapId, setActiveWebmapId } = React.useContext(BrowseAppContext);
+
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 
     const toggleList = ()=>{
@@ -27,14 +33,20 @@ const CardList: React.FC<Props> = ({
     const getList = ()=>{
         const cards = data.map((item, index)=>{
             return ( 
-                <div className='block trailer-half'>
+                <div 
+                    key={`list-item-${index}`}
+                    className='block trailer-half'
+                >
                     <RegularCard 
-                        key={`list-item-${index}`}
                         title={item.title}
                         description={item.snippet}
                         link={item.agolItemUrl}
                         itemId={item.id}
                         imageUrl={item.thumbnailUrl}
+
+                        viewOnMap={ item.id === activeWebmapId }
+
+                        viewBtnOnClick={setActiveWebmapId}
                     />
                 </div>
             );

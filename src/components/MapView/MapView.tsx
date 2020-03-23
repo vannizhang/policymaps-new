@@ -1,6 +1,15 @@
 import * as React from 'react';
 
 import { loadModules, loadCss } from 'esri-loader';
+
+import { 
+    BrowseAppContext 
+} from '../../contexts/BrowseAppProvider';
+
+import { 
+    AgolItem 
+} from '../../utils/arcgis-online-group-data';
+
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 
@@ -10,9 +19,11 @@ interface Props {
 };
 
 const MapView:React.FC<Props> = ({
-    webmapId,
+    // webmapId,
     children
 }: Props)=>{
+
+    const { activeWebmapId } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -35,7 +46,7 @@ const MapView:React.FC<Props> = ({
                 container: mapDivRef.current,
                 map: new WebMap({
                     portalItem: {
-                        id: webmapId
+                        id: activeWebmapId
                     }  
                 }),
             });
@@ -48,6 +59,36 @@ const MapView:React.FC<Props> = ({
             console.error(err);
         }
     };
+
+    const updateWebMap = async()=>{
+        type Modules = [typeof IWebMap];
+
+        try {
+            const [ 
+                WebMap 
+            ] = await (loadModules([
+                'esri/WebMap'
+            ]) as Promise<Modules>);
+
+            mapView.map = new WebMap({
+                portalItem: {
+                    id: activeWebmapId
+                }  
+            });
+
+        } catch(err){   
+            console.error(err);
+        }
+    };
+
+    React.useEffect(()=>{
+        // console.log('active webmap id on change', activeWebmapId);
+
+        if(mapView){
+            updateWebMap();
+        }
+
+    }, [ activeWebmapId ])
 
     React.useEffect(()=>{
         loadCss();
