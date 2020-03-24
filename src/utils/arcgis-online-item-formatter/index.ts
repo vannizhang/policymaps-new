@@ -26,7 +26,7 @@ export interface AgolItem {
 
 export const formatAsAgolItem = (item:AgolItem, {
     agolHost = 'https://www.arcgis.com',
-    thumbnailWidth = 400
+    thumbnailWidth = 200
 }={})=>{
     if(!item){
         return null;
