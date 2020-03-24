@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { 
     BrowseAppContextProvider, 
-    // BrowseAppContext 
+    BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
 import CardList from './CardList';
@@ -35,7 +35,7 @@ import ArcGISOnlineGroupData, {
 
 const BrowseApp:React.FC<{}>= ()=>{
 
-    // let agolGroupData:ArcGISOnlineGroupData;
+    const { itemsCollection } = React.useContext(BrowseAppContext);
 
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
@@ -121,58 +121,59 @@ const BrowseApp:React.FC<{}>= ()=>{
     }, [ searchResponse ]);
 
     return (
-        <BrowseAppContextProvider
-            defaultWebmapId={MapConfig.DEFAULT_WEBMAP_ID}
-        >
-            <div style={{
-                "position": "absolute",
-                "top": "118px",
-                "left": "0",
-                "bottom": "0",
-                "width": "100%",
-                "display": "flex",
-                "flexDirection": "row",
-                "flexWrap": "nowrap",
-                "justifyContent": "flex-start",
-                "alignContent": "stretch",
-                "alignItems": "stretch"
+        <div style={{
+            "position": "absolute",
+            "top": "118px",
+            "left": "0",
+            "bottom": "0",
+            "width": "100%",
+            "display": "flex",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "alignContent": "stretch",
+            "alignItems": "stretch"
+        }}>
+            <div className='side-bar' style={{
+                "display": !isSidebarHide ? "block" : "none",
+                "width": UIConfig["side-bar-width"],
+                "boxSizing": "border-box",
+                "padding": "1rem",
+                "overflowY": "auto",
+                "boxShadow": "0 2px 6px rgba(0,0,0,.24)"
             }}>
-                <div className='side-bar' style={{
-                    "display": !isSidebarHide ? "block" : "none",
-                    "width": UIConfig["side-bar-width"],
-                    "boxSizing": "border-box",
-                    "padding": "1rem",
-                    "overflowY": "auto",
-                    "boxShadow": "0 2px 6px rgba(0,0,0,.24)"
-                }}>
-                    <div 
-                        onClick={()=>{
-                            searchItems({
-                                searchNextSet: true
-                            });
-                        }}
-                    >click to load more</div>
+                <div 
+                    onClick={()=>{
+                        searchItems({
+                            searchNextSet: true
+                        });
+                    }}
+                >click to load more</div>
 
-                    <CardList 
-                        title={'Search Results'}
-                        data={webMapItems}
-                        itemCount={ searchResponse ? searchResponse.total : 0 }
-                    />
+                <CardList 
+                    title={'My collection of maps'}
+                    data={itemsCollection}
+                    itemCount={ itemsCollection ? itemsCollection.length : 0 }
+                />
 
-                </div>
-
-                <div style={{
-                    "position": "relative",
-                    "flexGrow": 1,
-                    "flexShrink": 0,
-                    "flexBasis": "200px"
-                }}>
-                    <MapView />
-                </div>
+                <CardList 
+                    title={'Search Results'}
+                    data={webMapItems}
+                    itemCount={ searchResponse ? searchResponse.total : 0 }
+                />
 
             </div>
-    
-        </BrowseAppContextProvider>
+
+            <div style={{
+                "position": "relative",
+                "flexGrow": 1,
+                "flexShrink": 0,
+                "flexBasis": "200px"
+            }}>
+                <MapView />
+            </div>
+
+        </div>
 
     );
 };

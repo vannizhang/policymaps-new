@@ -11,49 +11,66 @@ interface BrowseAppContextProps {
     activeWebmapItem: AgolItem;
     setActiveWebmapItem: (item:AgolItem)=>void;
 
-    itemCollections: AgolItem[],
+    itemsCollection: AgolItem[],
     toggleFromItemCollections: (item:AgolItem)=>void;
     // children: React.ReactNode;
 };
 
 interface BrowseAppContextProviderProps {
     // children: React.ReactNode;
-    defaultWebmapId: string;
+    // the item id for the webmap that will be used to init the map view
+    webmapId: string;
+    // list of items ids for the predefined collection 
+    collections?: string[];
 };
 
 export const BrowseAppContext = React.createContext<BrowseAppContextProps>(null);
 
 export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = ({ 
-    defaultWebmapId,
+    webmapId,
+    collections,
     children,
 })=>{
 
     const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
 
-    const [ itemCollections, setItemCollections ] = React.useState<AgolItem[]>(null);
+    const [ itemsCollection, setItemsCollection ] = React.useState<AgolItem[]>(null);
 
     const toggleFromItemCollections = (item:AgolItem)=>{
 
     };
 
+    // fetch items required to init the browse app (active web map, items in collection)
+    const fetchData = async()=>{
+
+        const itemIds = [
+            webmapId, 
+            ...collections
+        ];
+
+        const results = await queryItemsByIds({
+            itemIds,
+            groupId: Tier.PROD.AGOL_GROUP_ID
+        });
+        console.log(results);
+
+        const itemsCollection: AgolItem[] = [];
+
+        results.forEach(item=>{
+            const index = collections.indexOf(item.id);
+            itemsCollection[index] = item;
+        });
+        setItemsCollection(itemsCollection);
+
+        const webmapItem = results.filter(d=>d.id === webmapId)[0];
+        setActiveWebmapItem(webmapItem);
+    };
+
     const value = {
         activeWebmapItem,
         setActiveWebmapItem,
-        itemCollections,
+        itemsCollection,
         toggleFromItemCollections
-    };
-
-    // fetch items required to init the browse app (active web map, items in collection)
-    const fetchData = async()=>{
-        const results = await queryItemsByIds({
-            itemIds: [defaultWebmapId],
-            groupId: Tier.PROD.AGOL_GROUP_ID
-        });
-        // console.log(results)
-
-        const defaultWebmap = results.filter(d=>d.id === defaultWebmapId)[0];
-        
-        setActiveWebmapItem(defaultWebmap);
     };
 
     React.useEffect(()=>{
@@ -62,7 +79,11 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
 
     return (
         <BrowseAppContext.Provider value={value}>
-            { activeWebmapItem ? children : null }
+            { 
+                activeWebmapItem && itemsCollection 
+                ? children 
+                : null 
+            }
         </BrowseAppContext.Provider>
     );
 }

@@ -6,10 +6,6 @@ import {
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
-import { 
-    AgolItem 
-} from '../../utils/arcgis-online-group-data';
-
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 
