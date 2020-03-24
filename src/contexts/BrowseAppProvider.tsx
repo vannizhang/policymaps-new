@@ -42,7 +42,21 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     const [ itemsCollection, setItemsCollection ] = React.useState<AgolItem[]>(null);
 
     const toggleFromItemCollections = (item:AgolItem)=>{
+        const itemIds = itemsCollection.map(d=>d.id);
 
+        const index = itemIds.indexOf(item.id);
+
+        const newItemsCollection:AgolItem[] = [...itemsCollection];
+        
+        // push to end of the list if the item doesn't exist,
+        // otherwise, remove the item from collections
+        if(index === -1){
+            newItemsCollection.push(item)
+        } else {
+            newItemsCollection.splice(index, 1);
+        }
+
+        setItemsCollection(newItemsCollection);
     };
 
     // fetch items required to init the browse app (active web map, items in collection)
@@ -83,6 +97,7 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     const value = {
         activeWebmapItem,
         setActiveWebmapItem,
+
         itemsCollection,
         toggleFromItemCollections
     };

@@ -5,6 +5,10 @@ import { stringFns } from 'helper-toolkit-ts';
 
 import { AgolItem } from '../../../utils/arcgis-online-group-data';
 
+import { 
+    BrowseAppContext 
+} from '../../../contexts/BrowseAppProvider';
+
 interface Props {
     title: string;
     link: string;
@@ -14,10 +18,7 @@ interface Props {
     item?: AgolItem;
 
     viewOnMap?: boolean;
-    selected?: boolean;
-
-    viewBtnOnClick?: (item: AgolItem)=>void;
-    selectBtnOnClick?: (item: AgolItem)=>void;
+    isInCollection?: boolean;
 }
 
 const RegularCard:React.FC<Props> = ({
@@ -29,22 +30,17 @@ const RegularCard:React.FC<Props> = ({
     item,
 
     viewOnMap=false,
-    selected=false,
-    
-    viewBtnOnClick,
-    selectBtnOnClick
+    isInCollection=false
 }: Props)=>{
 
+    const { setActiveWebmapItem, toggleFromItemCollections } = React.useContext(BrowseAppContext);
+
     const viewBtnOnClickHandler = ()=>{
-        if(viewBtnOnClick){
-            viewBtnOnClick(item);
-        }
+        setActiveWebmapItem(item);
     };
 
     const selectBtnOnClickHandler = ()=>{
-        if(selectBtnOnClick){
-            selectBtnOnClick(item);
-        }
+        toggleFromItemCollections(item);
     };
 
     return (
@@ -94,14 +90,20 @@ const RegularCard:React.FC<Props> = ({
 
                     <div 
                         className={classnames('btn btn-small text-center', {
-                            'btn-clear': !selected
+                            'btn-clear': !isInCollection
                         })}
                         style={{
                             "width": "48%",
                             "margin": "0 .1rem"
                         }}
                         onClick={selectBtnOnClickHandler}
-                    >Collect</div>
+                    >
+                        { 
+                            isInCollection 
+                            ? 'Remove' 
+                            : 'Collect' 
+                        }
+                    </div>
                 </div>
             </div>
         </div>

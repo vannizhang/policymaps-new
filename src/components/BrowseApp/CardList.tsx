@@ -22,12 +22,19 @@ const CardList: React.FC<Props> = ({
     itemCount = 0
 }:Props)=>{
 
-    const { activeWebmapItem, setActiveWebmapItem } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem, itemsCollection, setActiveWebmapItem } = React.useContext(BrowseAppContext);
 
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 
     const toggleList = ()=>{
         setIsHide(!isHide);
+    };
+
+    const isInCollection = (itemId:string)=>{
+        // array of ids for items in the collection
+        const itemIds = itemsCollection.map(d=>d.id);
+
+        return itemIds.indexOf(itemId) > -1;
     };
 
     const getList = ()=>{
@@ -46,8 +53,7 @@ const CardList: React.FC<Props> = ({
                         item={item}
 
                         viewOnMap={ item.id === activeWebmapItem.id }
-
-                        viewBtnOnClick={(setActiveWebmapItem)}
+                        isInCollection={isInCollection(item.id)}
                     />
                 </div>
             );
