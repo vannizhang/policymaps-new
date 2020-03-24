@@ -3,5 +3,5 @@ export const MapConfig = {
 };
 
 export const UIConfig = {
-    "side-bar-width": "470px"
+    "side-bar-width": 470
 };

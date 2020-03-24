@@ -77,6 +77,7 @@ const CardList: React.FC<Props> = ({
                 }}
                 onClick={toggleList}
             > 
+                {/* // toggle button  */}
                 <div className='font-size--3' >
                     {
                         !isHide 
@@ -85,7 +86,16 @@ const CardList: React.FC<Props> = ({
                     }
                 </div>
                 
+                {/* //name of the list and count */}
                 <span className="avenir-demi font-size--2">{title} ({itemCount})</span>
+                
+                {/* // horizontal dicide line  */}
+                <div style={{
+                    'height': '1px',
+                    'background': '#ccc',
+                    'flexGrow': 2,
+                    'marginLeft': '.75rem'
+                }}></div>
             </div>
             { !isHide ? getList() : null }
         </>

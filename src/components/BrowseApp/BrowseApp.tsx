@@ -6,6 +6,7 @@ import {
 } from '../../contexts/BrowseAppProvider';
 
 import CardList from './CardList';
+import SideBar from './SideBar';
 
 import { 
     MapView
@@ -123,7 +124,7 @@ const BrowseApp:React.FC<{}>= ()=>{
     return (
         <div style={{
             "position": "absolute",
-            "top": "118px",
+            "top": "117px",
             "left": "0",
             "bottom": "0",
             "width": "100%",
@@ -134,22 +135,14 @@ const BrowseApp:React.FC<{}>= ()=>{
             "alignContent": "stretch",
             "alignItems": "stretch"
         }}>
-            <div className='side-bar' style={{
-                "display": !isSidebarHide ? "block" : "none",
-                "width": UIConfig["side-bar-width"],
-                "boxSizing": "border-box",
-                "padding": "1rem",
-                "overflowY": "auto",
-                "boxShadow": "0 2px 6px rgba(0,0,0,.24)"
-            }}>
-                <div 
-                    onClick={()=>{
-                        searchItems({
-                            searchNextSet: true
-                        });
-                    }}
-                >click to load more</div>
-
+            <SideBar
+                width={UIConfig["side-bar-width"]}
+                scrollToBottomHandler={()=>{
+                    searchItems({
+                        searchNextSet: true
+                    });
+                }}
+            >
                 <CardList 
                     title={'My collection of maps'}
                     data={itemsCollection}
@@ -161,8 +154,7 @@ const BrowseApp:React.FC<{}>= ()=>{
                     data={webMapItems}
                     itemCount={ searchResponse ? searchResponse.total : 0 }
                 />
-
-            </div>
+            </SideBar>
 
             <div style={{
                 "position": "relative",
