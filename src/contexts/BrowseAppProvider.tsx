@@ -1,9 +1,14 @@
 import * as React from 'react';
 
 import { 
-    AgolItem,
+    // AgolItem,
     queryItemsByIds
 } from '../utils/arcgis-online-group-data';
+
+import { 
+    AgolItem,
+    formatAsAgolItem
+} from '../utils/arcgis-online-item-formatter';
 
 import { Tier } from '../AppConfig';
 
@@ -54,17 +59,26 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         });
         console.log(results);
 
+        initItemsCollection(results);
+
+        initActiveWebmap(results);
+    };
+
+    const initActiveWebmap = (data:AgolItem[])=>{
+        const webmapItem = data.filter(d=>d.id === webmapId)[0];
+        setActiveWebmapItem(formatAsAgolItem(webmapItem));
+    }
+
+    const initItemsCollection = (data:AgolItem[])=>{
         const itemsCollection: AgolItem[] = [];
 
-        results.forEach(item=>{
+        data.forEach(item=>{
             const index = collections.indexOf(item.id);
-            itemsCollection[index] = item;
+            itemsCollection[index] = formatAsAgolItem(item);
         });
-        setItemsCollection(itemsCollection);
 
-        const webmapItem = results.filter(d=>d.id === webmapId)[0];
-        setActiveWebmapItem(webmapItem);
-    };
+        setItemsCollection(itemsCollection);
+    }
 
     const value = {
         activeWebmapItem,
