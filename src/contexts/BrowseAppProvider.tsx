@@ -12,6 +12,8 @@ import {
 
 import { Tier } from '../AppConfig';
 
+export { AgolItem };
+
 interface BrowseAppContextProps {
     activeWebmapItem: AgolItem;
     setActiveWebmapItem: (item:AgolItem)=>void;

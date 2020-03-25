@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 import { 
-    BrowseAppContextProvider, 
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
 import CardList from './CardList';
 import SideBar from './SideBar';
+import TopNav from './TopNav';
+import ActiveMapSwitcher from './ActiveMapSwitcher';
 
 import { 
     MapView
@@ -162,6 +163,10 @@ const BrowseApp:React.FC<{}>= ()=>{
                 "flexShrink": 0,
                 "flexBasis": "200px"
             }}>
+                <TopNav>
+                    <ActiveMapSwitcher />
+                </TopNav>
+
                 <MapView />
             </div>
 

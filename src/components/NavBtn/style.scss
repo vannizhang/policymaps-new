@@ -1,0 +1,27 @@
+.nav-btn {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor: pointer;
+
+    svg {
+        fill: #0079c1;
+    }
+}
+
+.nav-btn.disabled {
+    border: 1px solid #efefef;
+    pointer-events: none;
+
+    svg {
+        fill: #efefef;
+    }
+}
+
+.nav-btn:hover {
+    border: 1px solid #0079c1;
+} 
