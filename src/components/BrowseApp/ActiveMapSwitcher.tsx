@@ -58,15 +58,16 @@ const ActiveMapSwitcher:React.FC<Props> = ({
     const getContainerStyle = ():React.CSSProperties=>{
 
         return {
-            'height': '100%',
-            'width': '100%',
             'flexGrow': 1,
             'flexShrink': 0,
             // 'flexBasis': '200px',
             'display': 'flex',
+            'flexWrap': 'wrap',
             'justifyContent': 'flex-start',
             'alignContent': 'strech',
-            'alignItems': 'center'
+            'alignItems': 'center',
+            'padding': '0 .75rem',
+            'boxSizing': 'border-box',
         };
     };
 
@@ -75,25 +76,50 @@ const ActiveMapSwitcher:React.FC<Props> = ({
             className={'active-map-switcher'}
             style={getContainerStyle()}
         >
-            <div className='active-map-title'>
+            <div className='active-map-title' style={{
+                'flexGrow': 1,
+                'flexShrink': 0,
+                // 'flexBasis': '100px',
+                // 'whiteSpace': 'nowrap',
+                // 'overflow': 'hidden',
+                // 'textOverflow': 'ellipsis'
+            }}>
                 <span className='avenir-demi font-size--0'> { activeWebmapItem.title }</span>
             </div>
 
-            <div className=''>
-                <span>
-                    { getActiveItemIndicator() }
-                </span>
+            <div
+                style={{
+                    'display': 'flex',
+                    // 'justifyContent': 'flex-start',
+                    'alignItems': 'center',
+                }}
+            >
+
+                <div style={{ 'padding': '0 .5rem' }}>
+                    <span>
+                        { getActiveItemIndicator() }
+                    </span>
+                </div>
+
+                <div style={{ padding: '0 .25rem' }}>
+                    <NavBtn 
+                        direction='left'
+                        onClick={showPrev}
+                        isDisabled={ getIndexForActiveWebmap() === -1 }
+                    />
+                </div>
+
+                <div style={{ padding: '0 .25rem' }}>
+                    <NavBtn 
+                        direction='right'
+                        onClick={showNext}
+                        isDisabled={ getIndexForActiveWebmap() === -1 }
+                    />
+                </div>
+
             </div>
 
-            <NavBtn 
-                direction='left'
-                onClick={showPrev}
-            />
 
-            <NavBtn 
-                direction='right'
-                onClick={showNext}
-            />
         </div>
     );
 };

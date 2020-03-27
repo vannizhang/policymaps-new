@@ -11,3 +11,5 @@ export { default as MapView } from './MapView/MapView';
 export { default as RegularCard } from './Card/RegularCard/RegularCard';
 
 export { default as NavBtn } from './NavBtn/NavBtn';
+
+export { default as SearchWidget } from './SearchWidget/SearchWidget';

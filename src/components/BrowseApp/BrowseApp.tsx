@@ -7,10 +7,10 @@ import {
 import CardList from './CardList';
 import SideBar from './SideBar';
 import TopNav from './TopNav';
-import ActiveMapSwitcher from './ActiveMapSwitcher';
 
 import { 
-    MapView
+    MapView,
+    SearchWidget
 } from '../index';
 
 import { 
@@ -18,7 +18,6 @@ import {
 } from '../../AppConfig';
 
 import {
-    MapConfig,
     UIConfig
 } from './Config';
 
@@ -163,11 +162,11 @@ const BrowseApp:React.FC<{}>= ()=>{
                 "flexShrink": 0,
                 "flexBasis": "200px"
             }}>
-                <TopNav>
-                    <ActiveMapSwitcher />
-                </TopNav>
+                <TopNav />
 
-                <MapView />
+                <MapView>
+                    <SearchWidget/>
+                </MapView>
             </div>
 
         </div>
