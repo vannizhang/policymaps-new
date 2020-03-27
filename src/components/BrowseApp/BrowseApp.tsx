@@ -7,6 +7,7 @@ import {
 import CardList from './CardList';
 import SideBar from './SideBar';
 import TopNav from './TopNav';
+import CategoryFilter from './CategoryFilter';
 
 import { 
     MapView,
@@ -28,7 +29,8 @@ import {
 } from '../../utils/arcgis-online-item-formatter';
 
 import { 
-    getCategorySchema 
+    getCategorySchema, 
+    CategorySchemaDataItem
 } from '../../utils/category-schema-manager';
 
 import ArcGISOnlineGroupData, { 
@@ -39,23 +41,29 @@ const BrowseApp:React.FC<{}>= ()=>{
 
     const { itemsCollection } = React.useContext(BrowseAppContext);
 
+    const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
 
     const [ isSidebarHide, toggleSideBar ] = React.useState<boolean>();
 
-    // init the module that will be used to query items from the Policy Maps group on ArcGIS online
-    const initAgolGroupData = async ()=>{
+    const initCategorySchema = async () =>{
 
         const categorySchemaRes = await getCategorySchema({ 
             agolGroupId: Tier.PROD.AGOL_GROUP_ID 
         });
         // console.log(categorySchemaRes);
 
+        setCategorySchema(categorySchemaRes[0])
+    }
+
+    // init the module that will be used to query items from the Policy Maps group on ArcGIS online
+    const initAgolGroupData = async ()=>{
+
         const arcGISOnlineGroupData = new ArcGISOnlineGroupData({
             groupId: Tier.PROD.AGOL_GROUP_ID,
-            categorySchema: categorySchemaRes[0],
+            categorySchema,
             queryParams: {
                 contentType: 'webmap',
                 sortField: 'modified'
@@ -89,9 +97,17 @@ const BrowseApp:React.FC<{}>= ()=>{
         setSearchReponse(response);
     };
 
+    // fetch the category schema first
     React.useEffect(()=>{
-        initAgolGroupData();
-    }, []);
+        initCategorySchema();
+    }, [])
+
+    // once category schema is ready, init the AGOL Group Data module
+    React.useEffect(()=>{
+        if(categorySchema){
+            initAgolGroupData();
+        }
+    }, [ categorySchema ]);
 
     // start searching policy maps items once agolGroupData is ready
     React.useEffect(()=>{
@@ -144,6 +160,11 @@ const BrowseApp:React.FC<{}>= ()=>{
                     });
                 }}
             >
+                
+                <CategoryFilter 
+                    categorySchema={categorySchema}
+                />
+
                 <CardList 
                     title={'My collection of maps'}
                     data={itemsCollection}

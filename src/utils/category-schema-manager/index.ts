@@ -11,17 +11,17 @@ interface getCategorySchemaProps {
     agolHost?: string;
 }
 
-interface CategorySchemaSubCategory {
+export interface CategorySchemaSubCategory {
     title: string;
     categories: []
 }
 
-interface CategorySchemaMainCategory {
+export interface CategorySchemaMainCategory {
     title: string;
     categories: CategorySchemaSubCategory[];
 }
 
-interface CategorySchemaDataItem {
+export interface CategorySchemaDataItem {
     title: string;
     categories: CategorySchemaMainCategory[];
 }
