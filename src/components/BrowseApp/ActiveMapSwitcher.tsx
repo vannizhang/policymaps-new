@@ -1,9 +1,12 @@
 import * as React from 'react';
 
 import { 
-    BrowseAppContext,
-    AgolItem
+    BrowseAppContext
 } from '../../contexts/BrowseAppProvider';
+
+import {
+    AgolItem
+} from '../../utils/arcgis-online-item-formatter'
 
 import {
     NavBtn

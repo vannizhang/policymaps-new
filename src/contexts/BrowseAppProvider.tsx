@@ -12,7 +12,7 @@ import {
 
 import { Tier } from '../AppConfig';
 
-export { AgolItem };
+// export { AgolItem };
 
 interface BrowseAppContextProps {
     activeWebmapItem: AgolItem;
