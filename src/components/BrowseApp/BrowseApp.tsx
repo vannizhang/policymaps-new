@@ -10,7 +10,8 @@ import TopNav from './TopNav';
 
 import { 
     MapView,
-    SearchWidget
+    SearchWidget,
+    LegendWidget
 } from '../index';
 
 import { 
@@ -166,6 +167,7 @@ const BrowseApp:React.FC<{}>= ()=>{
 
                 <MapView>
                     <SearchWidget/>
+                    <LegendWidget/>
                 </MapView>
             </div>
 

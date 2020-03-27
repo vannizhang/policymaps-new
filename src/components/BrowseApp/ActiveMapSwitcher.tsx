@@ -43,7 +43,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
         ? itemsCollection[index - 1]
         : itemsCollection[itemsCollection.length - 1];
 
-    setActiveWebmapItem(prevItem);
+        setActiveWebmapItem(prevItem);
     };
 
     // get message that indicate the position of active webmap in the item collections (e.g. Map 2 of 5)
