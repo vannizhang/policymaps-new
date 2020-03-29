@@ -38,7 +38,7 @@ const CategoryFilter:React.FC<Props> = ({
 
         const allSubcategories = mainCategory.categories.map(d=>d.title);
 
-        if(mainCategory.title !== selectedCategory.title){
+        if(!selectedCategory || mainCategory.title !== selectedCategory.title){
 
             setSelectedCategory({
                 title: mainCategory.title,
