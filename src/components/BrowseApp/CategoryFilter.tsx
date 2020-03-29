@@ -3,29 +3,28 @@ import * as React from 'react';
 import { 
     CategorySchemaDataItem,
     CategorySchemaMainCategory,
-    CategorySchemaSubCategory
+    // CategorySchemaSubCategory
 } from '../../utils/category-schema-manager';
 
 interface Props {
     categorySchema: CategorySchemaDataItem;
+    onChange: (data:SelectedCategory)=>void;
 };
 
-interface SelectedCategory {
+export interface SelectedCategory {
     title: string;
     subcategories: string[];
 }
 
 const CategoryFilter:React.FC<Props> = ({
-    categorySchema
+    categorySchema,
+    onChange
 })=>{
 
     // active main catgeory that displays the all subcategory options
     const [ activeMainCategoryTitle, setActiveMainCategoryTitle ] = React.useState<string>();
 
-    const [ selectedCategory, setSelectedCategory ] = React.useState<SelectedCategory>({
-        title: '',
-        subcategories: []
-    });
+    const [ selectedCategory, setSelectedCategory ] = React.useState<SelectedCategory>();
 
     const toggleMainCategory = (mainCategoryTitle:string)=>{
         const newVal = mainCategoryTitle !== activeMainCategoryTitle 
@@ -62,7 +61,7 @@ const CategoryFilter:React.FC<Props> = ({
 
     const toggleSubcategory = (mainCategory:CategorySchemaMainCategory, subcategoryTitle?:string)=>{
 
-        if(mainCategory.title !== selectedCategory.title){
+        if( !selectedCategory || selectedCategory.title !== mainCategory.title ){
 
             setSelectedCategory({
                 title: mainCategory.title,
@@ -83,7 +82,7 @@ const CategoryFilter:React.FC<Props> = ({
         }
 
         setSelectedCategory({
-            title: mainCategory.title,
+            title: newValues.length ? mainCategory.title : '',
             subcategories: newValues
         });
     };
@@ -180,7 +179,12 @@ const CategoryFilter:React.FC<Props> = ({
     }
 
     React.useEffect(()=>{
-        console.log('selectedCategory', selectedCategory);
+        // console.log('selectedCategory', selectedCategory);
+
+        if(selectedCategory){
+            onChange(selectedCategory);
+        }
+
     }, [selectedCategory])
 
     return categorySchema ? (

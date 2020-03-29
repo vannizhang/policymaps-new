@@ -7,7 +7,7 @@ import {
 import CardList from './CardList';
 import SideBar from './SideBar';
 import TopNav from './TopNav';
-import CategoryFilter from './CategoryFilter';
+import CategoryFilter, { SelectedCategory } from './CategoryFilter';
 
 import { 
     MapView,
@@ -102,6 +102,11 @@ const BrowseApp:React.FC<{}>= ()=>{
         setSearchReponse(response);
     };
 
+    const categoryFilterOnChange = (data:SelectedCategory)=>{
+        agolGroupData.updateSelectedCategory(data.title, data.subcategories);
+        searchItems();
+    };
+
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
@@ -168,6 +173,7 @@ const BrowseApp:React.FC<{}>= ()=>{
                 
                 <CategoryFilter 
                     categorySchema={categorySchema}
+                    onChange={categoryFilterOnChange}
                 />
 
                 <CardList 
