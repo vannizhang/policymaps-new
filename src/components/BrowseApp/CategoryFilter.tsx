@@ -35,6 +35,31 @@ const CategoryFilter:React.FC<Props> = ({
         setActiveMainCategoryTitle(newVal);
     };
 
+    const toggleAllSubcategories = (mainCategory:CategorySchemaMainCategory)=>{
+
+        const allSubcategories = mainCategory.categories.map(d=>d.title);
+
+        if(mainCategory.title !== selectedCategory.title){
+
+            setSelectedCategory({
+                title: mainCategory.title,
+                subcategories: allSubcategories
+            });
+
+            return;
+        }
+
+        const subcategories = (
+            selectedCategory &&
+            selectedCategory.subcategories.length !== mainCategory.categories.length
+        ) ? allSubcategories : [];
+
+        setSelectedCategory({
+            title: subcategories.length ? mainCategory.title : '',
+            subcategories
+        });
+    }
+
     const toggleSubcategory = (mainCategory:CategorySchemaMainCategory, subcategoryTitle?:string)=>{
 
         if(mainCategory.title !== selectedCategory.title){
@@ -63,11 +88,29 @@ const CategoryFilter:React.FC<Props> = ({
         });
     };
 
-    const getSubCategoryFilters = (mainCategory:CategorySchemaMainCategory)=>{
+    const getToggleSelectAllOption = (mainCategory:CategorySchemaMainCategory)=>{
 
-        const style = {
-            'padding': '.1rem 0'
-        } as React.CSSProperties;
+        const selected = (
+            selectedCategory &&
+            selectedCategory.title === mainCategory.title && 
+            selectedCategory.subcategories.length === mainCategory.categories.length
+        );
+
+        const checkboxClass = selected ? 'icon-ui-checkbox-checked' : 'icon-ui-checkbox-unchecked';
+
+        return (
+            <div>
+                <span 
+                    className={`${checkboxClass} font-size--2`}
+                    onClick={toggleAllSubcategories.bind(this, mainCategory)}
+                ></span>
+                <span className='font-size--2'>All</span>
+            </div>
+        );
+
+    };
+
+    const getSubCategoryFilters = (mainCategory:CategorySchemaMainCategory)=>{
 
         const filters = mainCategory.categories.map((subcategory, index)=>{
 
@@ -77,13 +120,10 @@ const CategoryFilter:React.FC<Props> = ({
                 selectedCategory.subcategories.indexOf(subcategory.title) > -1 
             );
 
-            const checkboxClass = selected ? 'icon-ui-checkbox-checked' : 'icon-ui-checkbox-unchecked'
+            const checkboxClass = selected ? 'icon-ui-checkbox-checked' : 'icon-ui-checkbox-unchecked';
 
             return (
-                <div 
-                    key={`subcategory-filter-${index}`}
-                    style={style}
-                >
+                <div key={`subcategory-filter-${index}`}>
                     <span 
                         className={`${checkboxClass} font-size--2`}
                         onClick={toggleSubcategory.bind(this, mainCategory, subcategory.title)}
@@ -97,14 +137,7 @@ const CategoryFilter:React.FC<Props> = ({
             <div style={{
                 'padding': '.25rem 0'
             }}>
-                <div style={style} >
-                    <span 
-                        className={`${'icon-ui-checkbox-unchecked'} font-size--2`}
-                        onClick={toggleSubcategory.bind(this, mainCategory, 'all')}
-                    ></span>
-                    <span className='font-size--2'>All</span>
-                </div>
-
+                { getToggleSelectAllOption(mainCategory) }
                 { filters }
             </div>
         );

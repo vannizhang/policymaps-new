@@ -46,8 +46,6 @@ const BrowseApp:React.FC<{}>= ()=>{
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
 
-    const [ isSidebarHide, toggleSideBar ] = React.useState<boolean>();
-
     const initCategorySchema = async () =>{
 
         const categorySchemaRes = await getCategorySchema({ 
@@ -55,7 +53,14 @@ const BrowseApp:React.FC<{}>= ()=>{
         });
         // console.log(categorySchemaRes);
 
-        setCategorySchema(categorySchemaRes[0])
+        const categorySchema:CategorySchemaDataItem = categorySchemaRes[0];
+
+        // filter out 'Resources' category
+        categorySchema.categories = categorySchema.categories.filter(item=>{
+            return item.title !== 'Resources';
+        });
+
+        setCategorySchema(categorySchema);
     }
 
     // init the module that will be used to query items from the Policy Maps group on ArcGIS online
