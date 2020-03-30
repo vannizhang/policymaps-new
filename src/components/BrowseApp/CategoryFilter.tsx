@@ -59,9 +59,11 @@ const CategoryFilter:React.FC<Props> = ({
         });
     }
 
-    const toggleSubcategory = (mainCategory:CategorySchemaMainCategory, subcategoryTitle?:string)=>{
+    const toggleSubcategory = (mainCategory?:CategorySchemaMainCategory, subcategoryTitle?:string)=>{
 
-        if( !selectedCategory || selectedCategory.title !== mainCategory.title ){
+        if( !selectedCategory ||
+            selectedCategory.title !== mainCategory.title 
+        ){
 
             setSelectedCategory({
                 title: mainCategory.title,
@@ -71,6 +73,15 @@ const CategoryFilter:React.FC<Props> = ({
             return;
         }
 
+        const subcategories = toggleFromSelectedSubcategories(subcategoryTitle);
+
+        setSelectedCategory({
+            title: subcategories.length ? mainCategory.title : '',
+            subcategories
+        });
+    };
+
+    const toggleFromSelectedSubcategories = (subcategoryTitle:string)=>{
         const index = selectedCategory.subcategories.indexOf(subcategoryTitle);
 
         const newValues:string[] = [...selectedCategory.subcategories];
@@ -81,11 +92,25 @@ const CategoryFilter:React.FC<Props> = ({
             newValues.splice(index, 1);
         }
 
+        return newValues;
+    };
+
+    const removeFromSubcategories = (subcategoryTitle:string)=>{
+
+        const subcategories = toggleFromSelectedSubcategories(subcategoryTitle);
+
         setSelectedCategory({
-            title: newValues.length ? mainCategory.title : '',
-            subcategories: newValues
+            title: subcategories.length ? selectedCategory.title : '',
+            subcategories
         });
     };
+
+    const resetSelectedCategory = ()=>{
+        setSelectedCategory({
+            title: '',
+            subcategories: []
+        });
+    }
 
     const getToggleSelectAllOption = (mainCategory:CategorySchemaMainCategory)=>{
 
@@ -178,6 +203,59 @@ const CategoryFilter:React.FC<Props> = ({
         });
     }
 
+    const getChipsForSelectedCategories = ()=>{
+
+        if(!selectedCategory || !selectedCategory.subcategories.length){
+            return null;
+        }
+
+        const chipStyle = {
+            'display': 'flex',
+            'alignItems': 'center',
+            'padding': '.25rem .5rem',
+            'margin': '.25rem .35rem',
+            'background': '#ccc',
+            'borderRadius': '10px',
+            'border': '1px solid rgba(149, 149, 149, 0.5)'
+        } as React.CSSProperties;
+
+        const chips = selectedCategory.subcategories.map((subcategory, index)=>{
+
+            return (
+                <div 
+                    key={`subcategory-chip-${index}`}
+                    style={chipStyle}
+                >
+                    <span className='font-size--3'>{subcategory}</span>
+                    <span className='icon-ui-close margin-left-half font-size--3'
+                        style={{
+                            'cursor': 'pointer'
+                        }}
+                        onClick={removeFromSubcategories.bind(this, subcategory)}
+                    ></span>
+                </div>
+            );
+        });
+
+        return (
+            <div className='leader-half'
+                style={{
+                    'display': 'flex',
+                    'flexWrap': 'wrap'
+                }}
+            >
+                { chips }
+
+                <div className='btn btn-transparent' 
+                    onClick={resetSelectedCategory}
+                >
+                    <span className='font-size--3'>Clear All</span>
+                </div>
+            </div>
+        )
+
+    };
+
     React.useEffect(()=>{
         // console.log('selectedCategory', selectedCategory);
 
@@ -188,14 +266,18 @@ const CategoryFilter:React.FC<Props> = ({
     }, [selectedCategory])
 
     return categorySchema ? (
-        <div
-            style={{
-                'border': '1px solid #efefef',
-                'borderBottom': '0 solid #efefef',
-                'marginBottom': '1.5rem'
-            }}
-        >
-            { getCategoryFiltes() }
+        <div className='trailer-1'>
+            <div
+                style={{
+                    'border': '1px solid #efefef',
+                    'borderBottom': '0 solid #efefef',
+                    'marginBottom': '.5rem'
+                }}
+            >
+                { getCategoryFiltes() }
+            </div>
+
+            { getChipsForSelectedCategories() }
         </div>
     ): null;
 };
