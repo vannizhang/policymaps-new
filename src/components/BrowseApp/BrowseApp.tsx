@@ -12,7 +12,8 @@ import CategoryFilter, { SelectedCategory } from './CategoryFilter';
 import { 
     MapView,
     SearchWidget,
-    LegendWidget
+    LegendWidget,
+    SearchAutoComplete
 } from '../index';
 
 import { 
@@ -107,6 +108,11 @@ const BrowseApp:React.FC<{}>= ()=>{
         searchItems();
     };
 
+    const searchAutoCompleteOnChange = (val:string)=>{
+        agolGroupData.updateSearchTerm(val);
+        searchItems();
+    };
+
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
@@ -170,6 +176,10 @@ const BrowseApp:React.FC<{}>= ()=>{
                     });
                 }}
             >
+                <SearchAutoComplete 
+                    groupId={Tier.PROD.AGOL_GROUP_ID }
+                    onSelect={searchAutoCompleteOnChange}
+                />
                 
                 <CategoryFilter 
                     categorySchema={categorySchema}

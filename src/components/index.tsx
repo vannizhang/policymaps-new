@@ -15,3 +15,5 @@ export { default as NavBtn } from './NavBtn/NavBtn';
 export { default as SearchWidget } from './SearchWidget/SearchWidget';
 
 export { default as LegendWidget } from './LegendWidget/Legend';
+
+export { default as SearchAutoComplete } from './SearchAutoComplete/SearchAutoComplete';
