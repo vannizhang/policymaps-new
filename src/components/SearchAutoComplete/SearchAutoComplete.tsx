@@ -190,7 +190,7 @@ const SearchAutoComplete:React.FC<Props> = ({
 
                 <div className="input-group">
                     <input 
-                        className="input-group-input" 
+                        className="input-group-input input-minimal" 
                         type="text" 
                         autoComplete="off" 
                         placeholder={placeholder} 

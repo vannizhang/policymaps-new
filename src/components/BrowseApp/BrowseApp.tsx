@@ -46,6 +46,7 @@ const BrowseApp:React.FC<{}>= ()=>{
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
+    const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
 
     const initCategorySchema = async () =>{
 
@@ -113,6 +114,10 @@ const BrowseApp:React.FC<{}>= ()=>{
         searchItems();
     };
 
+    const toggleCategoryFilter = ()=>{
+        setIsCategoryFilterVisible(!isCategoryFilterVisible);
+    }
+
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
@@ -176,27 +181,72 @@ const BrowseApp:React.FC<{}>= ()=>{
                     });
                 }}
             >
-                <SearchAutoComplete 
-                    groupId={Tier.PROD.AGOL_GROUP_ID }
-                    onSelect={searchAutoCompleteOnChange}
-                />
-                
-                <CategoryFilter 
-                    categorySchema={categorySchema}
-                    onChange={categoryFilterOnChange}
-                />
+                <div
+                    style={{
+                        'display': 'flex',
+                        'alignContent': 'strech',
+                        'alignItems': 'strech',
+                        'border': '2px solid #efefef',
+                        'boxSizing': 'border-box'
+                    }}    
+                >
+                    <div
+                        style={{
+                            'flexGrow': 1,
+                            'flexShrink': 0,
+                            'paddingLeft': '0.5rem'
+                        }}
+                    >
+                        <SearchAutoComplete 
+                            groupId={Tier.PROD.AGOL_GROUP_ID }
+                            onSelect={searchAutoCompleteOnChange}
+                            placeholder={'Search and Filter Datasets'}
+                        />
+                    </div>
 
-                <CardList 
-                    title={'My collection of maps'}
-                    data={itemsCollection}
-                    itemCount={ itemsCollection ? itemsCollection.length : 0 }
-                />
+                    <div
+                        className='icon-right-padding-0'
+                        style={{
+                            'width': '50px',
+                            'borderLeft': '1px solid #efefef',
+                            'display': 'flex',
+                            'alignItems': 'center',
+                            'justifyContent': 'center',
+                            'cursor': 'pointer'
+                        }}    
+                        onClick={toggleCategoryFilter}
+                    >
+                        {
+                            <span className={`text-blue font-size-1 ${ isCategoryFilterVisible ? 'icon-ui-up': 'icon-ui-down'}`}></span>
+                        }
+                    </div>
+                </div>
 
-                <CardList 
-                    title={'Search Results'}
-                    data={webMapItems}
-                    itemCount={ searchResponse ? searchResponse.total : 0 }
-                />
+                <div
+                    style={{
+                        display: isCategoryFilterVisible ? 'block' : 'none'
+                    }}
+                >
+                    <CategoryFilter 
+                        categorySchema={categorySchema}
+                        onChange={categoryFilterOnChange}
+                    />
+                </div>
+
+                <div className='leader-1'>
+                    <CardList 
+                        title={'My collection of maps'}
+                        data={itemsCollection}
+                        itemCount={ itemsCollection ? itemsCollection.length : 0 }
+                    />
+
+                    <CardList 
+                        title={'Search Results'}
+                        data={webMapItems}
+                        itemCount={ searchResponse ? searchResponse.total : 0 }
+                    />
+                </div>
+
             </SideBar>
 
             <div style={{

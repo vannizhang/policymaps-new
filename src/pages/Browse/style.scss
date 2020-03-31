@@ -10,3 +10,9 @@ body {
 .esri-search__container{
     border: 1px solid #e0e0e0;
 }
+
+.icon-right-padding-0 {
+    [class^="icon-ui-"]:before, [class*=" icon-ui-"]:before {
+        padding-right: 0;
+    }
+}

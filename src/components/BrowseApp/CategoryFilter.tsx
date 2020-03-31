@@ -266,7 +266,7 @@ const CategoryFilter:React.FC<Props> = ({
     }, [selectedCategory])
 
     return categorySchema ? (
-        <div className='trailer-1'>
+        <>
             <div
                 style={{
                     'border': '1px solid #efefef',
@@ -278,7 +278,7 @@ const CategoryFilter:React.FC<Props> = ({
             </div>
 
             { getChipsForSelectedCategories() }
-        </div>
+        </>
     ): null;
 };
 
