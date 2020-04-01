@@ -6,8 +6,13 @@ import {
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
+import {
+    encodeSearchParams
+} from '../../utils/url-manager/BrowseAppUrlManager';
+
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
+import IwatchUtils from 'esri/core/watchUtils';
 
 interface Props {
     webmapId?: string;
@@ -19,7 +24,7 @@ const MapView:React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { activeWebmapItem } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem, defaultLocation } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -45,6 +50,8 @@ const MapView:React.FC<Props> = ({
                         id: activeWebmapItem.id
                     }  
                 }),
+                center: defaultLocation ? [ defaultLocation.lon, defaultLocation.lat ] : undefined,
+                zoom: defaultLocation ? defaultLocation.zoom : undefined
             });
 
             view.when(()=>{
@@ -77,6 +84,33 @@ const MapView:React.FC<Props> = ({
         }
     };
 
+    const addWatchEvent = async()=>{
+        type Modules = [typeof IwatchUtils];
+
+        try {
+            const [ 
+                watchUtils 
+            ] = await (loadModules([
+                'esri/core/watchUtils'
+            ]) as Promise<Modules>);
+
+            watchUtils.whenTrue(mapView, 'stationary', ()=>{
+                // console.log('mapview is stationary', mapView.center, mapView.zoom);
+
+                encodeSearchParams({
+                    location: {
+                        lat: +mapView.center.latitude.toFixed(3),
+                        lon: +mapView.center.longitude.toFixed(3),
+                        zoom: mapView.zoom
+                    }
+                });
+            });
+
+        } catch(err){   
+            console.error(err);
+        }
+    };
+
     React.useEffect(()=>{
         // console.log('active webmap id on change', activeWebmapId);
 
@@ -84,7 +118,13 @@ const MapView:React.FC<Props> = ({
             updateWebMap();
         }
 
-    }, [ activeWebmapItem ])
+    }, [ activeWebmapItem ]);
+
+    React.useEffect(()=>{
+        if(mapView){
+            addWatchEvent();
+        }
+    }, [ mapView ])
 
     React.useEffect(()=>{
         loadCss();

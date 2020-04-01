@@ -21,6 +21,7 @@ import {
 } from '../../AppConfig';
 
 import {
+    MapConfig,
     UIConfig
 } from './Config';
 

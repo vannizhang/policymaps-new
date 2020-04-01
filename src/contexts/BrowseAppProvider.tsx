@@ -10,6 +10,11 @@ import {
     formatAsAgolItem
 } from '../utils/arcgis-online-item-formatter';
 
+import {
+    encodeSearchParams,
+    Location
+} from '../utils/url-manager/BrowseAppUrlManager';
+
 import { Tier } from '../AppConfig';
 
 // export { AgolItem };
@@ -20,7 +25,9 @@ interface BrowseAppContextProps {
 
     itemsCollection: AgolItem[],
     toggleFromItemCollections: (item:AgolItem)=>void;
-    // children: React.ReactNode;
+
+    defaultLocation: Location;
+    hideSideBarByDefault: boolean;
 };
 
 interface BrowseAppContextProviderProps {
@@ -29,6 +36,9 @@ interface BrowseAppContextProviderProps {
     webmapId: string;
     // list of items ids for the predefined collection 
     collections?: string[];
+
+    defaultLocation?: Location;
+    hideSideBarByDefault?: boolean;
 };
 
 export const BrowseAppContext = React.createContext<BrowseAppContextProps>(null);
@@ -36,6 +46,8 @@ export const BrowseAppContext = React.createContext<BrowseAppContextProps>(null)
 export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = ({ 
     webmapId,
     collections,
+    defaultLocation,
+    hideSideBarByDefault,
     children,
 })=>{
 
@@ -101,12 +113,32 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         setActiveWebmapItem,
 
         itemsCollection,
-        toggleFromItemCollections
+        toggleFromItemCollections,
+
+        defaultLocation,
+        hideSideBarByDefault
     };
 
     React.useEffect(()=>{
         fetchData();
     }, []);
+
+    React.useEffect(()=>{
+        if(activeWebmapItem){
+            encodeSearchParams({
+                activeWebmapId: activeWebmapItem.id
+            });
+        }
+
+    }, [ activeWebmapItem ]);
+
+    React.useEffect(()=>{
+        if(itemsCollection){
+            encodeSearchParams({
+                collections: itemsCollection.map(d=>d.id)
+            });
+        }
+    }, [ itemsCollection ]);
 
     return (
         <BrowseAppContext.Provider value={value}>

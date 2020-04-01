@@ -10,24 +10,32 @@ import {
     BrowseAppContextProvider
 } from '../../contexts/BrowseAppProvider';
 
-export default class BrowsePage extends React.PureComponent {
+import {
+    decodeSearchParams
+} from '../../utils/url-manager/BrowseAppUrlManager';
 
-    render(){
-        return (
-            <PageLayout
-                shouldHideEsriFooter={true}
+import { 
+    MapConfig 
+} from '../../components/BrowseApp/Config';
+
+const BrowsePage:React.FC = ()=> {
+
+    const searchParams = decodeSearchParams();
+
+    return (
+        <PageLayout
+            shouldHideEsriFooter={true}
+        >
+            <BrowseAppContextProvider
+                webmapId={ searchParams.activeWebmapId || MapConfig.DEFAULT_WEBMAP_ID }
+                collections={ searchParams.collections }
+                defaultLocation = { searchParams.location }
+                hideSideBarByDefault={ searchParams.isSideBarHide }
             >
-                <BrowseAppContextProvider
-                    webmapId={'23a52f75191c4fc8b642945023511c11'}//{MapConfig.DEFAULT_WEBMAP_ID}
-                    collections={[
-                        // '23a52f75191c4fc8b642945023511c11', 
-                        // '88f17b4580e846609f92c9f75a9d9eee',
-                        // '4f18bc402faa44f6a94dfff113b59d38'
-                    ]}
-                >
-                    <BrowseApp />
-                </BrowseAppContextProvider>
-            </PageLayout>
-        )
-    }
+                <BrowseApp />
+            </BrowseAppContextProvider>
+        </PageLayout>
+    );
 };
+
+export default BrowsePage;

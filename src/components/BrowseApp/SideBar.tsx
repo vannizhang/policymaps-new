@@ -1,5 +1,13 @@
 import * as React from 'react';
 
+import {
+    encodeSearchParams
+} from '../../utils/url-manager/BrowseAppUrlManager';
+
+import { 
+    BrowseAppContext 
+} from '../../contexts/BrowseAppProvider';
+
 interface Props {
     width?: number;
     scrollToBottomHandler?:()=>void;
@@ -13,7 +21,9 @@ const SideBar:React.FC<Props> = ({
 
     const sidebarRef = React.createRef<HTMLDivElement>();
 
-    const [ isHide, setIsHide ] = React.useState<boolean>(false);
+    const { hideSideBarByDefault } = React.useContext(BrowseAppContext)
+
+    const [ isHide, setIsHide ] = React.useState<boolean>(hideSideBarByDefault);
 
     const toggleSideBar = ()=>{
         setIsHide(!isHide);
@@ -32,6 +42,12 @@ const SideBar:React.FC<Props> = ({
             scrollToBottomHandler();
         }
     };
+
+    React.useEffect(()=>{
+        encodeSearchParams({
+            isSideBarHide: isHide
+        })
+    }, [isHide]);
 
     return (
         <>
