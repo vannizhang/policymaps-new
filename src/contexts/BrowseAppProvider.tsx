@@ -26,8 +26,13 @@ interface BrowseAppContextProps {
     itemsCollection: AgolItem[],
     toggleFromItemCollections: (item:AgolItem)=>void;
 
-    defaultLocation: Location;
-    hideSideBarByDefault: boolean;
+    hideSideBar: boolean;
+    toggleHideSideBar: ()=>void;
+
+    mapCenterLocation: Location;
+    setMapCenterLocation: (location:Location)=>void;
+
+    currentUrl: string;
 };
 
 interface BrowseAppContextProviderProps {
@@ -54,6 +59,12 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
 
     const [ itemsCollection, setItemsCollection ] = React.useState<AgolItem[]>(null);
+
+    const [ hideSideBar, setHideSideBar ] = React.useState<boolean>(hideSideBarByDefault);
+
+    const [ mapCenterLocation, setMapCenterLocation ] = React.useState<Location>(defaultLocation);
+
+    const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
 
     const toggleFromItemCollections = (item:AgolItem)=>{
         const itemIds = itemsCollection.map(d=>d.id);
@@ -108,6 +119,10 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         setItemsCollection(itemsCollection);
     }
 
+    const toggleHideSideBar = ()=>{
+        setHideSideBar(!hideSideBar);
+    };
+
     const value = {
         activeWebmapItem,
         setActiveWebmapItem,
@@ -115,8 +130,13 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         itemsCollection,
         toggleFromItemCollections,
 
-        defaultLocation,
-        hideSideBarByDefault
+        hideSideBar,
+        toggleHideSideBar,
+
+        mapCenterLocation,
+        setMapCenterLocation,
+
+        currentUrl
     };
 
     React.useEffect(()=>{
@@ -124,21 +144,16 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     }, []);
 
     React.useEffect(()=>{
-        if(activeWebmapItem){
-            encodeSearchParams({
-                activeWebmapId: activeWebmapItem.id
-            });
-        }
+        encodeSearchParams({
+            activeWebmapId: activeWebmapItem ? activeWebmapItem.id : '',
+            collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+            location: mapCenterLocation,
+            isSideBarHide: hideSideBar
+        });
 
-    }, [ activeWebmapItem ]);
-
-    React.useEffect(()=>{
-        if(itemsCollection){
-            encodeSearchParams({
-                collections: itemsCollection.map(d=>d.id)
-            });
-        }
-    }, [ itemsCollection ]);
+        setCurrentUrl(window.location.href);
+        
+    }, [ activeWebmapItem, itemsCollection, mapCenterLocation, hideSideBar ]);
 
     return (
         <BrowseAppContext.Provider value={value}>

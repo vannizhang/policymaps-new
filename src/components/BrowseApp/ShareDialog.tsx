@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+import { 
+    BrowseAppContext 
+} from '../../contexts/BrowseAppProvider';
+
 interface Props {
     onClose?: ()=>void; 
 }
@@ -7,6 +11,8 @@ interface Props {
 const ShareDialog:React.FC<Props> = ({
     onClose
 })=>{
+
+    const { currentUrl } = React.useContext(BrowseAppContext);
 
     return (
         <div
@@ -31,10 +37,17 @@ const ShareDialog:React.FC<Props> = ({
 
             <div className="input-group">
 
-                <input className="input-group-input" type="text" placeholder="" style={{
-                    height: '2rem',
-                    border: '1px solid transparent'
-                }}/>
+                <input 
+                    readOnly={true}
+                    className="input-group-input" 
+                    type="text" 
+                    placeholder=""
+                    value={currentUrl}
+                    style={{
+                        height: '2rem',
+                        border: '1px solid transparent'
+                    }}
+                />
 
                 <span className="input-group-button">
                     <button className="btn btn-small" style={{

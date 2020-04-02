@@ -6,10 +6,6 @@ import {
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
-import {
-    encodeSearchParams
-} from '../../utils/url-manager/BrowseAppUrlManager';
-
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
@@ -24,7 +20,7 @@ const MapView:React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { activeWebmapItem, defaultLocation } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem, mapCenterLocation, setMapCenterLocation } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -50,8 +46,8 @@ const MapView:React.FC<Props> = ({
                         id: activeWebmapItem.id
                     }  
                 }),
-                center: defaultLocation ? [ defaultLocation.lon, defaultLocation.lat ] : undefined,
-                zoom: defaultLocation ? defaultLocation.zoom : undefined
+                center: mapCenterLocation ? [ mapCenterLocation.lon, mapCenterLocation.lat ] : undefined,
+                zoom: mapCenterLocation ? mapCenterLocation.zoom : undefined
             });
 
             view.when(()=>{
@@ -97,12 +93,10 @@ const MapView:React.FC<Props> = ({
             watchUtils.whenTrue(mapView, 'stationary', ()=>{
                 // console.log('mapview is stationary', mapView.center, mapView.zoom);
 
-                encodeSearchParams({
-                    location: {
-                        lat: +mapView.center.latitude.toFixed(3),
-                        lon: +mapView.center.longitude.toFixed(3),
-                        zoom: mapView.zoom
-                    }
+                setMapCenterLocation({
+                    lat: +mapView.center.latitude.toFixed(3),
+                    lon: +mapView.center.longitude.toFixed(3),
+                    zoom: mapView.zoom
                 });
             });
 
