@@ -8,12 +8,16 @@ import ILegend from 'esri/widgets/Legend';
 export const SearchWidgetContainerId = 'searcgWidgetContainer';
 
 interface Props {
+    isVisible?: boolean;
     mapView?: IMapView;
 }
 
 const LegendWidget:React.FC<Props> = ({
+    isVisible,
     mapView
 })=>{
+
+    const [ legend, setLegend ] = React.useState<ILegend>();
 
     const init = async()=>{
         type Modules = [typeof ILegend];
@@ -29,12 +33,29 @@ const LegendWidget:React.FC<Props> = ({
                 view: mapView
             });
 
+            setLegend(legend);
+
             mapView.ui.add(legend, "bottom-left");
 
         } catch(err){   
             console.error(err);
         }
     };
+
+    const toggleLegend = ()=>{
+        if( isVisible && !legend ){
+            init();
+        } else {
+            legend.destroy();
+            setLegend(null);
+        }
+    }
+
+    React.useEffect(()=>{
+        if(mapView){
+            toggleLegend();
+        }
+    }, [isVisible]);
 
     React.useEffect(()=>{
         if(mapView){

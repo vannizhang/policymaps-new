@@ -2,12 +2,15 @@ import * as React from 'react';
 
 import ActiveMapSwitcher from './ActiveMapSwitcher';
 import ShareDialog from './ShareDialog';
+import Menu from './Menu';
 
 import {
     SearchWidgetContainerId
 } from '../SearchWidget/SearchWidget';
 
 interface Props {
+    toggleLegend?: ()=>void;
+    isLegendVisible?: boolean;
 }
 
 const Config = {
@@ -18,13 +21,20 @@ const Config = {
 };
 
 const TopNav:React.FC<Props> = ({
-    children
+    toggleLegend,
+    isLegendVisible
 })=>{
 
     const [ isShareDialogVisible, setIsShareDialogVisible ] = React.useState<boolean>(true);
 
+    const [ isMenuVisible, setIsMenuVisible ] = React.useState<boolean>(false);
+
     const toggleShareDialog = ()=>{
         setIsShareDialogVisible(!isShareDialogVisible);
+    }
+
+    const toggleMenu = ()=>{
+        setIsMenuVisible(!isMenuVisible);
     }
 
     return (
@@ -53,6 +63,7 @@ const TopNav:React.FC<Props> = ({
                         'alignItems': 'center',
                         'cursor': 'pointer'
                     }}
+                    onClick={toggleMenu}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16"><path d="M14 4H2V3h12zM2 9h12V8H2zm0 5h12v-1H2z"/><path fill="none" d="M0 0h16v16H0z"/></svg>
                 </div>
@@ -101,6 +112,24 @@ const TopNav:React.FC<Props> = ({
                     >
                         <ShareDialog 
                             onClose={toggleShareDialog}
+                        />
+                    </div>
+                ) : null
+            }
+
+            {
+                isMenuVisible ? (
+                    <div
+                        style={{
+                            'position': 'absolute',
+                            'top': Config.top + Config.height,
+                            'left': Config.left,
+                            'zIndex': 5
+                        }}
+                    >
+                        <Menu 
+                            toggleLegend={toggleLegend}
+                            isLegendVisible={isLegendVisible}
                         />
                     </div>
                 ) : null

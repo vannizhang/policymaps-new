@@ -48,6 +48,7 @@ const BrowseApp:React.FC<{}>= ()=>{
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
     const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
+    const [ isLegendVisible, setIsLegendVisible ] = React.useState<boolean>(true);
 
     const initCategorySchema = async () =>{
 
@@ -117,6 +118,10 @@ const BrowseApp:React.FC<{}>= ()=>{
 
     const toggleCategoryFilter = ()=>{
         setIsCategoryFilterVisible(!isCategoryFilterVisible);
+    };
+
+    const toggleLegend = ()=>{
+        setIsLegendVisible(!isLegendVisible);
     }
 
     // fetch the category schema first
@@ -256,11 +261,16 @@ const BrowseApp:React.FC<{}>= ()=>{
                 "flexShrink": 0,
                 "flexBasis": "200px"
             }}>
-                <TopNav />
+                <TopNav
+                    isLegendVisible={isLegendVisible}
+                    toggleLegend={toggleLegend}
+                />
 
                 <MapView>
                     <SearchWidget/>
-                    <LegendWidget/>
+                    <LegendWidget 
+                        isVisible={isLegendVisible}
+                    />
                 </MapView>
             </div>
 
