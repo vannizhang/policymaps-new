@@ -12,7 +12,36 @@ const ShareDialog:React.FC<Props> = ({
     onClose
 })=>{
 
-    const { currentUrl } = React.useContext(BrowseAppContext);
+    const { currentUrl, itemsCollection } = React.useContext(BrowseAppContext);
+
+    const shareToSocialMedia = (name='')=>{
+        const socialmediaLookUp = {
+            'twitter': 'tw',
+            'facebook': 'fb',
+        };
+
+        const socialMedia = socialmediaLookUp[name];
+
+        const text = 'Policy maps for your consideration from esri policymaps site';
+
+        const urlToOpen = `https://www.arcgis.com/home/socialnetwork.html?t=${text}&n=${socialMedia}&u=${currentUrl}&h=policymaps`;
+
+        window.open(urlToOpen);
+    };
+
+    const sendEmail = ()=>{
+
+        const emailSubjectText = 'Policy maps for your consideration';
+        const emailBodyText = 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research';
+
+        const shareLink = encodeURIComponent(currentUrl);
+        const lineBreak = '%0D%0A';
+        const myCollectionItemName = itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.title).join(lineBreak) : ''
+        const body = `${emailBodyText}: ${lineBreak}${lineBreak}${myCollectionItemName}${lineBreak}${lineBreak}${shareLink}`;
+        const emailLink = `mailto:${encodeURIComponent('')}?subject=${emailSubjectText}&body=${body}`;
+
+        window.location.href = emailLink;
+    };
 
     return (
         <div
@@ -64,9 +93,9 @@ const ShareDialog:React.FC<Props> = ({
                 'alignItems': 'center'
             }}>
                 <div>
-                    <span className="icon-social-contact" aria-label="email"></span>
-                    <span className="icon-social-twitter margin-left-quarter" aria-label="twitter"></span>
-                    <span className="icon-social-facebook margin-left-quarter" aria-label="facebook"></span>
+                    <span className="icon-social-contact" aria-label="email" onClick={sendEmail}></span>
+                    <span className="icon-social-twitter margin-left-quarter" aria-label="twitter" onClick={shareToSocialMedia.bind(this,'twitter')}></span>
+                    <span className="icon-social-facebook margin-left-quarter" aria-label="facebook" onClick={shareToSocialMedia.bind(this,'facebook')}></span>
                 </div>
 
 
