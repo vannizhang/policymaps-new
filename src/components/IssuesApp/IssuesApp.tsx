@@ -21,13 +21,13 @@ import ArcGISOnlineGroupData, {
 
 import HeroBanner from './HeroBanner';
 import CategoryFilter from './CategoryFilter';
+import CardList from './CardList';
 
 const IssuesPage:React.FC<{}> = ()=>{
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
-    // const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
 
     const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>();
 
@@ -56,7 +56,7 @@ const IssuesPage:React.FC<{}> = ()=>{
             categorySchema,
             queryParams: {
                 // contentType: 'webmap',
-                // sortField: 'modified'
+                sortField: 'modified'
             }
         });
 
@@ -82,12 +82,17 @@ const IssuesPage:React.FC<{}> = ()=>{
             start,
             num
         });
+        
+        response.results = response.results
+            .map(d=>formatAsAgolItem(d));
+        
         console.log('search response', response);
 
         setSearchReponse(response);
     };
 
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
+        console.log(mainCategoryTitle, activeSubcategories)
         agolGroupData.updateSelectedCategory(mainCategoryTitle, activeSubcategories);
         searchItems();
     };
@@ -125,6 +130,12 @@ const IssuesPage:React.FC<{}> = ()=>{
                         categorySchema={categorySchema}
                         activeMainCategoryTitle={activeMainCategoryTitle}
                         onSelect={categoryFilterOnChange}
+                    />
+                </div>
+
+                <div className='column-19'>
+                    <CardList 
+                        data={ searchResponse ? searchResponse.results : [] }
                     />
                 </div>
             </div>
