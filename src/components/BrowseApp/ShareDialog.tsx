@@ -12,6 +12,8 @@ const ShareDialog:React.FC<Props> = ({
     onClose
 })=>{
 
+    const textInputRef = React.useRef<HTMLInputElement>();
+
     const { currentUrl, itemsCollection } = React.useContext(BrowseAppContext);
 
     const shareToSocialMedia = (name='')=>{
@@ -43,6 +45,13 @@ const ShareDialog:React.FC<Props> = ({
         window.location.href = emailLink;
     };
 
+    const copyUrl = ()=>{
+        textInputRef.current.select();
+        // For mobile devices
+        textInputRef.current.setSelectionRange(0, 99999); 
+        document.execCommand("copy");
+    };
+
     return (
         <div
             style={{
@@ -67,6 +76,7 @@ const ShareDialog:React.FC<Props> = ({
             <div className="input-group">
 
                 <input 
+                    ref={textInputRef}
                     readOnly={true}
                     className="input-group-input" 
                     type="text" 
@@ -79,11 +89,15 @@ const ShareDialog:React.FC<Props> = ({
                 />
 
                 <span className="input-group-button">
-                    <button className="btn btn-small" style={{
-                        height: '2rem',
-                        background: '#005e95',
-                        border: '1px solid #005e95'
-                    }}>Copy</button>
+                    <button 
+                        className="btn btn-small" 
+                        style={{
+                            height: '2rem',
+                            background: '#005e95',
+                            border: '1px solid #005e95'
+                        }}
+                        onClick={copyUrl}
+                    >Copy</button>
                 </span>
 
             </div>

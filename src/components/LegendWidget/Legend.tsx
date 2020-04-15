@@ -5,8 +5,6 @@ import { loadModules } from 'esri-loader';
 import IMapView from 'esri/views/MapView';
 import ILegend from 'esri/widgets/Legend';
 
-export const SearchWidgetContainerId = 'searcgWidgetContainer';
-
 interface Props {
     isVisible?: boolean;
     mapView?: IMapView;
