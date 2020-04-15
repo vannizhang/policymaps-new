@@ -22,6 +22,7 @@ import ArcGISOnlineGroupData, {
 import HeroBanner from './HeroBanner';
 import CategoryFilter from './CategoryFilter';
 import CardList from './CardList';
+import PageNav from './PageNav';
 
 const IssuesPage:React.FC<{}> = ()=>{
 
@@ -66,20 +67,19 @@ const IssuesPage:React.FC<{}> = ()=>{
     // search items from the policy maps group
     const searchItems = async({
         num = 10,
+        start = 1,
         searchNextSet = false
     }={})=>{
 
-        const start = ( searchNextSet && searchResponse ) 
-            ? searchResponse.nextStart
-            : 1; 
-        
         if(searchNextSet && start === -1){
             console.error('no more items to load');
             return;
         }
 
         const response = await agolGroupData.search({
-            start,
+            start: ( searchNextSet && searchResponse ) 
+                ? searchResponse.nextStart
+                : start,
             num
         });
         
@@ -109,13 +109,6 @@ const IssuesPage:React.FC<{}> = ()=>{
         }
     }, [ categorySchema ]);
 
-    // // start searching policy maps items once agolGroupData is ready
-    // React.useEffect(()=>{
-    //     if(agolGroupData){
-    //         searchItems();
-    //     }
-    // }, [ agolGroupData ]);
-    
     return (
         <div>
             <HeroBanner 
@@ -133,10 +126,28 @@ const IssuesPage:React.FC<{}> = ()=>{
                     />
                 </div>
 
-                <div className='column-19'>
-                    <CardList 
-                        data={ searchResponse ? searchResponse.results : [] }
+                <div className='column-19 trailer-2'>
+
+                    <div className='trailer-1'>
+                        <CardList 
+                            data={ searchResponse ? searchResponse.results : [] }
+                        />
+                    </div>
+
+                    <PageNav 
+                        searchResponse={searchResponse}
+                        prevBtnOnClick={()=>{
+                            searchItems({
+                                start: searchResponse.start - 10
+                            })
+                        }}
+                        nextBtnOnClick={()=>{
+                            searchItems({
+                                searchNextSet: true
+                            })
+                        }}
                     />
+
                 </div>
             </div>
         </div>
