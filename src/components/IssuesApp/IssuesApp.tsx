@@ -7,7 +7,6 @@ import {
 
 import {
     formatAsAgolItem,
-    AgolItem
 } from '../../utils/arcgis-online-item-formatter';
 
 import { 
@@ -18,6 +17,10 @@ import {
 import ArcGISOnlineGroupData, { 
     SearchResponse 
 } from '../../utils/arcgis-online-group-data';
+
+import { 
+    SearchAutoComplete
+} from '../index';
 
 import HeroBanner from './HeroBanner';
 import CategoryFilter from './CategoryFilter';
@@ -92,8 +95,12 @@ const IssuesPage:React.FC<{}> = ()=>{
     };
 
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
-        console.log(mainCategoryTitle, activeSubcategories)
         agolGroupData.updateSelectedCategory(mainCategoryTitle, activeSubcategories);
+        searchItems();
+    };
+
+    const searchAutoCompleteOnChange = (val:string)=>{
+        agolGroupData.updateSearchTerm(val);
         searchItems();
     };
 
@@ -118,6 +125,18 @@ const IssuesPage:React.FC<{}> = ()=>{
 
             <div className='grid-container leader-2'>
                 <div className='column-5 tablet-column-12 trailer-1'>
+
+                    <div className='trailer-half'
+                        style={{
+                            'border': '1px solid #efefef'
+                        }}
+                    >
+                        <SearchAutoComplete 
+                            groupId={Tier.PROD.AGOL_GROUP_ID }
+                            onSelect={searchAutoCompleteOnChange}
+                            placeholder={'Search items'}
+                        />
+                    </div>
 
                     <CategoryFilter 
                         categorySchema={categorySchema}

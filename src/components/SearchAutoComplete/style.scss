@@ -20,10 +20,12 @@ $input-group-height: 2.75rem;
         .clear-btn {
             position: absolute;
             top: 0;
-            right: .5rem;
+            right: 0;
+            padding: 0 .35rem;
             height: $input-group-height;
             display: flex;
             align-items: center;
+            background-color: #fff;
             cursor: pointer;
 
             svg {
