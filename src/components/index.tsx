@@ -17,3 +17,5 @@ export { default as SearchWidget } from './SearchWidget/SearchWidget';
 export { default as LegendWidget } from './LegendWidget/Legend';
 
 export { default as SearchAutoComplete } from './SearchAutoComplete/SearchAutoComplete';
+
+export { default as IssuesApp } from './IssuesApp/IssuesApp';

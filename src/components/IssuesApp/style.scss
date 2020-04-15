@@ -1,0 +1,33 @@
+.text-shadow-black {
+    text-shadow: 0px 0px 3px #000;
+}
+
+.hero-banner-nav[data-active-category="Social Equity and Health"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/social-equity.jpg');
+    background-size: cover;
+}
+
+.hero-banner-nav[data-active-category="Economic Opportunity"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/economic.jpg');
+    background-size: cover;
+}
+
+.hero-banner-nav[data-active-category="Transportation and Infrastructure"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/transportation.jpg');
+    background-size: cover;
+}
+
+.hero-banner-nav[data-active-category="Resilience and Sustainability"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/sustainability.jpg');
+    background-size: cover;
+}
+
+.hero-banner-nav[data-active-category="Environment and Natural Resources"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/environment.jpg');
+    background-size: cover;
+}
+
+.hero-banner-nav[data-active-category="Public Safety"] {
+    background: url('../../statics/img/IssuesPageTopBannerBackgrounds/public-safety.jpg');
+    background-size: cover;
+}
