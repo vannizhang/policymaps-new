@@ -94,8 +94,12 @@ const MapView:React.FC<Props> = ({
                 // console.log('mapview is stationary', mapView.center, mapView.zoom);
 
                 setMapCenterLocation({
-                    lat: +mapView.center.latitude.toFixed(3),
-                    lon: +mapView.center.longitude.toFixed(3),
+                    lat: mapView.center && mapView.center.latitude 
+                        ? +mapView.center.latitude.toFixed(3) 
+                        : 0,
+                    lon: mapView.center && mapView.center.longitude 
+                        ? +mapView.center.longitude.toFixed(3) 
+                        : 0,
                     zoom: mapView.zoom
                 });
             });
