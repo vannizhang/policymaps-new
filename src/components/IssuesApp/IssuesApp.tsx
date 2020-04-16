@@ -15,17 +15,25 @@ import {
 } from '../../utils/category-schema-manager';
 
 import ArcGISOnlineGroupData, { 
-    SearchResponse 
+    SearchResponse,
+    ContentType,
+    SortField,
 } from '../../utils/arcgis-online-group-data';
 
 import { 
-    SearchAutoComplete
+    SearchAutoComplete,
+    DropdownFilter
 } from '../index';
 
 import HeroBanner from './HeroBanner';
 import CategoryFilter from './CategoryFilter';
 import CardList from './CardList';
 import PageNav from './PageNav';
+
+import {
+    ContentTypeFilterData,
+    SortFilterData
+} from './Config';
 
 const IssuesPage:React.FC<{}> = ()=>{
 
@@ -104,6 +112,16 @@ const IssuesPage:React.FC<{}> = ()=>{
         searchItems();
     };
 
+    const contentTypeOnChange = (val:ContentType)=>{
+        agolGroupData.updateContentType(val);
+        searchItems();
+    };
+
+    const sortFieldOnChange = (val:SortField)=>{
+        agolGroupData.updateSortField(val);
+        searchItems();
+    };
+
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
@@ -138,11 +156,32 @@ const IssuesPage:React.FC<{}> = ()=>{
                         />
                     </div>
 
-                    <CategoryFilter 
-                        categorySchema={categorySchema}
-                        activeMainCategoryTitle={activeMainCategoryTitle}
-                        onSelect={categoryFilterOnChange}
-                    />
+                    <div className='trailer-half'>
+                        <CategoryFilter 
+                            categorySchema={categorySchema}
+                            activeMainCategoryTitle={activeMainCategoryTitle}
+                            onSelect={categoryFilterOnChange}
+                        />
+                    </div>
+
+
+                    <div className='trailer-half'>
+                        <DropdownFilter 
+                            data={ContentTypeFilterData}
+                            title={'Item Type'}
+                            onChange={contentTypeOnChange}
+                        />
+                    </div>
+
+                    <div className='trailer-half'>
+                        <DropdownFilter 
+                            data={SortFilterData}
+                            title={'Sort By'}
+                            onChange={sortFieldOnChange}
+                            activeValueByDefault={'modified'}
+                        />
+                    </div>
+
                 </div>
 
                 <div className='column-19 trailer-2'>

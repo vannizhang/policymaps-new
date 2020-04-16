@@ -2,9 +2,9 @@ import axios from 'axios';
 import queryItemsByIds from './queryItemsByIds';
 export { queryItemsByIds };
 
-type ContentType = 'maps' | 'layers' | 'apps' | 'tools' | 'files' | 'webmap';
-type SortField = 'relevance' | 'name' | 'modified';
-type DateFilter = '';
+export type ContentType = 'maps' | 'layers' | 'apps' | 'tools' | 'files' | 'webmap';
+export type SortField = 'relevance' | 'name' | 'modified';
+export type DateFilter = '';
 
 interface Props {
     groupId: string;

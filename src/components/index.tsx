@@ -19,3 +19,5 @@ export { default as LegendWidget } from './LegendWidget/Legend';
 export { default as SearchAutoComplete } from './SearchAutoComplete/SearchAutoComplete';
 
 export { default as IssuesApp } from './IssuesApp/IssuesApp';
+
+export { default as DropdownFilter } from './DropdownFilter/DropdownFilter';
