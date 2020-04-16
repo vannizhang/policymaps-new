@@ -42,7 +42,14 @@ import ArcGISOnlineGroupData, {
     SearchResponse 
 } from '../../utils/arcgis-online-group-data';
 
-const BrowseApp:React.FC<{}>= ()=>{
+interface Props {
+    // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
+    disableSearch?: boolean;
+}
+
+const BrowseApp:React.FC<Props>= ({
+    disableSearch
+})=>{
 
     const { itemsCollection } = React.useContext(BrowseAppContext);
     const { hideTopNavs } = React.useContext(SiteContext);
@@ -191,57 +198,69 @@ const BrowseApp:React.FC<{}>= ()=>{
                     });
                 }}
             >
-                <div
-                    style={{
-                        'display': 'flex',
-                        'alignContent': 'strech',
-                        'alignItems': 'strech',
-                        'border': '2px solid #efefef',
-                        'boxSizing': 'border-box'
-                    }}    
-                >
-                    <div
-                        style={{
-                            'flexGrow': 1,
-                            'flexShrink': 0,
-                            'paddingLeft': '0.5rem'
-                        }}
-                    >
-                        <SearchAutoComplete 
-                            groupId={Tier.PROD.AGOL_GROUP_ID }
-                            onSelect={searchAutoCompleteOnChange}
-                            placeholder={'Search and Filter Datasets'}
-                        />
-                    </div>
+                {
+                    !disableSearch ? (
 
-                    <div
-                        className='icon-right-padding-0'
-                        style={{
-                            'width': '50px',
-                            'borderLeft': '1px solid #efefef',
-                            'display': 'flex',
-                            'alignItems': 'center',
-                            'justifyContent': 'center',
-                            'cursor': 'pointer'
-                        }}    
-                        onClick={toggleCategoryFilter}
-                    >
-                        {
-                            <span className={`text-blue font-size-1 ${ isCategoryFilterVisible ? 'icon-ui-up': 'icon-ui-down'}`}></span>
-                        }
-                    </div>
-                </div>
+                        <div
+                            style={{
+                                'display': 'flex',
+                                'alignContent': 'strech',
+                                'alignItems': 'strech',
+                                'border': '2px solid #efefef',
+                                'boxSizing': 'border-box'
+                            }}    
+                        >
+                            <div
+                                style={{
+                                    'flexGrow': 1,
+                                    'flexShrink': 0,
+                                    'paddingLeft': '0.5rem'
+                                }}
+                            >
+                                <SearchAutoComplete 
+                                    groupId={Tier.PROD.AGOL_GROUP_ID }
+                                    onSelect={searchAutoCompleteOnChange}
+                                    placeholder={'Search and Filter Datasets'}
+                                />
+                            </div>
+        
+                            <div
+                                className='icon-right-padding-0'
+                                style={{
+                                    'width': '50px',
+                                    'borderLeft': '1px solid #efefef',
+                                    'display': 'flex',
+                                    'alignItems': 'center',
+                                    'justifyContent': 'center',
+                                    'cursor': 'pointer'
+                                }}    
+                                onClick={toggleCategoryFilter}
+                            >
+                                {
+                                    <span className={`text-blue font-size-1 ${ isCategoryFilterVisible ? 'icon-ui-up': 'icon-ui-down'}`}></span>
+                                }
+                            </div>
+                        </div>
 
-                <div
-                    style={{
-                        display: isCategoryFilterVisible ? 'block' : 'none'
-                    }}
-                >
-                    <CategoryFilter 
-                        categorySchema={categorySchema}
-                        onChange={categoryFilterOnChange}
-                    />
-                </div>
+                    ) : null
+                }
+
+                {
+                    !disableSearch ? (
+
+                        <div
+                            style={{
+                                display: isCategoryFilterVisible ? 'block' : 'none'
+                            }}
+                        >
+                            <CategoryFilter 
+                                categorySchema={categorySchema}
+                                onChange={categoryFilterOnChange}
+                            />
+                        </div>
+
+                    ) : null
+                }
 
                 <div className='leader-1'>
                     <CardList 
@@ -250,11 +269,16 @@ const BrowseApp:React.FC<{}>= ()=>{
                         itemCount={ itemsCollection ? itemsCollection.length : 0 }
                     />
 
-                    <CardList 
-                        title={'Search Results'}
-                        data={webMapItems}
-                        itemCount={ searchResponse ? searchResponse.total : 0 }
-                    />
+                    {
+                        !disableSearch ? (
+                            <CardList 
+                                title={'Search Results'}
+                                data={webMapItems}
+                                itemCount={ searchResponse ? searchResponse.total : 0 }
+                            />
+                        ) : null
+                    }
+
                 </div>
 
             </SideBar>

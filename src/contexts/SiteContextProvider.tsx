@@ -5,6 +5,7 @@ import EsriOAuth from '../utils/Esri-OAuth';
 
 interface SiteContextProps {
     esriOAuthUtils: EsriOAuth;
+    // this site can be embedded in COVID19 hub site and we need to hide both top navs if the "embed" hash param is true
     hideTopNavs?: boolean;
 }
 

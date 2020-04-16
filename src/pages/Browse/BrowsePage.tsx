@@ -1,6 +1,8 @@
 import './style.scss';
 import * as React from 'react';
 
+import { urlFns } from 'helper-toolkit-ts';
+
 import { 
     PageLayout,
     BrowseApp
@@ -22,6 +24,8 @@ const BrowsePage:React.FC = ()=> {
 
     const searchParams = decodeSearchParams();
 
+    const hashParams = urlFns.parseHash();
+
     return (
         <PageLayout
             shouldHideEsriFooter={true}
@@ -32,7 +36,9 @@ const BrowsePage:React.FC = ()=> {
                 defaultLocation = { searchParams.location }
                 hideSideBarByDefault={ searchParams.isSideBarHide }
             >
-                <BrowseApp />
+                <BrowseApp 
+                    disableSearch={hashParams.disableSearch ? true : false}
+                />
             </BrowseAppContextProvider>
         </PageLayout>
     );
