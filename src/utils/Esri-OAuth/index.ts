@@ -4,6 +4,7 @@ import IOAuthInfo from 'esri/identity/OAuthInfo';
 import IIdentityManager from 'esri/identity/IdentityManager';
 import IPortal from 'esri/portal/Portal';
 import ICredential from 'esri/identity/Credential';
+import IPortalUser from 'esri/portal/PortalUser';
 
 interface Props {
     appId: string;
@@ -13,7 +14,7 @@ interface Props {
 interface OAuthResponse {
     credential: ICredential;
     portal: IPortal;
-}
+};
 
 export default class OAuthUtils {
 
@@ -76,7 +77,10 @@ export default class OAuthUtils {
             console.log('anomynous user');
         }
 
-        return null;
+        return {
+            credential: null,
+            portal: null
+        };
     }
 
     sigIn() {
@@ -98,12 +102,17 @@ export default class OAuthUtils {
             return null;
         }
 
-        const { user, name } = this.userPortal;
+        const { name } = this.userPortal;
+
+        const user:IPortalUser & { 
+            favGroupId?: string 
+        } = this.userPortal.user;
         
         const { 
             fullName,
             username,
-            thumbnailUrl
+            thumbnailUrl,
+            favGroupId
         } = user;
 
         return {
@@ -114,7 +123,8 @@ export default class OAuthUtils {
             // 	group: 'Riverside City Mgmt.',
             group: name,
             // 	image: '//placehold.it/300x300'
-            image: thumbnailUrl
+            image: thumbnailUrl,
+            favGroupId
         }
     }
 }

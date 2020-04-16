@@ -32,6 +32,9 @@ interface BrowseAppContextProps {
     mapCenterLocation: Location;
     setMapCenterLocation: (location:Location)=>void;
 
+    myFavItems: string[];
+    setMyFavItems: (items: string[])=>void;
+
     currentUrl: string;
 };
 
@@ -65,6 +68,8 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     const [ mapCenterLocation, setMapCenterLocation ] = React.useState<Location>(defaultLocation);
 
     const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
+
+    const [ myFavItems, setMyFavItems ] = React.useState<string[]>([]);
 
     const toggleFromItemCollections = (item:AgolItem)=>{
         const itemIds = itemsCollection.map(d=>d.id);
@@ -135,6 +140,9 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
 
         mapCenterLocation,
         setMapCenterLocation,
+
+        myFavItems,
+        setMyFavItems,
 
         currentUrl
     };

@@ -5,6 +5,10 @@ import * as ReactDOM from 'react-dom';
 
 import { setDefaultOptions } from 'esri-loader';
 
+import {
+    setPortalData4MyFavItems
+} from './utils/my-favorites/myFav';
+
 import { SiteContextProvider } from './contexts/SiteContextProvider';
 import PolicyMapsSite from './pages';
 import EsriOAuth from './utils/Esri-OAuth';
@@ -21,7 +25,17 @@ const init = async()=>{
         appId: Tier.PROD.OAUTH_APPID
     });
     
-    await esriOAuthUtils.init();
+    const { credential, portal } = await esriOAuthUtils.init();
+
+    if( credential && portal ){
+        const { token } = credential;
+        const { favGroupId } = esriOAuthUtils.getUserData();
+
+        setPortalData4MyFavItems({
+            token,
+            favGroupId
+        });
+    }
 
     ReactDOM.render(
         <SiteContextProvider 

@@ -42,6 +42,10 @@ import ArcGISOnlineGroupData, {
     SearchResponse 
 } from '../../utils/arcgis-online-group-data';
 
+import {
+    getMyFavItemIds
+} from '../../utils/my-favorites/myFav'
+
 interface Props {
     // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
     disableSearch?: boolean;
@@ -51,7 +55,7 @@ const BrowseApp:React.FC<Props>= ({
     disableSearch
 })=>{
 
-    const { itemsCollection } = React.useContext(BrowseAppContext);
+    const { itemsCollection, setMyFavItems } = React.useContext(BrowseAppContext);
     const { hideTopNavs } = React.useContext(SiteContext);
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
@@ -91,6 +95,11 @@ const BrowseApp:React.FC<Props>= ({
         });
 
         setAgolGroupData(arcGISOnlineGroupData);
+    };
+
+    const initMyFavItems = async()=>{
+        const myFavItems = await getMyFavItemIds();
+        setMyFavItems(myFavItems);
     };
 
     // search items from the policy maps group
@@ -138,6 +147,7 @@ const BrowseApp:React.FC<Props>= ({
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
+        initMyFavItems();
     }, [])
 
     // once category schema is ready, init the AGOL Group Data module
