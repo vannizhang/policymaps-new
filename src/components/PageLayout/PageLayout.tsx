@@ -20,7 +20,7 @@ const PageLayout: React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { esriOAuthUtils } = React.useContext(SiteContext);
+    const { esriOAuthUtils, hideTopNavs } = React.useContext(SiteContext);
 
     React.useEffect(()=>{
 
@@ -60,12 +60,21 @@ const PageLayout: React.FC<Props> = ({
 
     return (
         <>
-            <div className="esri-header-barrier"></div>
-
-            <SiteNav 
-                siteName={'Esri Maps for Public Policy'}
-                links={getNavLinksData()}
-            />
+            <div 
+                className="esri-header-barrier" 
+                style={{
+                    "display": hideTopNavs ? "none" : "block"
+                }}
+            ></div>
+            
+            {
+                !hideTopNavs ? (
+                    <SiteNav 
+                        siteName={'Esri Maps for Public Policy'}
+                        links={getNavLinksData()}
+                    /> 
+                ): null
+            }
 
             { children }
 

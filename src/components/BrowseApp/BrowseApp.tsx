@@ -4,6 +4,10 @@ import {
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
+import {
+    SiteContext
+} from '../../contexts/SiteContextProvider';
+
 import CardList from './CardList';
 import SideBar from './SideBar';
 import TopNav from './TopNav';
@@ -41,6 +45,7 @@ import ArcGISOnlineGroupData, {
 const BrowseApp:React.FC<{}>= ()=>{
 
     const { itemsCollection } = React.useContext(BrowseAppContext);
+    const { hideTopNavs } = React.useContext(SiteContext);
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
@@ -167,7 +172,7 @@ const BrowseApp:React.FC<{}>= ()=>{
     return (
         <div style={{
             "position": "absolute",
-            "top": "117px",
+            "top": hideTopNavs ? '0': "117px",
             "left": "0",
             "bottom": "0",
             "width": "100%",

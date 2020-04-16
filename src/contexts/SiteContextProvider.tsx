@@ -1,9 +1,11 @@
 import * as React from 'react';
 
+import { urlFns } from 'helper-toolkit-ts';
 import EsriOAuth from '../utils/Esri-OAuth';
 
 interface SiteContextProps {
     esriOAuthUtils: EsriOAuth;
+    hideTopNavs?: boolean;
 }
 
 interface SiteContextProviderProps {
@@ -18,8 +20,11 @@ export const SiteContextProvider:React.FC<SiteContextProviderProps> = ({
     children,
 })=>{
 
+    const hashParams = urlFns.parseHash();
+
     const value = {
-        esriOAuthUtils
+        esriOAuthUtils,
+        hideTopNavs: hashParams.embed ? true : false
     };
 
     return (
