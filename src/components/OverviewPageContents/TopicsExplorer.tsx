@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { loadModules, loadCss } from 'esri-loader';
 
+import { urlFns } from 'helper-toolkit-ts';
+
 import {
     NavBtn
 } from '../';
@@ -22,6 +24,11 @@ interface HighlightedTopicsJSON {
     topics: HighlightedTopic[]
 };
 
+interface CustomLocation {
+    latitude: number;
+    longitude: number;
+}
+
 const TopicsExplorer:React.FC = ()=>{
 
     // let autoRotateInterval:NodeJS.Timeout = null;
@@ -31,6 +38,8 @@ const TopicsExplorer:React.FC = ()=>{
     const [ index4ActiveTopic, setIndex4ActiveTopic ] = React.useState<number>(0);
 
     const [ highlightedTopics, setHighlightedTopics ] = React.useState<HighlightedTopic[]>([]);
+
+    const [ customLocation, setCustomLocation ] = React.useState<CustomLocation>();
 
     const loadHighlightedTopicsJSON = async()=>{
 
@@ -58,14 +67,36 @@ const TopicsExplorer:React.FC = ()=>{
         });
 
         searchWidget.on('search-complete', (evt)=>{
+            const { results } = evt;
             // console.log(evt);
-            // const { results } = evt;
+            // console.log(results[0], results[0].results[0])
+
+            if(results[0] && results[0].results[0]){
+                const geometry = results[0].results[0].feature.geometry.toJSON();
+                const { x, y } = geometry;
+                setCustomLocation({
+                    longitude: x, 
+                    latitude: y
+                });
+            }
         });
     };
 
     const explorerBtnOnClick = ()=>{
         const activeTopic = highlightedTopics[index4ActiveTopic];
-        const searchParams = activeTopic.value;
+        let searchParams = activeTopic.value;
+
+        console.log(customLocation)
+
+        if(customLocation){
+            searchParams = urlFns.updateKeyValuePairInQueryString({
+                queryString: searchParams,
+                key: 'loc',
+                value: `${customLocation.longitude},${customLocation.latitude},10`,
+            });
+
+
+        }
 
         const targetUrl = `./browse?${searchParams}`;
         window.open(targetUrl);
