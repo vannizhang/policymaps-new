@@ -1,0 +1,60 @@
+{
+    "topics": [
+        {
+            "title": "What maps can I view relating to my community and <span class='highlight'>coronavirus</span>?",
+            "tooltip": "Coronavirus",
+            "value": "loc=0,0,2&col=fa96bca2d5be474b81d9450a06cc892b,88f17b4580e846609f92c9f75a9d9eee,2c8fdc6267e4439e968837020e7618f3,48638a1be455429287d6756985013910,02a82293e2dd475391cb3699b5e82d61,d89c527f2e6b4d658db0948ea9d49cd9,48a70b524601428ba297e3106b751401,be559110b5c34591b1a767fbb807bcbf,e0427fbc472f4a45b7d94d182a5e9591,142e65436bed4063973380feae6ed248,f9a130f43abb404fbdffefa8f5ec0ed1&viz=fa96bca2d5be474b81d9450a06cc892b&hs=1"
+        },
+        {
+            "title": "How well do you know your community?",
+            "tooltip": "Community",
+            "value": "loc=-119.270,36.531,11&col=55ad238b19e44d1d9d50f0dc0a188049,2aa47a7d482644c28a389b406a42ec32,488c996049864d3db6bd93a8e7f9d36d,b4dd84ea45e84d038097deffa01f6943,4e02dbb42cff4471accfc3548e1d9317,4407daa382334d0a81c4632e9a97c7e3,75dba888ba454e1abe19691d0abdcdff,1674d2db05094b2789e4b229c41372b4&viz=55ad238b19e44d1d9d50f0dc0a188049"
+        },
+        {
+            "title": "What populations are at <span class='highlight'>risk</span> in my community?",
+            "tooltip": "Risk",
+            "value": "loc=-79.997,40.439,10&col=23d7e549aa0648c4b9481b2b290cd766,367f0b224a3a40b8a5952f04e55ac106,faa8825f626746b2a39cdd819592f836,75a796c83aa246e1908908587a6ea6bf,a16b9f8f0d594125aac60179b9bb9741,19e4d9cd2807475fb496dd9b7a3bab42,1c892d1be67747c69eee146b7a2c8970,a18519d27d0e45e192aaa32ba4ca0215,2311c537f401434ca460a9d2dcfbd0c9,36dc45f566d846a3a2bdee2fa869a281,8d47a8ebd86144579098314f9db92cf4&viz=23d7e549aa0648c4b9481b2b290cd766&hs=0"
+        },
+        {
+            "title": "What are typical <span class='highlight'>commutes</span> in my community?",            
+            "tooltip": "Commute",
+            "value": "loc=-79.997,40.439,10&col=b185e27750604a92bbc2d3ca13f506d3,e0094426f3af4826830ae0943b2e259f,9afc43dab85349b595b815582609fbdc,b8c58b95fd924721aa2af44513b966e8,891ad8dfcf9d46c6ae9dc92f848df61f,18d3681c4ec2401190595c5816c72cab&viz=b185e27750604a92bbc2d3ca13f506d3&hs=0"
+                
+        },
+        {
+            "title": "How is <span class='highlight'>population growth and decline</span> affecting my community?",
+            "tooltip": "Population",
+            "value": "loc=-79.997,40.439,10&col=392451c381ad4109bf04f7bd442bc038,900e6a92c4b44d74ab50fba5cec000b7,a2c6126960b84d379973673f430771c7,b3dc9bb59e554da1b95b69ff4f51252b,af5b01111fd14cf19c1ff9ece7a22adc,ce85a6b7b8b948d18f9f8899bceb242c,8b3d17dc510b4ce1861c59585192abcd&viz=392451c381ad4109bf04f7bd442bc038&hs=0"
+        },
+        {
+            "title": "How is <span class='highlight'>transit</span> helping my community with <span class='highlight'>access to jobs</span>?",
+            "tooltip": "Transit",
+            "value": "loc=-79.997,40.439,10&col=4c1ff156eed9431c9b399cb2cf63a792,8a896ce35a3c454f959c102a4f7b72e8,5664bea0bf4c4a8ab2ed539045a2f242,1674d2db05094b2789e4b229c41372b4&viz=4c1ff156eed9431c9b399cb2cf63a792&hs=0"
+        },
+        {
+            "title": "How are the <span class='highlight'>youth</span> connected to <span class='highlight'>school and work</span> in my community? ",
+            "tooltip": "Youth",
+            "value": "loc=-79.997,40.439,10&col=bff958dc716f4aba8f34d842ba37e558,7f1f6852c2ce43c393d8d017a2aed44c,801a582f3d174b7ebf8a26f85e5996aa,93f9b7c287554236bb96e0faed31974f,b4dd84ea45e84d038097deffa01f6943,a18519d27d0e45e192aaa32ba4ca0215&viz=bff958dc716f4aba8f34d842ba37e558&hs=0"
+        },
+        {
+            "title": "How is <span class='highlight'>poverty</span> affecting my community?",
+            "tooltip": "Poverty",
+            "value": "loc=-79.997,40.439,10&col=1c892d1be67747c69eee146b7a2c8970,66bc59305fb042b59d19f9f84ca3d30f,0aa54ded7f0a41b58e9d7fb2fca6e4ee,1e71cef22f8b45439db238cecd28f252,75dba888ba454e1abe19691d0abdcdff,e286f6079d0e4ddd9ee7e4c955530d1f,8465d3276b2b4147907995165f353349,5eec2c5d1ea04040ad0e359c7a0f243d&viz=1c892d1be67747c69eee146b7a2c8970&hs=0"
+        },
+        {
+            "title": "What are <span class='highlight'>public health</span> concerns in my community?",
+            "tooltip": "Health",
+            "value": "loc=-79.997,40.439,10&col=153c17de00914039bb28f6f6efe6d322,a16b9f8f0d594125aac60179b9bb9741,340f8d0b243745ffb7c78b01a3730922,0de7cade7d9e4fbd86f59e59dbb0d246,5a462a15b68d43409188e87b4617680d,07f70065653b4386b5c87cbe9b50b314&viz=153c17de00914039bb28f6f6efe6d322&hs=0"
+        },
+        {
+            "title": "What do we know about the <span class='highlight'>jobs and workforce</span> in my community?",
+            "tooltip": "Jobs",
+            "value": "loc=-79.997,40.439,10&col=b185e27750604a92bbc2d3ca13f506d3,8d47a8ebd86144579098314f9db92cf4,e0094426f3af4826830ae0943b2e259f,9afc43dab85349b595b815582609fbdc,b8c58b95fd924721aa2af44513b966e8,891ad8dfcf9d46c6ae9dc92f848df61f,18d3681c4ec2401190595c5816c72cab,a97f6424904b465bb489fea84b2872b7,9c6f06e90d0b4d5cafdd2c0951f327e1,b361c4467db248e7ad55b6e7661e5706&viz=b185e27750604a92bbc2d3ca13f506d3&hs=0"
+        },
+        {
+            "title": "What do we know about the <span class='highlight'>veterans</span> in my community?",
+            "tooltip": "Veterans",
+            "value": "loc=-79.997,40.439,10&col=81d2a5142081433c83e69fc59b1f0ec5,33ee7f3c8c4a488bbd3bedb0930a8c76,83bb1c807af94c38b12ed606751bf126,f58b026be2ba43d4bd2f64138294d90a,9f25db0089144535b97f30f66f59a55c,62954e2ee7004b9ea6c990110ec9ab72&viz=81d2a5142081433c83e69fc59b1f0ec5&hs=0"
+        }
+    ]
+}

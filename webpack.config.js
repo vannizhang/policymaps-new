@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports =  (env, options)=> {
 
@@ -73,6 +74,12 @@ module.exports =  (env, options)=> {
             ]
         },
         plugins: [
+            devMode ? new CopyPlugin([
+                { 
+                    from: './src/media', 
+                    to: 'media/policymaps'
+                }
+            ]) : false,
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
@@ -157,7 +164,7 @@ module.exports =  (env, options)=> {
                 }
             }),
             new CleanWebpackPlugin()
-        ],
+        ].filter(Boolean),
         optimization: {
             minimizer: [
                 new TerserPlugin({

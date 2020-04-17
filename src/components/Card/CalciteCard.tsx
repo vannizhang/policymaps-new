@@ -18,7 +18,7 @@ const CalciteCard:React.FC<Props> = ({
 
     return (
         <div 
-            className='card block'
+            className='card block trailer-half'
         >
             <figure 
                 style={{
