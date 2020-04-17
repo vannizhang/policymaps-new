@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import TopBanner from './TopBanner';
-import PolicyQuestionsCards from './PolicyQuestionsCards'
+import PolicyQuestionsCards from './PolicyQuestionsCards';
+import TopicsExplorer from './TopicsExplorer';
 
 const OverviewPageContents:React.FC = ()=>{
 
@@ -10,6 +11,7 @@ const OverviewPageContents:React.FC = ()=>{
         <>
             <TopBanner />
             <PolicyQuestionsCards />
+            <TopicsExplorer />
         </>
     );
 };

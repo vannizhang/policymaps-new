@@ -1,19 +1,27 @@
 import './style.scss';
 import * as React from 'react';
+import classnames from 'classnames';
 
 type NavBtnDirection = 'left' | 'right';
 
 interface Props {
     direction: NavBtnDirection;
     isDisabled?: boolean;
+    solidBackground?: boolean;
     onClick?: ()=>void;
 };
 
 const NavBtn:React.FC<Props> = ({
     direction,
     isDisabled,
+    solidBackground,
     onClick
 })=>{
+
+    const classNames = classnames('nav-btn', {
+        'disabled': isDisabled,
+        'solid-background': solidBackground
+    })
 
     const getIcon = ()=>{
         return direction === 'left'
@@ -26,7 +34,7 @@ const NavBtn:React.FC<Props> = ({
     };
 
     return (
-        <div className={`nav-btn ${ isDisabled ? 'disabled': '' }`}
+        <div className={classNames}
             onClick={onClick}
         >
             { getIcon() }

@@ -25,3 +25,15 @@
 .nav-btn:hover {
     border: 1px solid #0079c1;
 } 
+
+.nav-btn.solid-background {
+    background-color: #fff;
+    border: none;
+}
+
+.nav-btn:hover {
+    background-color: #0079c1;
+    svg {
+        fill: #fff;
+    }
+} 
