@@ -6,10 +6,10 @@ import {
     PageLoadingIndicator
 } from '../components';
 
-const OverviewPage = React.lazy(() => import('./Overview'));
-const BrowsePage = React.lazy(() => import('./Browse'));
-const IssuesPage = React.lazy(() => import('./Issues'));
-const ResourcesPage = React.lazy(() => import('./Resources'));
+const OverviewPage = React.lazy(() => import('./Overview/OverviewPage'));
+const BrowsePage = React.lazy(() => import('./Browse/BrowsePage'));
+const IssuesPage = React.lazy(() => import('./Issues/IssuesPage'));
+const ResourcesPage = React.lazy(() => import('./Resources/ResourcesPage'));
 
 const PolicyMapsSite: React.FC = ()=>{
 

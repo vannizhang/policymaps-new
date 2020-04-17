@@ -10,6 +10,8 @@ export { default as MapView } from './MapView/MapView';
 
 export { default as RegularCard } from './Card/RegularCard/RegularCard';
 
+export { default as CalciteCard } from './Card/CalciteCard';
+
 export { default as NavBtn } from './NavBtn/NavBtn';
 
 export { default as SearchWidget } from './SearchWidget/SearchWidget';
@@ -18,6 +20,8 @@ export { default as LegendWidget } from './LegendWidget/Legend';
 
 export { default as SearchAutoComplete } from './SearchAutoComplete/SearchAutoComplete';
 
-export { default as IssuesApp } from './IssuesApp/IssuesApp';
+export { default as IssuesPageContents } from './IssuesPageContents/IssuesPageContents';
+
+export { default as OverviewPageContents } from './OverviewPageContents/OverviewPageContents';
 
 export { default as DropdownFilter } from './DropdownFilter/DropdownFilter';

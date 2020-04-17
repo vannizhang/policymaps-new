@@ -6,7 +6,7 @@ import {
 
 import {
     NavBtn
-} from '../';
+} from '..';
 
 interface Props {
     searchResponse: SearchResponse,

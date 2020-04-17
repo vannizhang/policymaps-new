@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { 
     PageLayout, 
-    IssuesApp
+    IssuesPageContents
 } from '../../components'
 
 const IssuesPage:React.FC<{}> = ()=>{
     
     return (
         <PageLayout>
-            <IssuesApp />
+            <IssuesPageContents />
         </PageLayout>
     )
 };
