@@ -64,42 +64,32 @@ const ResourcesPageContents:React.FC = ()=>{
 
         Object.keys(dataBySections).map(key=>{
 
-            let idxForFeaturedItem = -1;
+            let featured:AgolItem = null;
 
-            const cardsData = data.filter(d=>{
+            let cardsData = data.filter(d=>{
                 const { groupCategories } = d;
                 return groupCategories.filter(categoryName=>categoryName.indexOf(key) > -1).length;
             });
 
             cardsData.forEach((d, i)=>{
 
-                if(idxForFeaturedItem === -1){
-                    
-                    let isFeatured = false;
+                d.groupCategories.forEach(categoryName=>{
+                    if(categoryName.indexOf('Featured') > -1){
 
-                    d.groupCategories.forEach(categoryName=>{
-                        if(categoryName.indexOf('Featured') > -1){
-                            isFeatured = true;
+                        if(!featured){
+                            featured = d;
+                            cardsData.splice(i, 1);
                         }
-                    });
-    
-                    if(isFeatured){
-                        idxForFeaturedItem = i;
                     }
-                }
+                });
 
             });
 
-            if(idxForFeaturedItem > -1){
-                cardsData.splice(idxForFeaturedItem, 1);
-            }
-
             dataBySections[key] = {
-                featured: cardsData[idxForFeaturedItem],
+                featured,
                 cardsData
             };
         });
-        // console.log(dataBySections)
 
         setGettingStartedSectionData(dataBySections['Getting Started']);
 
