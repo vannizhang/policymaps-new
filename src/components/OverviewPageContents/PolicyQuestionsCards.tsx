@@ -1,18 +1,16 @@
 import * as React from 'react';
-import axios from 'axios';
 
 import {
     CardCarousel
 } from '../';
 
 import {
-    formatAsAgolItem,
     AgolItem
 } from '../../utils/arcgis-online-item-formatter';
 
-import {
-    Tier
-} from '../../AppConfig';
+import { 
+    fetchResourcesData 
+} from '../../utils/policy-maps-resources-data/fetchResourcesData';
 
 const PolicyQuestionsCards:React.FC = ()=>{
 
@@ -21,23 +19,16 @@ const PolicyQuestionsCards:React.FC = ()=>{
     const fetchPolicyQuestions = async()=>{
 
         try {
-            const { AGOL_GROUP_ID } = Tier.PROD
-            const requestUrl = `https://www.arcgis.com/sharing/rest/content/groups/${AGOL_GROUP_ID}/search?f=json&start=1&num=10&categories=/Categories/Resources/In%20the%20News`;
+            const cardsData = await fetchResourcesData({
+                categories: ['In the News']
+            });
 
-            const { data } = await axios.get(requestUrl);
-
-            if(data && data.results && data.results.length){
-
-                const cardsData = data.results
-                    .map((d:AgolItem)=>formatAsAgolItem(d , { thumbnailWidth: 800 }));
-
-                setCardsData(cardsData);
-            }
+            setCardsData(cardsData);
 
         } catch(err){
             console.error(err);
         }
-        
+
     };
 
     React.useEffect(()=>{

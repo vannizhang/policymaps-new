@@ -24,6 +24,10 @@ export { default as IssuesPageContents } from './IssuesPageContents/IssuesPageCo
 
 export { default as OverviewPageContents } from './OverviewPageContents/OverviewPageContents';
 
+export { default as ResourcesPageContents } from './ResourcesPageContents/ResourcesPageContents';
+
 export { default as DropdownFilter } from './DropdownFilter/DropdownFilter';
 
 export { default as CardCarousel } from './CardCarousel/CardCarousel';
+
+export { default as InfoCardsGroup } from './InfoCardsGroup/InfoCardsGroup';

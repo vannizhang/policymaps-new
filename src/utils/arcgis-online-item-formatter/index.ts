@@ -9,6 +9,7 @@ export interface AgolItem {
     documentation?: string;
     extent?: number[][];
     categories?: string[];
+    groupCategories?: string[];
     culture?: string;
     properties?: any;
     url?: string;
