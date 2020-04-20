@@ -13,12 +13,16 @@ import {
     fetchResourcesData
 } from '../../utils/policy-maps-resources-data/fetchResourcesData';
 
+import IndustryPerspectivesCarousel from './IndustryPerspectivesCarousel/IndustryPerspectivesCarousel';
+
 interface SectionData {
     featured?: AgolItem;
     cardsData?: AgolItem[]
 }
 
 const ResourcesPageContents:React.FC = ()=>{
+
+    const [ industryPerspectivesSectionData, setIndustryPerspectivesSectionData ] = React.useState<SectionData>();
 
     const [ gettingStartedSectionData, setGettingStartedSectionData ] = React.useState<SectionData>();
 
@@ -90,12 +94,15 @@ const ResourcesPageContents:React.FC = ()=>{
                 cardsData
             };
         });
+        // console.log(dataBySections)
 
         setGettingStartedSectionData(dataBySections['Getting Started']);
 
         setBestPracticeSectionData(dataBySections['Best Practices']);
 
         setLearnLessonsSectionData(dataBySections['Learn Lessons']);
+
+        setIndustryPerspectivesSectionData(dataBySections['Industry Perspectives']);
     };
 
     React.useEffect(()=>{
@@ -104,6 +111,10 @@ const ResourcesPageContents:React.FC = ()=>{
 
     return (
         <>
+            <IndustryPerspectivesCarousel 
+                data={industryPerspectivesSectionData ? industryPerspectivesSectionData.cardsData : []}
+            />
+
             <InfoCardsGroup 
                 title={'Getting Started'}
                 description={'Explore resources to help you begin planning your policy framework.'}

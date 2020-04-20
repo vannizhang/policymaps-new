@@ -37,7 +37,7 @@ export const fetchResourcesData = async({
         }
 
         const resourcesData = data.results
-            .map((d:AgolItem)=>formatAsAgolItem(d , { thumbnailWidth: 800 }));
+            .map((d:AgolItem)=>formatAsAgolItem(d , { thumbnailWidth: 400 }));
 
         return resourcesData;
 

@@ -1,0 +1,56 @@
+.industry-perspectives-cards-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.industry-perspectives-card {
+    /* width: 300px; */
+    min-height: 300px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 100px;
+    // background-color: #efefef;
+}
+
+.industry-perspectives-card[data-item-id="1a7320e8d6cb4df596253792434922d1"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/1a7320e8d6cb4df596253792434922d1.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="005c1f6baf5b46569bcf65d37f8ff3f4"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/005c1f6baf5b46569bcf65d37f8ff3f4.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="6f376689926040788caaa39c5b90a7b0"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/6f376689926040788caaa39c5b90a7b0.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="80607a3ca7df4cf18a3204d1400e7d24"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/80607a3ca7df4cf18a3204d1400e7d24.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="a3de59d4be314d2286dea0d9c50dc3f1"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/a3de59d4be314d2286dea0d9c50dc3f1.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="8a4b5a1322894f72b525c3a56e0bbca7"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/8a4b5a1322894f72b525c3a56e0bbca7.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card[data-item-id="086a52579c1341b68901fa81f50670c9"]{
+    background: url('../../../statics/img/pdf-documents-thumbnails/086a52579c1341b68901fa81f50670c9.png') center center no-repeat;
+    background-size: 70%;
+}
+
+.industry-perspectives-card.is-active {
+    background-size: contain;
+}
