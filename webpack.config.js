@@ -11,10 +11,16 @@ module.exports =  (env, options)=> {
     const devMode = options.mode === 'development' ? true : false;
 
     return {
-        entry: path.resolve(__dirname, './src/index.tsx'),
+        entry: {
+            overview: path.resolve(__dirname, "./src/pages/Overview/OverviewPage.tsx"),
+            browse: path.resolve(__dirname, "./src/pages/Browse/BrowsePage.tsx"),
+            issues: path.resolve(__dirname, "./src/pages/Issues/IssuesPage.tsx"),
+            resources: path.resolve(__dirname, "./src/pages/Resources/ResourcesPage.tsx"),
+        },
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: '[name].[contenthash].js',
+            // publicPath: '/'
             // chunkFilename: '[name].[contenthash].js',
         },
         devtool: 'source-map',
@@ -44,16 +50,35 @@ module.exports =  (env, options)=> {
                         }
                     ]
                 },
-                { test: /\.woff$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-                { test: /\.ttf$/,  loader: "url-loader?limit=10000&mimetype=application/octet-stream" },
-                { test: /\.eot$/,  loader: "file-loader" },
+                {   
+                    test: /\.(woff|ttf|eot)$/,  
+                    loader: "file-loader",
+                    options: {
+                        name: '[hash].[ext]',
+                        outputPath: (url, resourcePath, context) => {
+                            return `static/font/${url}`;
+                        },
+                        publicPath: function(url) {
+                            return '../static/font/' + url;
+                        },
+                    }
+                },
                 { 
                     test: /\.svg$/,  
                     loader: "url-loader",
                     options: {
                         limit: 10000,
                         fallback: {
-                            loader: "file-loader"
+                            loader: "file-loader",
+                            options: {
+                                name: "[hash].[ext]",
+                                outputPath: (url, resourcePath, context) => {
+                                    return `static/svg/${url}`;
+                                },
+                                publicPath: function(url) {
+                                    return '../static/svg/' + url;
+                                },
+                            }
                         }
                     }
                 },
@@ -63,7 +88,16 @@ module.exports =  (env, options)=> {
                     options: {
                         limit: 10000,
                         fallback: {
-                            loader: "file-loader"
+                            loader: "file-loader",
+                            options: {
+                                name: '[hash].[ext]',
+                                outputPath: (url, resourcePath, context) => {
+                                    return `static/img/${url}`;
+                                },
+                                publicPath: function(url) {
+                                    return '../static/img/' + url;
+                                },
+                            }
                         }
                     }
                 },
@@ -79,8 +113,8 @@ module.exports =  (env, options)=> {
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
-                filename: devMode ? '[name].css' : '[name].[contenthash].css',
-                chunkFilename: devMode ? '[name].css' : '[name].[contenthash].css',
+                filename: devMode ? '[name].css' : './static/[name].[contenthash].css',
+                chunkFilename: devMode ? '[name].css' : './static/[name].[contenthash].css',
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/index.html'),
@@ -91,7 +125,7 @@ module.exports =  (env, options)=> {
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 inject: true,
                 filename: './overview/index.html',
-                pageName: 'overview',
+                chunks: ['overview'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -111,7 +145,7 @@ module.exports =  (env, options)=> {
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 inject: true,
                 filename: './browse/index.html',
-                pageName: 'browse',
+                chunks: ['browse'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -131,7 +165,7 @@ module.exports =  (env, options)=> {
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 inject: true,
                 filename: './issues/index.html',
-                pageName: 'issues',
+                chunks: ['issues'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -151,7 +185,7 @@ module.exports =  (env, options)=> {
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
                 inject: true,
                 filename: './resources/index.html',
-                pageName: 'resources',
+                chunks: ['resources'],
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,

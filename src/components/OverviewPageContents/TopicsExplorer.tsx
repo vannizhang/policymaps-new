@@ -98,7 +98,7 @@ const TopicsExplorer:React.FC = ()=>{
 
         }
 
-        const targetUrl = `./browse?${searchParams}`;
+        const targetUrl = `../browse?${searchParams}`;
         window.open(targetUrl);
     };
 

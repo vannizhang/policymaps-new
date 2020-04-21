@@ -1,14 +1,21 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import { PageLayout, OverviewPageContents } from '../../components'
 
-export default class OverviewPage extends React.PureComponent {
+import SiteWrapper from '../SiteWrapper/SiteWrapper';
 
-    render(){
-        return (
+const OverviewPage:React.FC = ()=>{
+    return (
+        <SiteWrapper>
             <PageLayout>
                 <OverviewPageContents />
             </PageLayout>
-        )
-    }
+        </SiteWrapper>
+    );
 };
+
+ReactDOM.render(
+    <OverviewPage />, 
+    document.getElementById('root')
+);

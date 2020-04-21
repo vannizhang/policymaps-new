@@ -1,17 +1,25 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import { 
     PageLayout, 
     IssuesPageContents
 } from '../../components'
 
-const IssuesPage:React.FC<{}> = ()=>{
+import SiteWrapper from '../SiteWrapper/SiteWrapper';
+
+const IssuesPage:React.FC = ()=>{
     
     return (
-        <PageLayout>
-            <IssuesPageContents />
-        </PageLayout>
-    )
+        <SiteWrapper>
+            <PageLayout>
+                <IssuesPageContents />
+            </PageLayout>
+        </SiteWrapper>
+    );
 };
 
-export default IssuesPage;
+ReactDOM.render(
+    <IssuesPage />, 
+    document.getElementById('root')
+);

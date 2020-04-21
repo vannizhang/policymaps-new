@@ -18,14 +18,19 @@ const SiteNav: React.FC<Props> = ({
 
     const getNavLinks = ()=>{
 
-        const pathnames = window.location.pathname.split('/');
+        const pathnames = window.location.pathname
+            .split('/')
+            .filter(d=>d);
         // pathname of the current page
-        const currentPath = pathnames[1];
+        const currentPath = pathnames[pathnames.length - 1];
         
         return links.map((d, i)=>{
 
-            const targetPathname = d.path.split('/')[1];
-            const isActive = currentPath === targetPathname;
+            const targetPathnames = d.path
+                .split('/')
+                .filter(d=>d);
+
+            const isActive = currentPath === targetPathnames[targetPathnames.length - 1];
 
             return (
                 <div className='esri-sub-nav-link-item' key={`sub-nav-link-${i}`}>
