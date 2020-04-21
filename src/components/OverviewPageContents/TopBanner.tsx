@@ -46,4 +46,4 @@ const TopBanner:React.FC = ()=>{
     );
 };
 
-export default TopBanner;
+export default React.memo(TopBanner);

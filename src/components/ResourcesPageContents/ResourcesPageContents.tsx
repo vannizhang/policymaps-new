@@ -15,6 +15,8 @@ import {
 
 import IndustryPerspectivesCarousel from './IndustryPerspectivesCarousel/IndustryPerspectivesCarousel';
 
+import TopBanner from './TopBanner';
+
 interface SectionData {
     featured?: AgolItem;
     cardsData?: AgolItem[]
@@ -111,6 +113,8 @@ const ResourcesPageContents:React.FC = ()=>{
 
     return (
         <>
+            <TopBanner />
+            
             <IndustryPerspectivesCarousel 
                 data={industryPerspectivesSectionData ? industryPerspectivesSectionData.cardsData : []}
             />
