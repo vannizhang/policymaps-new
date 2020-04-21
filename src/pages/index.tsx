@@ -11,12 +11,16 @@ const BrowsePage = React.lazy(() => import('./Browse/BrowsePage'));
 const IssuesPage = React.lazy(() => import('./Issues/IssuesPage'));
 const ResourcesPage = React.lazy(() => import('./Resources/ResourcesPage'));
 
+// import OverviewPage from './Overview/OverviewPage';
+// import BrowsePage from './Browse/BrowsePage';
+// import IssuesPage from './Issues/IssuesPage';
+// import ResourcesPage from './Resources/ResourcesPage';
+
 const PolicyMapsSite: React.FC = ()=>{
 
     const getComponentForCurrentPage = ()=>{
-
-        const pathnames = window.location.pathname.split('/');
-        const currentPath = pathnames[1];
+        const pathnames = window.location.pathname.split('/').filter(d=>d);
+        const currentPath = pathnames[pathnames.length - 1];
 
         const componentsLookup = {
             'overview': <OverviewPage />,

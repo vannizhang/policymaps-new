@@ -39,19 +39,19 @@ const PageLayout: React.FC<Props> = ({
         const links = [
             {
                 label: 'Overview',
-                path: '../overview',
+                path: '../overview/',
             },
             {
                 label: 'Explore',
-                path: '../browse',
+                path: '../browse/',
             },
             {
                 label: 'Issues',
-                path: '../issues',
+                path: '../issues/',
             },
             {
                 label: 'Resources',
-                path: '../resources',
+                path: '../resources/',
             }
         ];
 

@@ -23,10 +23,6 @@ module.exports =  (env, options)=> {
         },
         module: {
             rules: [
-                // {
-                //     test: /\.(ts|tsx)$/,
-                //     loader: 'ts-loader'
-                // },
                 {
                     test: /\.(ts|tsx)$/,
                     loader: 'babel-loader'
@@ -88,12 +84,14 @@ module.exports =  (env, options)=> {
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/index.html'),
-                filename: 'index.html',
+                filename: './index.html',
                 chunks: []
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
-                filename: 'overview/index.html',
+                inject: true,
+                filename: './overview/index.html',
+                pageName: 'overview',
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -111,7 +109,9 @@ module.exports =  (env, options)=> {
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
-                filename: 'browse/index.html',
+                inject: true,
+                filename: './browse/index.html',
+                pageName: 'browse',
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -129,7 +129,9 @@ module.exports =  (env, options)=> {
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
-                filename: 'issues/index.html',
+                inject: true,
+                filename: './issues/index.html',
+                pageName: 'issues',
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -147,7 +149,9 @@ module.exports =  (env, options)=> {
             }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './src/layouts/site.layout.html'),
-                filename: 'resources/index.html',
+                inject: true,
+                filename: './resources/index.html',
+                pageName: 'resources',
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
