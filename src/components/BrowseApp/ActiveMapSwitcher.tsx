@@ -13,10 +13,11 @@ import {
 } from '../';
 
 interface Props {
+    isMinimal: boolean;
 }
 
 const ActiveMapSwitcher:React.FC<Props> = ({
-    children
+    isMinimal
 })=>{
 
     const { itemsCollection, activeWebmapItem, setActiveWebmapItem } = React.useContext(BrowseAppContext);
@@ -58,47 +59,55 @@ const ActiveMapSwitcher:React.FC<Props> = ({
         return `Map ${ index + 1 } of ${itemsCollection.length}`;
     };
 
-    const getContainerStyle = ():React.CSSProperties=>{
-
-        return {
-            'flexGrow': 1,
-            'flexShrink': 0,
-            // 'flexBasis': '200px',
-            'display': 'flex',
-            'flexWrap': 'wrap',
-            'justifyContent': 'flex-start',
-            'alignContent': 'strech',
-            'alignItems': 'center',
-            'padding': '0 .75rem',
-            'boxSizing': 'border-box',
-        };
-    };
-
     return (
         <div
             className={'active-map-switcher'}
-            style={getContainerStyle()}
-        >
-            <div className='active-map-title' style={{
+            style={{
                 'flexGrow': 1,
-                'flexShrink': 0,
-                // 'flexBasis': '100px',
-                // 'whiteSpace': 'nowrap',
-                // 'overflow': 'hidden',
-                // 'textOverflow': 'ellipsis'
-            }}>
-                <span className='avenir-demi font-size--0'> { activeWebmapItem.title }</span>
+                'flexShrink': 1,
+                'flexBasis': '10px',
+    
+                'display': 'flex',
+                'flexDirection': 'row',
+                'flexWrap': 'wrap',
+                'justifyContent': 'flex-start',
+                'alignContent': 'center',
+                'alignItems': 'center',
+                'padding': '0 .75rem',
+                'boxSizing': 'border-box',
+            }}
+        >
+            <div 
+                className='active-map-title text-ellipsis avenir-demi font-size--0' 
+                style={{
+                    'flexGrow': 1,
+                    'flexShrink': 1,
+                    'flexBasis': '1px',
+                }}
+            >
+                { activeWebmapItem.title }
+                {/* <span className='avenir-demi font-size--0'> { activeWebmapItem.title }</span> */}
             </div>
 
             <div
                 style={{
+                    // 'flexGrow': 1,
+                    // 'flexShrink': 0,
+                    // 'flexBasis': '50px',
                     'display': 'flex',
-                    // 'justifyContent': 'flex-start',
+                    'justifyContent': 'flex-end',
                     'alignItems': 'center',
+                    // 'flexBasis': '200px',
                 }}
             >
 
-                <div style={{ 'padding': '0 .5rem' }}>
+                <div 
+                    className='tablet-hide'
+                    style={{ 
+                        'padding': '0 .5rem',
+                        'display': !isMinimal ? 'block' : 'none'
+                    }}
+                >
                     <span>
                         { getActiveItemIndicator() }
                     </span>

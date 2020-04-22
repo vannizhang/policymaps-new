@@ -296,8 +296,8 @@ const BrowseApp:React.FC<Props>= ({
             <div style={{
                 "position": "relative",
                 "flexGrow": 1,
-                "flexShrink": 0,
-                "flexBasis": "200px"
+                // "flexShrink": 0,
+                // "flexBasis": "0px"
             }}>
                 <TopNav
                     isLegendVisible={isLegendVisible}
