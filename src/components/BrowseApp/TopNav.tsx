@@ -130,7 +130,7 @@ const TopNav:React.FC<Props> = ({
             const width = containerRef.current.offsetWidth;
             // console.log(width);
 
-            const isMinimal = width < 640;
+            const isMinimal = width < 690;
             const isHide = width < 480 ;
 
             setIsMinimal(isMinimal);

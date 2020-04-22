@@ -17,3 +17,19 @@ body {
         padding-right: 0;
     }
 }
+
+.fancy-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.fancy-scrollbar::-webkit-scrollbar-track {
+    background: rgba(200, 200, 200, .5); 
+}
+
+.fancy-scrollbar::-webkit-scrollbar-thumb {
+    background: #ccc; 
+}
+
+.fancy-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a9a9a9; 
+}

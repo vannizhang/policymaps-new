@@ -40,6 +40,7 @@ const SideBar:React.FC<Props> = ({
                     <div
                         ref={sidebarRef}
                         onScroll={onScrollHandler}
+                        className='fancy-scrollbar'
                         style={{
                             "width": width,
                             "boxSizing": "border-box",
