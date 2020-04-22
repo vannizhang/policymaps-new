@@ -4,6 +4,14 @@ import {
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
 
+import { 
+    SiteContext 
+} from '../../contexts/SiteContextProvider';
+
+import {
+    batchAdd
+} from '../../utils/my-favorites/myFav';
+
 interface Props {
     onClose?: ()=>void; 
 }
@@ -14,7 +22,9 @@ const ShareDialog:React.FC<Props> = ({
 
     const textInputRef = React.useRef<HTMLInputElement>();
 
-    const { currentUrl, itemsCollection } = React.useContext(BrowseAppContext);
+    const { currentUrl, itemsCollection, setMyFavItems } = React.useContext(BrowseAppContext);
+
+    const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 
     const shareToSocialMedia = (name='')=>{
         const socialmediaLookUp = {
@@ -51,6 +61,21 @@ const ShareDialog:React.FC<Props> = ({
         textInputRef.current.setSelectionRange(0, 99999); 
         document.execCommand("copy");
     };
+
+    const addToMyFavBtnOnClick = async()=>{
+
+        if(isEmbedded){
+            window.open(window.location.href, '_blank');
+        }
+
+        try {
+            const itemIds = itemsCollection.map(d=>d.id);
+            const myFavItems = await batchAdd(itemIds);
+            setMyFavItems(myFavItems);
+        } catch(err){
+            esriOAuthUtils.sigIn();
+        }
+    }
 
     return (
         <div
@@ -119,7 +144,13 @@ const ShareDialog:React.FC<Props> = ({
                     'textAlign': 'right',
                     'paddingRight': '.5rem'
                 }}>
-                    <span className="font-size--2 text-white" style={{ 'cursor': 'pointer' }}>Add collections to Favorites</span>
+                    <span 
+                        className="font-size--2 text-white" 
+                        style={{ 
+                            'cursor': 'pointer' 
+                        }}
+                        onClick={addToMyFavBtnOnClick}
+                    >Add collections to Favorites</span>
                 </div>
                 
             </div>

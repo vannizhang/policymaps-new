@@ -56,7 +56,7 @@ const BrowseApp:React.FC<Props>= ({
 })=>{
 
     const { itemsCollection, setMyFavItems } = React.useContext(BrowseAppContext);
-    const { hideTopNavs } = React.useContext(SiteContext);
+    const { isEmbedded } = React.useContext(SiteContext);
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
@@ -189,7 +189,7 @@ const BrowseApp:React.FC<Props>= ({
     return (
         <div style={{
             "position": "absolute",
-            "top": hideTopNavs ? '0': "117px",
+            "top": isEmbedded ? '0': "117px",
             "left": "0",
             "bottom": "0",
             "width": "100%",

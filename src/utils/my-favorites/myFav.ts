@@ -73,7 +73,7 @@ const getMyFavItems = (): Promise<AgolItem[]>=>{
 
 };
 
-const addToMyFavGroup = (itemId='')=>{
+const addToMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
 
     const { favGroupId, token } = portalData;
 
@@ -102,7 +102,7 @@ const addToMyFavGroup = (itemId='')=>{
     });
 };
 
-const removeFromMyFavGroup = (itemId='')=>{
+const removeFromMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
 
     const { favGroupId, token } = portalData;
 
@@ -263,6 +263,32 @@ export const toggleAsMyFavItem = (itemId:string): Promise<string[]>=>{
 
     });
 
+};
+
+export const batchAdd = (itemIds: string[]): Promise<string[]>=>{
+
+
+    return new Promise(async(resolve, reject)=>{
+
+        const { favGroupId, token } = portalData;
+
+        if(!favGroupId || !token){
+            reject('favorite group id and token are required to remove fav item, please sign in first');
+        }
+
+        try {
+
+            for(let i = 0, len = itemIds.length; i < len; i++){
+                const itemId = itemIds[i]
+                const addToMyFavGroupRes = await addToMyFavGroup(itemId);
+                toggleMyFavItemIds(itemId);
+            }
+    
+            resolve(myFavItemIds);
+        } catch(err){
+            reject(err);
+        }
+    });
 };
 
 export const setPortalData4MyFavItems = ({

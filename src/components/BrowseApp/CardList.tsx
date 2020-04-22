@@ -22,7 +22,7 @@ const CardList: React.FC<Props> = ({
     itemCount = 0
 }:Props)=>{
 
-    const { activeWebmapItem, itemsCollection, setActiveWebmapItem } = React.useContext(BrowseAppContext);
+    const { activeWebmapItem, itemsCollection } = React.useContext(BrowseAppContext);
 
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 

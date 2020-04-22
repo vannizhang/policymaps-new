@@ -20,7 +20,7 @@ const PageLayout: React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { esriOAuthUtils, hideTopNavs } = React.useContext(SiteContext);
+    const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 
     React.useEffect(()=>{
 
@@ -63,12 +63,12 @@ const PageLayout: React.FC<Props> = ({
             <div 
                 className="esri-header-barrier" 
                 style={{
-                    "display": hideTopNavs ? "none" : "block"
+                    "display": isEmbedded ? "none" : "block"
                 }}
             ></div>
             
             {
-                !hideTopNavs ? (
+                !isEmbedded ? (
                     <SiteNav 
                         siteName={'Esri Maps for Public Policy'}
                         links={getNavLinksData()}

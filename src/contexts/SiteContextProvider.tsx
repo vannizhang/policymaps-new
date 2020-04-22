@@ -6,7 +6,7 @@ import EsriOAuth from '../utils/Esri-OAuth';
 interface SiteContextProps {
     esriOAuthUtils: EsriOAuth;
     // this site can be embedded in COVID19 hub site and we need to hide both top navs if the "embed" hash param is true
-    hideTopNavs?: boolean;
+    isEmbedded?: boolean;
 }
 
 interface SiteContextProviderProps {
@@ -25,7 +25,7 @@ export const SiteContextProvider:React.FC<SiteContextProviderProps> = ({
 
     const value = {
         esriOAuthUtils,
-        hideTopNavs: hashParams.embed ? true : false
+        isEmbedded: hashParams.embed ? true : false
     };
 
     return (
