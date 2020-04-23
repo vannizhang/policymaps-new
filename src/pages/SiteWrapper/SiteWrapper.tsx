@@ -40,7 +40,7 @@ const SiteWrapper:React.FC = ({
                 });
             }
     
-            console.log(esriOAuthUtils)
+            console.log(esriOAuthUtils);
     
             setEsriOAuthUtils(esriOAuthUtils);
 

@@ -110,8 +110,7 @@ const MapView:React.FC<Props> = ({
     };
 
     React.useEffect(()=>{
-        // console.log('active webmap id on change', activeWebmapId);
-
+        
         if(mapView){
             updateWebMap();
         }
@@ -122,7 +121,7 @@ const MapView:React.FC<Props> = ({
         if(mapView){
             addWatchEvent();
         }
-    }, [ mapView ])
+    }, [ mapView ]);
 
     React.useEffect(()=>{
         loadCss();

@@ -101,7 +101,7 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
             itemIds,
             groupId: Tier.PROD.AGOL_GROUP_ID
         });
-        console.log(results);
+        console.log('agol items to init browse app', results);
 
         initItemsCollection(results);
 

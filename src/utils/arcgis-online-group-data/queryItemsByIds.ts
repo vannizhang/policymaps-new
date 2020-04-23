@@ -20,13 +20,16 @@ const queryItemsByIds = async({
 
     const urlForSearchOperation = getUrlForSearchOperation(groupId, agolHost);
 
-    const queryStrForItemIds = itemIds.map(id=>{
+    const queryStrForItemIds = itemIds
+    .filter(d=>d)
+    .map(id=>{
         return `id:${id}`
     }).join(' OR ');
 
     const params = {
         f: 'json',
         start: 1,
+        num: 100,
         q: `(${queryStrForItemIds})`
     };
 
@@ -36,9 +39,14 @@ const queryItemsByIds = async({
 
     const requestURL = `${urlForSearchOperation}?${paramsAsStr}`;
 
-    const { data } = await axios.get<SearchResponse>(requestURL);
+    try {
+        const { data } = await axios.get<SearchResponse>(requestURL);
+        return data.results;
+        
+    } catch(err){
+        console.error(err);
+    }
 
-    return data.results;
 };
 
 export default queryItemsByIds;
