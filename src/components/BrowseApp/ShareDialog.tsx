@@ -66,6 +66,7 @@ const ShareDialog:React.FC<Props> = ({
 
         if(isEmbedded){
             window.open(window.location.href, '_blank');
+            return;
         }
 
         try {
