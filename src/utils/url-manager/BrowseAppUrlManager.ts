@@ -2,6 +2,8 @@ import { urlFns } from 'helper-toolkit-ts';
 
 type SearhParamKeys = 'col' | 'viz' | 'loc' | 'hs';
 
+type IsSideBarHideValue = '0' | '1';
+
 export interface Location {
     lat: number;
     lon: number;
@@ -47,10 +49,12 @@ export const encodeSearchParams = ({
         });
     }
 
-    if(collections.length){
+    if(collections){
 
         const key = SearchParamKeyLookup['collections'];
-        const value = collections.join(',');
+        const value = collections.length 
+            ? collections.join(',') 
+            : 'null';
 
         urlFns.updateQueryParam({
             key,
@@ -70,7 +74,7 @@ export const encodeSearchParams = ({
 
     if(typeof isSideBarHide === 'boolean'){
         const key = SearchParamKeyLookup['isSideBarHide'];
-        const value = isSideBarHide ? '1' : '0';
+        const value:IsSideBarHideValue = isSideBarHide ? '1' : '0';
 
         urlFns.updateQueryParam({
             key,
@@ -83,7 +87,7 @@ export const encodeSearchParams = ({
 export const decodeSearchParams = ():decodeSearchParamsResponse=>{
     const searchParams = urlFns.parseQuery();
 
-    const collections = searchParams['col'] 
+    const collections = searchParams['col'] && searchParams['col'] !== 'null'
         ? searchParams['col'].split(',') 
         : [];
 
