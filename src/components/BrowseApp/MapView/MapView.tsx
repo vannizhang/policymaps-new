@@ -105,6 +105,10 @@ const MapView:React.FC<Props> = ({
             watchUtils.whenTrue(mapView, 'stationary', ()=>{
                 // console.log('mapview is stationary', mapView.center, mapView.zoom);
 
+                if(mapView.zoom === -1){
+                    return;
+                }
+
                 const centerLocation = {
                     lat: mapView.center && mapView.center.latitude 
                         ? +mapView.center.latitude.toFixed(3) 
