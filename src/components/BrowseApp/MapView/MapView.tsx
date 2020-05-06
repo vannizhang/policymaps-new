@@ -1,33 +1,38 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { loadModules, loadCss } from 'esri-loader';
 
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
 
+import { 
+    AgolItem 
+} from '../../../utils/arcgis-online-group-data';
+
 import {
-    setCenterLocation,
-    centerLocationSelector,
-	activeWebmapSelector
-} from '../../store/browseApp/reducers/map';
+    Location
+} from '../../../utils/url-manager/BrowseAppUrlManager';
 
 interface Props {
-    webmapId?: string;
+    webmapItem?: AgolItem;
+    initialCenter?: {
+        lon: number;
+        lat: number;
+    };
+    initialZoom?: number;
+
+    onStationary?: (location:Location)=>void;
+
     children?: React.ReactNode;
 };
 
 const MapView:React.FC<Props> = ({
-    // webmapId,
+    webmapItem,
+    initialCenter,
+    initialZoom,
+    onStationary,
     children
 }: Props)=>{
-
-    const dispatch = useDispatch();
-
-    const activeWebmapItem = useSelector(activeWebmapSelector);
-
-    const mapCenterLocation = useSelector(centerLocationSelector)
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -50,11 +55,11 @@ const MapView:React.FC<Props> = ({
                 container: mapDivRef.current,
                 map: new WebMap({
                     portalItem: {
-                        id: activeWebmapItem.id
+                        id: webmapItem.id
                     }  
                 }),
-                center: mapCenterLocation ? [ mapCenterLocation.lon, mapCenterLocation.lat ] : undefined,
-                zoom: mapCenterLocation ? mapCenterLocation.zoom : undefined
+                center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
+                zoom: initialZoom
             });
 
             view.when(()=>{
@@ -78,7 +83,7 @@ const MapView:React.FC<Props> = ({
 
             mapView.map = new WebMap({
                 portalItem: {
-                    id: activeWebmapItem.id
+                    id: webmapItem.id
                 }
             });
 
@@ -110,7 +115,7 @@ const MapView:React.FC<Props> = ({
                     zoom: mapView.zoom
                 }
                 
-                dispatch(setCenterLocation(centerLocation));
+                onStationary(centerLocation);
             });
 
         } catch(err){   
@@ -119,8 +124,12 @@ const MapView:React.FC<Props> = ({
     };
 
     React.useEffect(()=>{
-        
-        if(!activeWebmapItem){
+        loadCss();
+    }, []);
+
+    React.useEffect(()=>{
+
+        if(!webmapItem){
             return;
         }
 
@@ -129,18 +138,13 @@ const MapView:React.FC<Props> = ({
         } else {
             updateWebMap();
         }
-
-    }, [ activeWebmapItem ]);
+    }, [ webmapItem ]);
 
     React.useEffect(()=>{
         if(mapView){
             addWatchEvent();
         }
     }, [ mapView ]);
-
-    React.useEffect(()=>{
-        loadCss();
-    }, []);
 
     return (
         <>
