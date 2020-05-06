@@ -1,28 +1,35 @@
 import * as React from 'react';
 
-import { 
-    BrowseAppContext 
-} from '../../contexts/BrowseAppProvider';
+import Card from './Card';
 
-import {
-    RegularCard
-} from '../';
+import { AgolItem } from '../../../utils/arcgis-online-group-data';
 
-import { AgolItem } from '../../utils/arcgis-online-group-data';
+export interface CardListData {
+    data: AgolItem;
+    inCollection?: boolean;
+    viewOnMap?: boolean;
+    isMyFav?: boolean;
+}
 
 interface Props {
     title: string;
-    data: AgolItem[];
+    items: CardListData[];
     itemCount: number;
+
+    viewBtnOnClick: (item:AgolItem)=>void;
+    toggleCollectBtnOnClick: (item:AgolItem)=>void;
+    toggleAsMyFavBtnOnClick: (item:AgolItem)=>void;
 };
 
 const CardList: React.FC<Props> = ({
     title = '',
-    data = [],
-    itemCount = 0
-}:Props)=>{
+    items = [],
+    itemCount = 0,
 
-    const { activeWebmapItem, itemsCollection } = React.useContext(BrowseAppContext);
+    viewBtnOnClick,
+    toggleCollectBtnOnClick,
+    toggleAsMyFavBtnOnClick
+}:Props)=>{
 
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 
@@ -30,30 +37,35 @@ const CardList: React.FC<Props> = ({
         setIsHide(!isHide);
     };
 
-    const isInCollection = (itemId:string)=>{
-        // array of ids for items in the collection
-        const itemIds = itemsCollection.map(d=>d.id);
-
-        return itemIds.indexOf(itemId) > -1;
-    };
-
     const getList = ()=>{
-        const cards = data.map((item, index)=>{
+        const cards = items.map((item, index)=>{
+
+            const { data, inCollection, viewOnMap, isMyFav } = item;
+
+            const  {
+                title, snippet, agolItemUrl, id, thumbnailUrl
+            } = data
+
             return ( 
                 <div 
                     key={`list-item-${index}`}
                     className='block trailer-half'
                 >
-                    <RegularCard 
-                        title={item.title}
-                        description={item.snippet}
-                        link={item.agolItemUrl}
-                        itemId={item.id}
-                        imageUrl={item.thumbnailUrl}
-                        item={item}
+                    <Card 
+                        title={title}
+                        description={snippet}
+                        link={agolItemUrl}
+                        itemId={id}
+                        imageUrl={thumbnailUrl}
+                        item={data}
 
-                        viewOnMap={ item.id === activeWebmapItem.id }
-                        isInCollection={isInCollection(item.id)}
+                        viewOnMap={viewOnMap}
+                        isInCollection={inCollection}
+                        isMyFav={isMyFav}
+
+                        viewBtnOnClick={viewBtnOnClick}
+                        toggleCollectBtnOnClick={toggleCollectBtnOnClick}
+                        toggleAsMyFavBtnOnClick={toggleAsMyFavBtnOnClick}
                     />
                 </div>
             );

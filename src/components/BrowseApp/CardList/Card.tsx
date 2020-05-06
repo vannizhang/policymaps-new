@@ -1,21 +1,7 @@
 import * as React from 'react';
-
 import classnames from 'classnames';
 import { stringFns } from 'helper-toolkit-ts';
-
 import { AgolItem } from '../../../utils/arcgis-online-group-data';
-
-import { 
-    BrowseAppContext 
-} from '../../../contexts/BrowseAppProvider';
-
-import { 
-    SiteContext 
-} from '../../../contexts/SiteContextProvider';
-
-import {
-    toggleAsMyFavItem
-} from '../../../utils/my-favorites/myFav'
 
 interface Props {
     title: string;
@@ -27,6 +13,11 @@ interface Props {
 
     viewOnMap?: boolean;
     isInCollection?: boolean;
+    isMyFav?:boolean;
+
+    viewBtnOnClick: (item:AgolItem)=>void;
+    toggleCollectBtnOnClick: (item:AgolItem)=>void;
+    toggleAsMyFavBtnOnClick: (item:AgolItem)=>void;
 }
 
 const RegularCard:React.FC<Props> = ({
@@ -38,38 +29,16 @@ const RegularCard:React.FC<Props> = ({
     item,
 
     viewOnMap=false,
-    isInCollection=false
+    isInCollection=false,
+    isMyFav=false,
+
+    viewBtnOnClick,
+    toggleCollectBtnOnClick,
+    toggleAsMyFavBtnOnClick
 }: Props)=>{
 
-    const { setActiveWebmapItem, toggleFromItemCollections, myFavItems, setMyFavItems } = React.useContext(BrowseAppContext);
-
-    const { esriOAuthUtils } = React.useContext(SiteContext);
-
-    const isInMyFavItems = myFavItems.indexOf(itemId) > -1;
-
-    const viewBtnOnClickHandler = ()=>{
-        setActiveWebmapItem(item);
-    };
-
-    const selectBtnOnClickHandler = ()=>{
-        toggleFromItemCollections(item);
-    };
-
-    const myFavBtnOnClickHandler = async()=>{
-        try {
-            const myFavItems = await toggleAsMyFavItem(itemId);
-            setMyFavItems(myFavItems);
-        } catch(err){
-            esriOAuthUtils.sigIn();
-            // console.error(err);
-        }
-    };
-
-    return (
-        <div className='card' style={{
-            position: 'relative',
-            height: '100%'
-        }}>
+    const getMyFavIcon = ()=>{
+        return (
             <div
                 style={{
                     'position': 'absolute',
@@ -83,13 +52,13 @@ const RegularCard:React.FC<Props> = ({
                     'width': '20px',
                     'backgroundColor': 'rgba(0, 0, 0, 0.4)',
                     'borderRadius': '50%',
-                    'fill': isInMyFavItems ? '#ffee33' : 'rgba(255, 255, 255, 0.9)',
+                    'fill': isMyFav ? '#ffee33' : 'rgba(255, 255, 255, 0.9)',
                     'zIndex': 5,
                     'boxSizing': 'border-box'
                 }}
                 className='cursor-pointer'
-                title={ isInMyFavItems ? 'Reomve from Favorites' : 'Add to Favorites'}
-                onClick={myFavBtnOnClickHandler}
+                title={ isMyFav ? 'Reomve from Favorites' : 'Add to Favorites'}
+                onClick={toggleAsMyFavBtnOnClick.bind(this, item)}
             >
                 <svg 
                     height="16" 
@@ -98,13 +67,22 @@ const RegularCard:React.FC<Props> = ({
                     <path d="M7.998.2l1.885 5.816h6.094l-4.93 3.586 1.894 5.813-4.943-3.597-4.944 3.597 1.893-5.813-4.97-3.586h6.135z"></path>
                 </svg>
             </div>
+        );
+    }
+
+    return (
+        <div className='card' style={{
+            position: 'relative',
+            height: '100%'
+        }}>
+            { getMyFavIcon() }
 
             <figure 
                 className="card-image-wrap" 
                 style={{
                     cursor: "pointer"
                 }}
-                onClick={viewBtnOnClickHandler}
+                onClick={viewBtnOnClick.bind(this, item)}
             >
                 <img className="card-image" src={imageUrl} />
             </figure>
@@ -137,7 +115,7 @@ const RegularCard:React.FC<Props> = ({
                             "width": "48%",
                             "margin": "0 .1rem",
                         }}
-                        onClick={viewBtnOnClickHandler}
+                        onClick={viewBtnOnClick.bind(this, item)}
                     >View</div>
 
                     <div 
@@ -148,7 +126,7 @@ const RegularCard:React.FC<Props> = ({
                             "width": "48%",
                             "margin": "0 .1rem"
                         }}
-                        onClick={selectBtnOnClickHandler}
+                        onClick={toggleCollectBtnOnClick.bind(this, item)}
                     >
                         { 
                             isInCollection 

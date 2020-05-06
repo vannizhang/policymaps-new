@@ -1,50 +1,51 @@
 import * as React from 'react';
 
-import { 
-    BrowseAppContext
-} from '../../contexts/BrowseAppProvider';
-
-import {
-    AgolItem
-} from '../../utils/arcgis-online-item-formatter'
-
 import {
     NavBtn
-} from '../';
+} from '../..';
 
 interface Props {
     isMinimal: boolean;
+
+    activeItemId: string;
+    activeItemTitle: string;
+    allItemIds: string[]
+
+    activeItemIdOnChange: (itemId:string)=>void;
 }
 
 const ActiveMapSwitcher:React.FC<Props> = ({
-    isMinimal
+    isMinimal,
+
+    activeItemId,
+    activeItemTitle,
+    allItemIds,
+    activeItemIdOnChange
 })=>{
 
-    const { itemsCollection, activeWebmapItem, setActiveWebmapItem } = React.useContext(BrowseAppContext);
-
     const getIndexForActiveWebmap = ()=>{
-        const itemIds = itemsCollection.map(item=>item.id);
-        return itemIds.indexOf(activeWebmapItem.id);
+        return allItemIds.indexOf(activeItemId);
     }
 
     const showNext = ()=>{
         const index = getIndexForActiveWebmap();
 
-        const nextItem:AgolItem = (index + 1 < itemsCollection.length) 
-            ? itemsCollection[index + 1]
-            : itemsCollection[0];
+        const nextItemId:string = (index + 1 < allItemIds.length) 
+            ? allItemIds[index + 1]
+            : allItemIds[0];
 
-        setActiveWebmapItem(nextItem);
+        activeItemIdOnChange(nextItemId);
     };
 
     const showPrev = ()=>{
         const index = getIndexForActiveWebmap();
 
-        const prevItem:AgolItem = (index - 1 >=0 ) 
-        ? itemsCollection[index - 1]
-        : itemsCollection[itemsCollection.length - 1];
+        const prevItemId:string = (index - 1 >=0 ) 
+            ? allItemIds[index - 1]
+            : allItemIds[allItemIds.length - 1];
+        
+        activeItemIdOnChange(prevItemId);
 
-        setActiveWebmapItem(prevItem);
     };
 
     // get message that indicate the position of active webmap in the item collections (e.g. Map 2 of 5)
@@ -56,7 +57,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
             return '';
         }
 
-        return `Map ${ index + 1 } of ${itemsCollection.length}`;
+        return `Map ${ index + 1 } of ${allItemIds.length}`;
     };
 
     return (
@@ -85,19 +86,14 @@ const ActiveMapSwitcher:React.FC<Props> = ({
                     'flexBasis': '1px',
                 }}
             >
-                { activeWebmapItem.title }
-                {/* <span className='avenir-demi font-size--0'> { activeWebmapItem.title }</span> */}
+                { activeItemTitle }
             </div>
 
             <div
                 style={{
-                    // 'flexGrow': 1,
-                    // 'flexShrink': 0,
-                    // 'flexBasis': '50px',
                     'display': 'flex',
                     'justifyContent': 'flex-end',
-                    'alignItems': 'center',
-                    // 'flexBasis': '200px',
+                    'alignItems': 'center'
                 }}
             >
 
@@ -130,7 +126,6 @@ const ActiveMapSwitcher:React.FC<Props> = ({
                 </div>
 
             </div>
-
 
         </div>
     );

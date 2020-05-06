@@ -1,26 +1,38 @@
 import * as React from 'react';
-
 import { loadModules, loadCss } from 'esri-loader';
-
-import { 
-    BrowseAppContext 
-} from '../../contexts/BrowseAppProvider';
 
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
 
+import { 
+    AgolItem 
+} from '../../../utils/arcgis-online-group-data';
+
+import {
+    Location
+} from '../../../utils/url-manager/BrowseAppUrlManager';
+
 interface Props {
-    webmapId?: string;
+    webmapItem?: AgolItem;
+    initialCenter?: {
+        lon: number;
+        lat: number;
+    };
+    initialZoom?: number;
+
+    onStationary?: (location:Location)=>void;
+
     children?: React.ReactNode;
 };
 
 const MapView:React.FC<Props> = ({
-    // webmapId,
+    webmapItem,
+    initialCenter,
+    initialZoom,
+    onStationary,
     children
 }: Props)=>{
-
-    const { activeWebmapItem, mapCenterLocation, setMapCenterLocation } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -43,11 +55,11 @@ const MapView:React.FC<Props> = ({
                 container: mapDivRef.current,
                 map: new WebMap({
                     portalItem: {
-                        id: activeWebmapItem.id
+                        id: webmapItem.id
                     }  
                 }),
-                center: mapCenterLocation ? [ mapCenterLocation.lon, mapCenterLocation.lat ] : undefined,
-                zoom: mapCenterLocation ? mapCenterLocation.zoom : undefined
+                center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
+                zoom: initialZoom
             });
 
             view.when(()=>{
@@ -71,7 +83,7 @@ const MapView:React.FC<Props> = ({
 
             mapView.map = new WebMap({
                 portalItem: {
-                    id: activeWebmapItem.id
+                    id: webmapItem.id
                 }
             });
 
@@ -93,7 +105,11 @@ const MapView:React.FC<Props> = ({
             watchUtils.whenTrue(mapView, 'stationary', ()=>{
                 // console.log('mapview is stationary', mapView.center, mapView.zoom);
 
-                setMapCenterLocation({
+                if(mapView.zoom === -1){
+                    return;
+                }
+
+                const centerLocation = {
                     lat: mapView.center && mapView.center.latitude 
                         ? +mapView.center.latitude.toFixed(3) 
                         : 0,
@@ -101,7 +117,9 @@ const MapView:React.FC<Props> = ({
                         ? +mapView.center.longitude.toFixed(3) 
                         : 0,
                     zoom: mapView.zoom
-                });
+                }
+                
+                onStationary(centerLocation);
             });
 
         } catch(err){   
@@ -110,23 +128,27 @@ const MapView:React.FC<Props> = ({
     };
 
     React.useEffect(()=>{
-        
-        if(mapView){
-            updateWebMap();
+        loadCss();
+    }, []);
+
+    React.useEffect(()=>{
+
+        if(!webmapItem){
+            return;
         }
 
-    }, [ activeWebmapItem ]);
+        if(!mapView){
+            initMapView();
+        } else {
+            updateWebMap();
+        }
+    }, [ webmapItem ]);
 
     React.useEffect(()=>{
         if(mapView){
             addWatchEvent();
         }
     }, [ mapView ]);
-
-    React.useEffect(()=>{
-        loadCss();
-        initMapView();
-    }, []);
 
     return (
         <>

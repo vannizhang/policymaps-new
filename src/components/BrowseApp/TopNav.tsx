@@ -1,16 +1,17 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 
-import ActiveMapSwitcher from './ActiveMapSwitcher';
-import ShareDialog from './ShareDialog';
+import ActiveMapSwitcher from './ActiveMapSwitcher/ActiveMapSwitcherContainer';
+import ShareDialog from './ShareDialog/ShareDialogContainer';
 import Menu from './Menu';
-
-import { 
-    BrowseAppContext
-} from '../../contexts/BrowseAppProvider';
 
 import {
     SearchWidgetContainerId
 } from '../SearchWidget/SearchWidget';
+
+import {
+    hideSideBarSelectore
+} from '../../store/browseApp/reducers/UI';
 
 interface Props {
     toggleLegend?: ()=>void;
@@ -31,7 +32,7 @@ const TopNav:React.FC<Props> = ({
 
     const containerRef = React.useRef<HTMLDivElement>();
 
-    const { hideSideBar } = React.useContext(BrowseAppContext);
+    const hideSideBar = useSelector(hideSideBarSelectore);
 
     const [ isMinimal, setIsMinimal ] = React.useState<boolean>(false);
 
