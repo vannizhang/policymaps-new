@@ -1,17 +1,14 @@
 import * as React from 'react';
 
-import { 
-    BrowseAppContext 
-} from '../../../contexts/BrowseAppProvider';
-
 import {
     SiteContext
 } from '../../../contexts/SiteContextProvider';
 
-import CardList from '../CardList';
+import CardList from '../CardList/CardListContainer';
 import SideBar from '../SideBar';
 import TopNav from '../TopNav';
 import CategoryFilter, { SelectedCategory } from '../CategoryFilter';
+import MyCollection from '../MyCollection/MyCollection';
 
 import { 
     MapView,
@@ -45,13 +42,11 @@ import ArcGISOnlineGroupData, {
 
 interface Props {
     // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
-    disableSearch?: boolean;
-    itemsCollection: AgolItem[]
+    disableSearch?: boolean
 }
 
 const BrowseApp:React.FC<Props>= ({
-    disableSearch,
-    itemsCollection
+    disableSearch
 })=>{
 
     console.log('render browse app')
@@ -96,11 +91,6 @@ const BrowseApp:React.FC<Props>= ({
 
         setAgolGroupData(arcGISOnlineGroupData);
     };
-
-    // const initMyFavItems = async()=>{
-    //     const myFavItems = await getMyFavItemIds();
-    //     setMyFavItems(myFavItems);
-    // };
 
     // search items from the policy maps group
     const searchItems = async({
@@ -147,7 +137,6 @@ const BrowseApp:React.FC<Props>= ({
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
-        // initMyFavItems();
     }, [])
 
     // once category schema is ready, init the AGOL Group Data module
@@ -273,18 +262,14 @@ const BrowseApp:React.FC<Props>= ({
                 }
 
                 <div className='leader-1'>
-                    <CardList 
-                        title={'My collection of maps'}
-                        data={itemsCollection}
-                        itemCount={ itemsCollection ? itemsCollection.length : 0 }
-                    />
+
+                    <MyCollection />
 
                     {
                         !disableSearch ? (
                             <CardList 
                                 title={'Search Results'}
                                 data={webMapItems}
-                                itemCount={ searchResponse ? searchResponse.total : 0 }
                             />
                         ) : null
                     }

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import ActiveMapSwitcher from './ActiveMapSwitcher';
-import ShareDialog from './ShareDialog';
+import ActiveMapSwitcher from './ActiveMapSwitcher/ActiveMapSwitcherContainer';
+import ShareDialog from './ShareDialog/ShareDialogContainer';
 import Menu from './Menu';
 
 import {
@@ -10,7 +10,6 @@ import {
 } from '../SearchWidget/SearchWidget';
 
 import {
-    // toggleSidebar,
     hideSideBarSelectore
 } from '../../store/browseApp/reducers/UI';
 

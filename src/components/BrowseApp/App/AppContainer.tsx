@@ -28,8 +28,7 @@ import {
 } from '../../../utils/arcgis-online-item-formatter';
 
 import {
-    loadCollectionItems,
-    itemCollectionSelector
+    loadCollectionItems
 } from '../../../store/browseApp/reducers/itemCollections';
 
 import {
@@ -49,10 +48,6 @@ const BrowseAppContainer:React.FC = ()=>{
     const searchParams = decodeSearchParams();
 
     const hashParams = urlFns.parseHash();
-
-    // const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
-
-    const myCollection = useSelector(itemCollectionSelector);
 
     const fetchItemCollections = async()=>{
         const { collections } = searchParams;
@@ -108,7 +103,6 @@ const BrowseAppContainer:React.FC = ()=>{
 
     return <BrowseApp
         disableSearch={hashParams.disableSearch ? true : false}
-        itemsCollection={myCollection}
     />
 }
 

@@ -8,8 +8,6 @@ export { default as BrowseApp } from './BrowseApp/App/AppContainer';
 
 export { default as MapView } from './MapView/MapView';
 
-export { default as RegularCard } from './Card/RegularCard/RegularCard';
-
 export { default as CalciteCard } from './Card/CalciteCard';
 
 export { default as NavBtn } from './NavBtn/NavBtn';
