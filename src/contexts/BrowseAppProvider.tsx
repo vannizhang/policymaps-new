@@ -15,22 +15,22 @@ import {
     Location
 } from '../utils/url-manager/BrowseAppUrlManager';
 
-import { Tier } from '../AppConfig';
+// import { Tier } from '../AppConfig';
 
 // export { AgolItem };
 
 interface BrowseAppContextProps {
-    activeWebmapItem: AgolItem;
-    setActiveWebmapItem: (item:AgolItem)=>void;
+    // activeWebmapItem: AgolItem;
+    // setActiveWebmapItem: (item:AgolItem)=>void;
 
-    itemsCollection: AgolItem[],
-    toggleFromItemCollections: (item:AgolItem)=>void;
+    // itemsCollection: AgolItem[],
+    // toggleFromItemCollections: (item:AgolItem)=>void;
 
-    hideSideBar: boolean;
-    toggleHideSideBar: ()=>void;
+    // hideSideBar: boolean;
+    // toggleHideSideBar: ()=>void;
 
-    mapCenterLocation: Location;
-    setMapCenterLocation: (location:Location)=>void;
+    // mapCenterLocation: Location;
+    // setMapCenterLocation: (location:Location)=>void;
 
     myFavItems: string[];
     setMyFavItems: (items: string[])=>void;
@@ -59,87 +59,87 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
     children,
 })=>{
 
-    const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
+    // const [ activeWebmapItem, setActiveWebmapItem ] = React.useState<AgolItem>(null);
 
-    const [ itemsCollection, setItemsCollection ] = React.useState<AgolItem[]>(null);
+    // const [ itemsCollection, setItemsCollection ] = React.useState<AgolItem[]>(null);
 
-    const [ hideSideBar, setHideSideBar ] = React.useState<boolean>(hideSideBarByDefault);
+    // const [ hideSideBar, setHideSideBar ] = React.useState<boolean>(hideSideBarByDefault);
 
-    const [ mapCenterLocation, setMapCenterLocation ] = React.useState<Location>(defaultLocation);
+    // const [ mapCenterLocation, setMapCenterLocation ] = React.useState<Location>(defaultLocation);
 
     const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
 
     const [ myFavItems, setMyFavItems ] = React.useState<string[]>([]);
 
-    const toggleFromItemCollections = (item:AgolItem)=>{
-        const itemIds = itemsCollection.map(d=>d.id);
+    // const toggleFromItemCollections = (item:AgolItem)=>{
+    //     const itemIds = itemsCollection.map(d=>d.id);
 
-        const index = itemIds.indexOf(item.id);
+    //     const index = itemIds.indexOf(item.id);
 
-        const newItemsCollection:AgolItem[] = [...itemsCollection];
+    //     const newItemsCollection:AgolItem[] = [...itemsCollection];
         
-        // push to end of the list if the item doesn't exist,
-        // otherwise, remove the item from collections
-        if(index === -1){
-            newItemsCollection.push(item)
-        } else {
-            newItemsCollection.splice(index, 1);
-        }
+    //     // push to end of the list if the item doesn't exist,
+    //     // otherwise, remove the item from collections
+    //     if(index === -1){
+    //         newItemsCollection.push(item)
+    //     } else {
+    //         newItemsCollection.splice(index, 1);
+    //     }
 
-        setItemsCollection(newItemsCollection);
-    };
+    //     setItemsCollection(newItemsCollection);
+    // };
 
-    // fetch items required to init the browse app (active web map, items in collection)
-    const fetchData = async()=>{
+    // // fetch items required to init the browse app (active web map, items in collection)
+    // const fetchData = async()=>{
 
-        const itemIds = [
-            webmapId, 
-            ...collections
-        ];
+    //     const itemIds = [
+    //         webmapId, 
+    //         // ...collections
+    //     ];
 
-        const results = await queryItemsByIds({
-            itemIds,
-            groupId: Tier.PROD.AGOL_GROUP_ID
-        });
-        console.log('agol items to init browse app', results);
+    //     const results = await queryItemsByIds({
+    //         itemIds,
+    //         groupId: Tier.PROD.AGOL_GROUP_ID
+    //     });
+    //     console.log('agol items to init browse app', results);
 
-        initItemsCollection(results);
+    //     // initItemsCollection(results);
 
-        initActiveWebmap(results);
-    };
+    //     initActiveWebmap(results);
+    // };
 
-    const initActiveWebmap = (data:AgolItem[])=>{
-        const webmapItem = data.filter(d=>d.id === webmapId)[0];
-        setActiveWebmapItem(formatAsAgolItem(webmapItem));
-    }
+    // const initActiveWebmap = (data:AgolItem[])=>{
+    //     const webmapItem = data.filter(d=>d.id === webmapId)[0];
+    //     setActiveWebmapItem(formatAsAgolItem(webmapItem));
+    // }
 
-    const initItemsCollection = (data:AgolItem[])=>{
-        const itemsCollection: AgolItem[] = [];
+    // const initItemsCollection = (data:AgolItem[])=>{
+    //     const itemsCollection: AgolItem[] = [];
 
-        data.forEach(item=>{
-            const index = collections.indexOf(item.id);
-            itemsCollection[index] = formatAsAgolItem(item);
-        });
+    //     data.forEach(item=>{
+    //         const index = collections.indexOf(item.id);
+    //         itemsCollection[index] = formatAsAgolItem(item);
+    //     });
 
-        setItemsCollection(itemsCollection);
-    }
+    //     setItemsCollection(itemsCollection);
+    // }
 
-    const toggleHideSideBar = ()=>{
-        setHideSideBar(!hideSideBar);
-    };
+    // const toggleHideSideBar = ()=>{
+    //     setHideSideBar(!hideSideBar);
+    // };
 
     const value = {
-        activeWebmapItem,
-        setActiveWebmapItem,
+        // activeWebmapItem,
+        // setActiveWebmapItem,
 
-        itemsCollection,
-        toggleFromItemCollections,
+        // itemsCollection,
+        // toggleFromItemCollections,
 
-        hideSideBar,
-        toggleHideSideBar,
+        // hideSideBar,
+        // toggleHideSideBar,
 
-        mapCenterLocation,
-        setMapCenterLocation,
+        // mapCenterLocation,
+        // setMapCenterLocation,
 
         myFavItems,
         setMyFavItems,
@@ -147,28 +147,26 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         currentUrl
     };
 
-    React.useEffect(()=>{
-        fetchData();
-    }, []);
+    // React.useEffect(()=>{
+    //     fetchData();
+    // }, []);
 
     React.useEffect(()=>{
         encodeSearchParams({
-            activeWebmapId: activeWebmapItem ? activeWebmapItem.id : '',
-            collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
-            location: mapCenterLocation,
-            isSideBarHide: hideSideBar
+            // activeWebmapId: activeWebmapItem ? activeWebmapItem.id : '',
+            // collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+            // location: mapCenterLocation,
+            // isSideBarHide: hideSideBar
         });
 
         setCurrentUrl(window.location.href);
         
-    }, [ activeWebmapItem, itemsCollection, mapCenterLocation, hideSideBar ]);
+    }, []);
 
     return (
         <BrowseAppContext.Provider value={value}>
             { 
-                activeWebmapItem && itemsCollection 
-                ? children 
-                : null 
+                children
             }
         </BrowseAppContext.Provider>
     );

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { 
     BrowseAppContext 
 } from '../../contexts/BrowseAppProvider';
@@ -9,6 +11,16 @@ import {
 } from '../';
 
 import { AgolItem } from '../../utils/arcgis-online-group-data';
+
+
+import {
+    itemCollectionSelector
+} from '../../store/browseApp/reducers/itemCollections';
+
+import {
+    setActiveWebmap,
+	activeWebmapSelector
+} from '../../store/browseApp/reducers/map';
 
 interface Props {
     title: string;
@@ -22,7 +34,9 @@ const CardList: React.FC<Props> = ({
     itemCount = 0
 }:Props)=>{
 
-    const { activeWebmapItem, itemsCollection } = React.useContext(BrowseAppContext);
+    const itemsCollection = useSelector(itemCollectionSelector);
+
+    const activeWebmapItem = useSelector(activeWebmapSelector);
 
     const [ isHide, setIsHide ] = React.useState<boolean>(false);
 

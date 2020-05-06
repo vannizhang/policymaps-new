@@ -1,8 +1,14 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { 
-    BrowseAppContext 
-} from '../../contexts/BrowseAppProvider';
+// import { 
+//     BrowseAppContext 
+// } from '../../contexts/BrowseAppProvider';
+
+import {
+    toggleSidebar,
+    hideSideBarSelectore
+} from '../../store/browseApp/reducers/UI';
 
 interface Props {
     width?: number;
@@ -15,9 +21,13 @@ const SideBar:React.FC<Props> = ({
     children
 })=>{
 
+    const dispatch = useDispatch();
+
+    const hideSideBar = useSelector(hideSideBarSelectore);
+
     const sidebarRef = React.createRef<HTMLDivElement>();
 
-    const { hideSideBar, toggleHideSideBar } = React.useContext(BrowseAppContext);
+    // const { hideSideBar, toggleHideSideBar } = React.useContext(BrowseAppContext);
 
     const onScrollHandler = ()=>{
 
@@ -69,7 +79,9 @@ const SideBar:React.FC<Props> = ({
                     cursor: 'pointer',
                     color: '#fff'
                 }}
-                onClick={toggleHideSideBar}
+                onClick={()=>{
+                    dispatch(toggleSidebar())
+                }}
             >
                 {
                     hideSideBar 

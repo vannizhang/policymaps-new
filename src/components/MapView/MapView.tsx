@@ -1,14 +1,21 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { loadModules, loadCss } from 'esri-loader';
 
-import { 
-    BrowseAppContext 
-} from '../../contexts/BrowseAppProvider';
+// import { 
+//     BrowseAppContext 
+// } from '../../contexts/BrowseAppProvider';
 
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
+
+import {
+    setCenterLocation,
+    centerLocationSelector,
+	activeWebmapSelector
+} from '../../store/browseApp/reducers/map';
 
 interface Props {
     webmapId?: string;
@@ -20,7 +27,13 @@ const MapView:React.FC<Props> = ({
     children
 }: Props)=>{
 
-    const { activeWebmapItem, mapCenterLocation, setMapCenterLocation } = React.useContext(BrowseAppContext);
+    const dispatch = useDispatch();
+
+    const activeWebmapItem = useSelector(activeWebmapSelector);
+
+    const mapCenterLocation = useSelector(centerLocationSelector)
+
+    // const { setMapCenterLocation } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
@@ -93,7 +106,7 @@ const MapView:React.FC<Props> = ({
             watchUtils.whenTrue(mapView, 'stationary', ()=>{
                 // console.log('mapview is stationary', mapView.center, mapView.zoom);
 
-                setMapCenterLocation({
+                const centerLocation = {
                     lat: mapView.center && mapView.center.latitude 
                         ? +mapView.center.latitude.toFixed(3) 
                         : 0,
@@ -101,7 +114,9 @@ const MapView:React.FC<Props> = ({
                         ? +mapView.center.longitude.toFixed(3) 
                         : 0,
                     zoom: mapView.zoom
-                });
+                }
+                
+                dispatch(setCenterLocation(centerLocation));
             });
 
         } catch(err){   
@@ -111,7 +126,13 @@ const MapView:React.FC<Props> = ({
 
     React.useEffect(()=>{
         
-        if(mapView){
+        if(!activeWebmapItem){
+            return;
+        }
+
+        if(!mapView){
+            initMapView();
+        } else {
             updateWebMap();
         }
 
@@ -125,7 +146,6 @@ const MapView:React.FC<Props> = ({
 
     React.useEffect(()=>{
         loadCss();
-        initMapView();
     }, []);
 
     return (

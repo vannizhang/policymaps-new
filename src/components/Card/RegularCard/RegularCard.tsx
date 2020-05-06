@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 
 import classnames from 'classnames';
 import { stringFns } from 'helper-toolkit-ts';
@@ -15,7 +16,16 @@ import {
 
 import {
     toggleAsMyFavItem
-} from '../../../utils/my-favorites/myFav'
+} from '../../../utils/my-favorites/myFav';
+
+import {
+    toggleCollectionItem
+} from '../../../store/browseApp/reducers/itemCollections';
+
+import {
+    setActiveWebmap,
+	activeWebmapSelector
+} from '../../../store/browseApp/reducers/map';
 
 interface Props {
     title: string;
@@ -41,18 +51,21 @@ const RegularCard:React.FC<Props> = ({
     isInCollection=false
 }: Props)=>{
 
-    const { setActiveWebmapItem, toggleFromItemCollections, myFavItems, setMyFavItems } = React.useContext(BrowseAppContext);
+    const dispatch = useDispatch();
+
+    const { myFavItems, setMyFavItems } = React.useContext(BrowseAppContext);
 
     const { esriOAuthUtils } = React.useContext(SiteContext);
 
     const isInMyFavItems = myFavItems.indexOf(itemId) > -1;
 
     const viewBtnOnClickHandler = ()=>{
-        setActiveWebmapItem(item);
+        dispatch(setActiveWebmap(item));
     };
 
     const selectBtnOnClickHandler = ()=>{
-        toggleFromItemCollections(item);
+        // toggleFromItemCollections(item);
+        dispatch(toggleCollectionItem(item));
     };
 
     const myFavBtnOnClickHandler = async()=>{

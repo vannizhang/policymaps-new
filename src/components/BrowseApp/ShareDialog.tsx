@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { 
     BrowseAppContext 
@@ -12,6 +13,10 @@ import {
     batchAdd
 } from '../../utils/my-favorites/myFav';
 
+import {
+    itemCollectionSelector
+} from '../../store/browseApp/reducers/itemCollections';
+
 interface Props {
     onClose?: ()=>void; 
 }
@@ -20,9 +25,11 @@ const ShareDialog:React.FC<Props> = ({
     onClose
 })=>{
 
+    const itemsCollection = useSelector(itemCollectionSelector);
+
     const textInputRef = React.useRef<HTMLInputElement>();
 
-    const { currentUrl, itemsCollection, setMyFavItems } = React.useContext(BrowseAppContext);
+    const { currentUrl, setMyFavItems } = React.useContext(BrowseAppContext);
 
     const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 

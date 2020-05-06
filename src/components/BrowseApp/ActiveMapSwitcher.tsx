@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { 
     BrowseAppContext
 } from '../../contexts/BrowseAppProvider';
@@ -12,6 +14,15 @@ import {
     NavBtn
 } from '../';
 
+import {
+    itemCollectionSelector
+} from '../../store/browseApp/reducers/itemCollections';
+
+import {
+    setActiveWebmap,
+	activeWebmapSelector
+} from '../../store/browseApp/reducers/map';
+
 interface Props {
     isMinimal: boolean;
 }
@@ -20,7 +31,11 @@ const ActiveMapSwitcher:React.FC<Props> = ({
     isMinimal
 })=>{
 
-    const { itemsCollection, activeWebmapItem, setActiveWebmapItem } = React.useContext(BrowseAppContext);
+    const dispatch = useDispatch();
+
+    const itemsCollection = useSelector(itemCollectionSelector);
+
+    const activeWebmapItem = useSelector(activeWebmapSelector);
 
     const getIndexForActiveWebmap = ()=>{
         const itemIds = itemsCollection.map(item=>item.id);
@@ -34,7 +49,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
             ? itemsCollection[index + 1]
             : itemsCollection[0];
 
-        setActiveWebmapItem(nextItem);
+        dispatch(setActiveWebmap(nextItem));
     };
 
     const showPrev = ()=>{
@@ -44,7 +59,8 @@ const ActiveMapSwitcher:React.FC<Props> = ({
         ? itemsCollection[index - 1]
         : itemsCollection[itemsCollection.length - 1];
 
-        setActiveWebmapItem(prevItem);
+        // setActiveWebmapItem(prevItem);
+        dispatch(setActiveWebmap(prevItem));
     };
 
     // get message that indicate the position of active webmap in the item collections (e.g. Map 2 of 5)
@@ -59,7 +75,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
         return `Map ${ index + 1 } of ${itemsCollection.length}`;
     };
 
-    return (
+    return activeWebmapItem ? (
         <div
             className={'active-map-switcher'}
             style={{
@@ -133,7 +149,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
 
 
         </div>
-    );
+    ) : null;
 };
 
 export default ActiveMapSwitcher;

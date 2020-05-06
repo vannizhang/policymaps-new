@@ -4,7 +4,7 @@ export { default as PageLoadingIndicator } from './PageLoadingIndicator/LoadingI
 
 export { default as SiteNav } from './SiteNav/SiteNav';
 
-export { default as BrowseApp } from './BrowseApp/BrowseApp';
+export { default as BrowseApp } from './BrowseApp/App/AppContainer';
 
 export { default as MapView } from './MapView/MapView';
 
