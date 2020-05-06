@@ -18,7 +18,7 @@ import {
 
 import CardList, {
     CardListData
-} from '../CardList/CardList';
+} from './CardList';
 
 import {
     toggleAsMyFavItem

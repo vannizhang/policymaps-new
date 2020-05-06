@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {
     NavBtn
-} from '../../';
+} from '../..';
 
 interface Props {
     isMinimal: boolean;
