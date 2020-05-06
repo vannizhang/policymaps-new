@@ -33,8 +33,6 @@ const TopNav:React.FC<Props> = ({
 
     const containerRef = React.useRef<HTMLDivElement>();
 
-    // const { hideSideBar } = React.useContext(BrowseAppContext);
-
     const hideSideBar = useSelector(hideSideBarSelectore);
 
     const [ isMinimal, setIsMinimal ] = React.useState<boolean>(false);

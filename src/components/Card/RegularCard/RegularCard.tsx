@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classnames from 'classnames';
 import { stringFns } from 'helper-toolkit-ts';
@@ -23,9 +23,13 @@ import {
 } from '../../../store/browseApp/reducers/itemCollections';
 
 import {
-    setActiveWebmap,
-	activeWebmapSelector
+    setActiveWebmap
 } from '../../../store/browseApp/reducers/map';
+
+import {
+    setMyFavItems,
+	myFavItemsSelector
+} from '../../../store/browseApp/reducers/myFavItems';
 
 interface Props {
     title: string;
@@ -53,7 +57,7 @@ const RegularCard:React.FC<Props> = ({
 
     const dispatch = useDispatch();
 
-    const { myFavItems, setMyFavItems } = React.useContext(BrowseAppContext);
+    const myFavItems = useSelector(myFavItemsSelector);
 
     const { esriOAuthUtils } = React.useContext(SiteContext);
 
@@ -71,7 +75,8 @@ const RegularCard:React.FC<Props> = ({
     const myFavBtnOnClickHandler = async()=>{
         try {
             const myFavItems = await toggleAsMyFavItem(itemId);
-            setMyFavItems(myFavItems);
+            // setMyFavItems(myFavItems);
+            dispatch(setMyFavItems(myFavItems))
         } catch(err){
             esriOAuthUtils.sigIn();
             // console.error(err);

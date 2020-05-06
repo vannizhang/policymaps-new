@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { 
-//     BrowseAppContext 
-// } from '../../contexts/BrowseAppProvider';
-
 import {
     toggleSidebar,
     hideSideBarSelectore
@@ -26,8 +22,6 @@ const SideBar:React.FC<Props> = ({
     const hideSideBar = useSelector(hideSideBarSelectore);
 
     const sidebarRef = React.createRef<HTMLDivElement>();
-
-    // const { hideSideBar, toggleHideSideBar } = React.useContext(BrowseAppContext);
 
     const onScrollHandler = ()=>{
 

@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { loadModules, loadCss } from 'esri-loader';
 
-// import { 
-//     BrowseAppContext 
-// } from '../../contexts/BrowseAppProvider';
-
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
@@ -32,8 +28,6 @@ const MapView:React.FC<Props> = ({
     const activeWebmapItem = useSelector(activeWebmapSelector);
 
     const mapCenterLocation = useSelector(centerLocationSelector)
-
-    // const { setMapCenterLocation } = React.useContext(BrowseAppContext);
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 

@@ -32,10 +32,10 @@ interface BrowseAppContextProps {
     // mapCenterLocation: Location;
     // setMapCenterLocation: (location:Location)=>void;
 
-    myFavItems: string[];
-    setMyFavItems: (items: string[])=>void;
+    // myFavItems: string[];
+    // setMyFavItems: (items: string[])=>void;
 
-    currentUrl: string;
+    // currentUrl: string;
 };
 
 interface BrowseAppContextProviderProps {
@@ -67,9 +67,9 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
 
     // const [ mapCenterLocation, setMapCenterLocation ] = React.useState<Location>(defaultLocation);
 
-    const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
+    // const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
 
-    const [ myFavItems, setMyFavItems ] = React.useState<string[]>([]);
+    // const [ myFavItems, setMyFavItems ] = React.useState<string[]>([]);
 
     // const toggleFromItemCollections = (item:AgolItem)=>{
     //     const itemIds = itemsCollection.map(d=>d.id);
@@ -141,27 +141,27 @@ export const BrowseAppContextProvider:React.FC<BrowseAppContextProviderProps> = 
         // mapCenterLocation,
         // setMapCenterLocation,
 
-        myFavItems,
-        setMyFavItems,
+        // myFavItems,
+        // setMyFavItems,
 
-        currentUrl
+        // currentUrl
     };
 
     // React.useEffect(()=>{
     //     fetchData();
     // }, []);
 
-    React.useEffect(()=>{
-        encodeSearchParams({
-            // activeWebmapId: activeWebmapItem ? activeWebmapItem.id : '',
-            // collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
-            // location: mapCenterLocation,
-            // isSideBarHide: hideSideBar
-        });
+    // React.useEffect(()=>{
+    //     encodeSearchParams({
+    //         // activeWebmapId: activeWebmapItem ? activeWebmapItem.id : '',
+    //         // collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+    //         // location: mapCenterLocation,
+    //         // isSideBarHide: hideSideBar
+    //     });
 
-        setCurrentUrl(window.location.href);
+    //     setCurrentUrl(window.location.href);
         
-    }, []);
+    // }, []);
 
     return (
         <BrowseAppContext.Provider value={value}>

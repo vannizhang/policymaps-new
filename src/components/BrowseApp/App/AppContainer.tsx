@@ -36,6 +36,10 @@ import {
     setActiveWebmap
 } from '../../../store/browseApp/reducers/map';
 
+import {
+    setMyFavItems
+} from '../../../store/browseApp/reducers/myFavItems';
+
 import { Tier } from '../../../AppConfig';
 
 const BrowseAppContainer:React.FC = ()=>{
@@ -74,6 +78,9 @@ const BrowseAppContainer:React.FC = ()=>{
 
     const fetchMyFavItems = async()=>{
         const myFavItems = await getMyFavItemIds();
+        // console.log('myFavItems', myFavItems)
+
+        dispatch(setMyFavItems(myFavItems));
     };
 
     const fetchItems = async(itemIds: string[])=>{
@@ -96,6 +103,7 @@ const BrowseAppContainer:React.FC = ()=>{
     React.useEffect(()=>{
         fetchItemCollections();
         fecthActiveWebmapItem();
+        fetchMyFavItems();
     }, []);
 
     return <BrowseApp

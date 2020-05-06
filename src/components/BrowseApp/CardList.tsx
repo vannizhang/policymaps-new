@@ -18,7 +18,6 @@ import {
 } from '../../store/browseApp/reducers/itemCollections';
 
 import {
-    setActiveWebmap,
 	activeWebmapSelector
 } from '../../store/browseApp/reducers/map';
 
@@ -66,7 +65,7 @@ const CardList: React.FC<Props> = ({
                         imageUrl={item.thumbnailUrl}
                         item={item}
 
-                        viewOnMap={ item.id === activeWebmapItem.id }
+                        viewOnMap={ activeWebmapItem && item.id === activeWebmapItem.id }
                         isInCollection={isInCollection(item.id)}
                     />
                 </div>

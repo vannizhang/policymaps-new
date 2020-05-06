@@ -17,6 +17,23 @@ import {
     itemCollectionSelector
 } from '../../store/browseApp/reducers/itemCollections';
 
+import {
+    activeWebmapSelector,
+    centerLocationSelector
+} from '../../store/browseApp/reducers/map';
+
+import {
+    hideSideBarSelectore
+} from '../../store/browseApp/reducers/UI';
+
+import {
+    setMyFavItems
+} from '../../store/browseApp/reducers/myFavItems';
+
+import {
+    encodeSearchParams
+} from '../../utils/url-manager/BrowseAppUrlManager';
+
 interface Props {
     onClose?: ()=>void; 
 }
@@ -25,13 +42,23 @@ const ShareDialog:React.FC<Props> = ({
     onClose
 })=>{
 
+    const dispatch = useDispatch();
+
     const itemsCollection = useSelector(itemCollectionSelector);
+
+    const activeWebmap = useSelector(activeWebmapSelector);
+
+    const centerLocation = useSelector(centerLocationSelector);
+
+    const hideSidebar = useSelector(hideSideBarSelectore);
 
     const textInputRef = React.useRef<HTMLInputElement>();
 
-    const { currentUrl, setMyFavItems } = React.useContext(BrowseAppContext);
+    // const { currentUrl } = React.useContext(BrowseAppContext);
 
     const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
+
+    const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
 
     const shareToSocialMedia = (name='')=>{
         const socialmediaLookUp = {
@@ -79,11 +106,25 @@ const ShareDialog:React.FC<Props> = ({
         try {
             const itemIds = itemsCollection.map(d=>d.id);
             const myFavItems = await batchAdd(itemIds);
-            setMyFavItems(myFavItems);
+            // setMyFavItems(myFavItems);
+            dispatch(setMyFavItems(myFavItems));
         } catch(err){
             esriOAuthUtils.sigIn();
         }
     }
+
+    React.useEffect(()=>{
+
+        encodeSearchParams({
+            activeWebmapId: activeWebmap ? activeWebmap.id : '',
+            collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+            location: centerLocation,
+            isSideBarHide: hideSidebar
+        });
+
+        setCurrentUrl(window.location.href);
+        
+    }, [itemsCollection, activeWebmap, centerLocation, hideSidebar])
 
     return (
         <div
