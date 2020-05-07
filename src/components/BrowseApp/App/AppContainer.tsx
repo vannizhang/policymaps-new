@@ -240,6 +240,7 @@ const BrowseAppContainer:React.FC = ()=>{
     return <BrowseApp
         disableSearch={isSearchDisabled}
         searchResults={webMapItems}
+        searchResultsCount={searchResponse ? searchResponse.total : 0}
         categorySchema={categorySchema}
 
         sidebarScrolledToEnd={searchMoreItems}

@@ -37,6 +37,7 @@ interface Props {
     // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
     disableSearch?: boolean
     searchResults: AgolItem[];
+    searchResultsCount: number;
     categorySchema: CategorySchemaDataItem;
 
     sidebarScrolledToEnd?: ()=>void
@@ -47,6 +48,7 @@ interface Props {
 const BrowseApp:React.FC<Props>= ({
     disableSearch,
     searchResults,
+    searchResultsCount,
     categorySchema,
 
     sidebarScrolledToEnd,
@@ -147,6 +149,7 @@ const BrowseApp:React.FC<Props>= ({
             <CardList 
                 title={'Search Results'}
                 data={searchResults}
+                itemCount={searchResultsCount}
             />
         )
     }

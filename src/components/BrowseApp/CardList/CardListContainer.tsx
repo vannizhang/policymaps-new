@@ -33,12 +33,14 @@ import { AgolItem } from '../../../utils/arcgis-online-group-data';
 
 interface Props {
     title: string;
-    data: AgolItem[]
+    data: AgolItem[];
+    itemCount?: number;
 }
 
 const CardListContainer:React.FC<Props> = ({
-    title,
-    data
+    title = '',
+    data = [],
+    itemCount = 0
 })=>{
 
     const { esriOAuthUtils } = React.useContext(SiteContext);
@@ -77,7 +79,7 @@ const CardListContainer:React.FC<Props> = ({
     return (
         <CardList 
             items={getData()}
-            itemCount={data ? data.length : 0}
+            itemCount={itemCount || data.length}
             title={title}
 
             viewBtnOnClick={(item)=>{
