@@ -192,7 +192,12 @@ export default class GroupData {
         const queryStrings = [];
 
         if(searchTerm){
-            queryStrings.push(`(${searchTerm})`);
+            
+            const cleanedSearchTerm = searchTerm
+                .replace(/[!@#\$%\^&\*\(\)\{\}\?<>\+:;",\.\\]/g,'')
+                .replace(/\s+/g, ' ');
+
+            queryStrings.push(`(${cleanedSearchTerm})`);
         }
 
         if(contentType){
@@ -233,7 +238,6 @@ export default class GroupData {
         start = 1,
         num = 10
     }={}): string{
-
         const q = this.getQueryString();
 
         const categories = this.getCategoryPath();
