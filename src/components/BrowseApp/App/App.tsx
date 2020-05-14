@@ -96,6 +96,7 @@ const BrowseApp:React.FC<Props>= ({
                         groupId={Tier.PROD.AGOL_GROUP_ID }
                         onSelect={searchAutoCompleteOnChange}
                         placeholder={'Search and Filter Datasets'}
+                        filters={'type:"web map"'}
                     />
                 </div>
 

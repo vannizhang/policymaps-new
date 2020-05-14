@@ -3,6 +3,8 @@ import axios from 'axios';
 interface Props {
     searchTerm: string;
     groupId: string;
+    // type:"web map"
+    filters: string;
     agolHost?: string;
 }
 
@@ -25,6 +27,7 @@ export interface SuggestApiResponse {
 export const getSearchSuggest = async({
     searchTerm,
     groupId,
+    filters,
     agolHost = 'https://www.arcgis.com'
 }:Props): Promise<SuggestApiResponse>=>{
 
@@ -34,7 +37,8 @@ export const getSearchSuggest = async({
     }
 
     try {
-        const requestUrl = `${agolHost}/sharing/rest/search/suggest?f=json&suggest=${searchTerm}&filters=group:${groupId}`;
+        const filterString = [ `group:"${groupId}"`, filters ].filter(d=>d).join(' AND ');
+        const requestUrl = `${agolHost}/sharing/rest/search/suggest?f=json&suggest=${searchTerm}&filters=${filterString}`;
         const { data } = await axios.get(requestUrl);
 
         return data;

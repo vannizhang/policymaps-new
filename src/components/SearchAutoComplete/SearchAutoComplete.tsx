@@ -11,6 +11,8 @@ interface Props {
     groupId: string;
     agolHost?: string;
     placeholder?: string;
+    // type:"web map"
+    filters?: string;
 
     onSelect?: (val:string)=>void;
 }
@@ -19,6 +21,7 @@ const SearchAutoComplete:React.FC<Props> = ({
     groupId,
     agolHost = 'https://www.arcgis.com',
     placeholder = 'Search items',
+    filters = '',
     onSelect
 })=>{
 
@@ -35,7 +38,8 @@ const SearchAutoComplete:React.FC<Props> = ({
             const res = await getSearchSuggest({
                 searchTerm: val,
                 groupId,
-                agolHost
+                agolHost,
+                filters
             });
 
             const results = res && res.results || [];
