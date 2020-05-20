@@ -1,6 +1,7 @@
 import './style.scss';
 import * as React from 'react';
 import { stringFns } from 'helper-toolkit-ts';
+import shortid from 'shortid';
 
 import {
     getSearchSuggest,
@@ -147,7 +148,7 @@ const SearchAutoComplete:React.FC<Props> = ({
             // const iconUrl = getIconUrl(d.type, d.typeKeywords);
 
             return (
-                <div key={`suggestion-item-${i}`} 
+                <div key={`suggestion-item-${shortid.generate()}`} 
                     className={`suggestion-item font-size--2 ${isActiveCandidate}`} 
                     onClick={suggestionOnSelect.bind(this, title)}
                 >
