@@ -1,4 +1,5 @@
 import * as React from 'react';
+import shortid from 'shortid';
 
 import Card from './Card';
 
@@ -48,7 +49,7 @@ const CardList: React.FC<Props> = ({
 
             return ( 
                 <div 
-                    key={`list-item-${id}`}
+                    key={`list-item-${shortid.generate()}`}
                     className='block trailer-half'
                 >
                     <Card 
