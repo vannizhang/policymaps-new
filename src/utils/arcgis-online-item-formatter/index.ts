@@ -54,11 +54,41 @@ export const formatAsAgolItem = (item:AgolItem, {
     item.itemIconUrl = getIconUrl(item.type, item.typeKeywords);
 
     item.typeDisplayName = getDisplayName(item.type, item.typeKeywords);
+
+    item.url = getUrl(item);
+
     return item;
 };
 
-const getAgolItemUrl = (itemId='', agolHost='')=>{
-    agolHost = agolHost || 'https://www.arcgis.com';
+const getUrl = (item:AgolItem, agolHost = 'https://www.arcgis.com')=>{
+
+    const { url, id, typeDisplayName } = item;
+
+    if(url){
+        return url
+    };
+
+    const urlAgolItemPage = `${agolHost}/home/item.html?id=${id}`;
+    const urlForWebmap = `${agolHost}/home/webmap/viewer.html?webmap=${id}`;
+    const urlForPdfFile = `${agolHost}/sharing/rest/content/items/${id}/data`;
+    const urlForLayer = `${agolHost}/home/webmap/viewer.html?useExisting=1&layers=${id}`;
+    const urlForDashboard = `${agolHost}/apps/opsdashboard/index.html#/${id}`;
+
+    const urlByContentType = {
+        'Web Map': urlForWebmap,
+        'PDF': urlForPdfFile,
+        'Feature Layer': urlForLayer,
+        'Tile Layer': urlForLayer,
+        'Imagery Layer': urlForLayer,
+        'Map Image Layer': urlForLayer,
+        'Dashboard': urlForDashboard
+    };
+
+    return urlByContentType[typeDisplayName] || urlAgolItemPage;
+}
+
+const getAgolItemUrl = (itemId='', agolHost='https://www.arcgis.com')=>{
+    // agolHost = agolHost || 'https://www.arcgis.com';
     return agolHost + "/home/item.html?id=" + itemId;
 };
 

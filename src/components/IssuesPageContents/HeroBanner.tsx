@@ -47,6 +47,8 @@ const HeroBanner:React.FC<Props> = ({
 
         const navBtns = categorySchema.categories.map((category, index)=>{
 
+            const { title } = category;
+
             const classNames = classnames('sub-nav-link cursor-pointer', {
                 'is-active': category.title === activeMainCategoryTitle
             });
@@ -55,9 +57,9 @@ const HeroBanner:React.FC<Props> = ({
                 <span 
                     key={`sub-nav-link-${index}`}
                     className={classNames}
-                    onClick={setActiveMainCategoryTitle.bind(this, category.title)}
+                    onClick={setActiveMainCategoryTitle.bind(this, title)}
                 >
-                    {category.title}
+                    {title}
                 </span>
             )
         });

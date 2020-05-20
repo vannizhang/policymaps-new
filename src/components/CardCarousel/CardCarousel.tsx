@@ -56,12 +56,13 @@ const CardCarousel:React.FC<Props> = ({
                     typeDisplayName,
                     url,
                     title,
-                    snippet
+                    snippet,
+                    id
                 } = d;
 
                 return (
                     <CalciteCard 
-                        key={`policy-questions-card-${i}`}
+                        key={`policy-questions-card-${id}`}
                         title={title}
                         url={url}
                         descriptions={snippet}

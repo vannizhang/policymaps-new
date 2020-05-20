@@ -33,7 +33,7 @@ const SiteNav: React.FC<Props> = ({
             const isActive = currentPath === targetPathnames[targetPathnames.length - 1];
 
             return (
-                <div className='esri-sub-nav-link-item' key={`sub-nav-link-${i}`}>
+                <div className='esri-sub-nav-link-item' key={`sub-nav-link-${d.path}`}>
                     <a 
                         className='esri-sub-nav-link' 
                         href={d.path}

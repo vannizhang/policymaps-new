@@ -48,7 +48,7 @@ const CardList: React.FC<Props> = ({
 
             return ( 
                 <div 
-                    key={`list-item-${index}`}
+                    key={`list-item-${id}`}
                     className='block trailer-half'
                 >
                     <Card 

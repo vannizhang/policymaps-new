@@ -23,14 +23,15 @@ const CardList:React.FC<Props> = ({
                 thumbnailUrl,
                 agolItemUrl,
                 itemIconUrl,
-                typeDisplayName
+                typeDisplayName,
+                id
             } = d;
 
             const ownerProfileUrl = `//www.arcgis.com/home/search.html?q=owner:${owner}`;
 
             return (
                 <div
-                    key={`list-card-${i}`}
+                    key={`list-card-${id}`}
                     className='trailer-1'
                     style={{
                         'boxShadow': '0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 16px 0 rgba(0, 0, 0, 0.05)',
