@@ -1,6 +1,7 @@
 import './style.scss';
 import * as React from 'react';
 import classnames from 'classnames';
+import shortid from 'shortid';
 
 import {
     NavBtn
@@ -71,7 +72,7 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
 
             return (
                 <div 
-                    key={`industry-perspectives-card-${i}`}
+                    key={`industry-perspectives-card-${shortid.generate()}`}
                     className={classNames} 
                     data-item-id={id}
                 >

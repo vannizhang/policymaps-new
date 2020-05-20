@@ -1,4 +1,5 @@
 import * as React from 'react';
+import shortid from 'shortid';
 
 import { 
     CategorySchemaDataItem
@@ -52,7 +53,7 @@ const CategoryFilter:React.FC<Props> = ({
 
             return (
                 <div
-                    key={`catgeory-filter-option-${index}`}
+                    key={`catgeory-filter-option-${shortid.generate()}`}
                     style={{
                         ...optionBtnStyle,
                         'borderLeft': activeSubCategories.length === 1 && activeSubCategories[0] === title
