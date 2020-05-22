@@ -57,7 +57,7 @@ const RegularCard:React.FC<Props> = ({
                     'boxSizing': 'border-box'
                 }}
                 className='cursor-pointer'
-                title={ isMyFav ? 'Reomve from Favorites' : 'Add to Favorites'}
+                title={ isMyFav ? 'Remove from Favorites' : 'Add to Favorites'}
                 onClick={toggleAsMyFavBtnOnClick.bind(this, item)}
             >
                 <svg 
