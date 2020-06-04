@@ -39,7 +39,7 @@ const ShareDialog:React.FC<Props> = ({
             }}
         >
             <div className="trailer-half">
-                <span className="font-size--2 avenir-demi">Share this collection</span>
+                <span className="font-size--2 avenir-demi">Share this map collection</span>
                 <span 
                     className="font-size--2 icon-ui-close right" 
                     style={{ 'cursor': 'pointer' }}
@@ -99,7 +99,7 @@ const ShareDialog:React.FC<Props> = ({
                             'cursor': 'pointer' 
                         }}
                         onClick={addToMyFavBtnOnClick}
-                    >Add collections to Favorites</span>
+                    >Add map collection to Favorites</span>
                 </div>
                 
             </div>
