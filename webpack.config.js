@@ -6,6 +6,8 @@ const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
+const SiteTitle = 'Esri Maps for Public Policy';
+
 module.exports =  (env, options)=> {
 
     const devMode = options.mode === 'development' ? true : false;
@@ -126,6 +128,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './overview/index.html',
                 chunks: ['overview'],
+                title: `Overview | ${SiteTitle}`,
+                meta: {
+                    description: 'Esri Maps for Public Policy offers maps, layers, training, and other resources to help policymakers make data-driven decisions.'
+                },
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -146,6 +152,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './browse/index.html',
                 chunks: ['browse'],
+                title: `Browse | ${SiteTitle}`,
+                meta: {
+                    description: 'Access maps and analysis that act as the baseline for your research and policy decisions'
+                },
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -166,6 +176,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './issues/index.html',
                 chunks: ['issues'],
+                title: `Issues | ${SiteTitle}`,
+                meta: {
+                    description: 'Browse the curated datasets on major topics including economic opportunity, social equity, health, sustainability, and more'
+                },
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
@@ -186,6 +200,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './resources/index.html',
                 chunks: ['resources'],
+                title: `Resources | ${SiteTitle}`,
+                meta: {
+                    description: 'Get education, training, and best practices that help raise your data literacy'
+                },
                 minify: {
                     html5                          : true,
                     collapseWhitespace             : true,
