@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const SiteTitle = 'Esri Maps for Public Policy';
 
@@ -219,7 +220,8 @@ module.exports =  (env, options)=> {
                     useShortDoctype                : true
                 }
             }),
-            new CleanWebpackPlugin()
+            new CleanWebpackPlugin(),
+            new BundleAnalyzerPlugin()
         ].filter(Boolean),
         optimization: {
             minimizer: [
