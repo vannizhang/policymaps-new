@@ -1,5 +1,4 @@
 import * as React from 'react';
-import shortid from 'shortid';
 
 import { 
     CategorySchemaDataItem,
@@ -148,7 +147,7 @@ const CategoryFilter:React.FC<Props> = ({
             const checkboxClass = selected ? 'icon-ui-checkbox-checked' : 'icon-ui-checkbox-unchecked';
 
             return (
-                <div key={`subcategory-filter-${shortid.generate()}`}>
+                <div key={`subcategory-filter-${subcategory.title}`}>
                     <span 
                         className={`${checkboxClass} font-size--2`}
                         onClick={toggleSubcategory.bind(this, mainCategory, subcategory.title)}
@@ -178,7 +177,7 @@ const CategoryFilter:React.FC<Props> = ({
 
             return (
                 <div 
-                    key={`category-filter-${shortid.generate()}`}
+                    key={`category-filter-${mainCategory.title}`}
                     style={{
                         'padding': '.5rem 1rem',
                         'borderBottom': '1px solid #efefef',
@@ -224,7 +223,7 @@ const CategoryFilter:React.FC<Props> = ({
 
             return (
                 <div 
-                    key={`subcategory-chip-${shortid.generate()}`}
+                    key={`subcategory-chip-${subcategory}`}
                     style={chipStyle}
                 >
                     <span className='font-size--3'>{subcategory}</span>

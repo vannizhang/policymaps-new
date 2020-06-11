@@ -1,6 +1,5 @@
 import './style.scss';
 import * as React from 'react';
-import shortid from 'shortid';
 
 export interface NavLinkData {
     label: string;
@@ -34,7 +33,7 @@ const SiteNav: React.FC<Props> = ({
             const isActive = currentPath === targetPathnames[targetPathnames.length - 1];
 
             return (
-                <div className='esri-sub-nav-link-item' key={`sub-nav-link-${shortid.generate()}`}>
+                <div className='esri-sub-nav-link-item' key={`sub-nav-link-${i}`}>
                     <a 
                         className='esri-sub-nav-link' 
                         href={d.path}

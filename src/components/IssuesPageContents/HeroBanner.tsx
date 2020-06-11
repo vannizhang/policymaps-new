@@ -1,5 +1,4 @@
 import * as React from 'react';
-import shortid from 'shortid';
 
 import { 
     CategorySchemaDataItem
@@ -56,7 +55,7 @@ const HeroBanner:React.FC<Props> = ({
 
             return (
                 <span 
-                    key={`sub-nav-link-${shortid.generate()}`}
+                    key={`sub-nav-link-${title}`}
                     className={classNames}
                     onClick={setActiveMainCategoryTitle.bind(this, title)}
                 >

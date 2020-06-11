@@ -1,5 +1,4 @@
 import * as React from 'react';
-import shortid from 'shortid';
 
 import {
     NavBtn,
@@ -63,7 +62,7 @@ const CardCarousel:React.FC<Props> = ({
 
                 return (
                     <CalciteCard 
-                        key={`policy-questions-card-${shortid.generate()}`}
+                        key={id}
                         title={title}
                         url={url}
                         descriptions={snippet}

@@ -1,7 +1,6 @@
 import './TopicsExplorer.scss';
 import * as React from 'react';
 import axios from 'axios';
-import shortid from 'shortid';
 
 import { loadModules, loadCss } from 'esri-loader';
 
@@ -186,11 +185,14 @@ const TopicsExplorer:React.FC = ()=>{
     const getNavDots = ()=>{
 
         const dots = highlightedTopics.map((d, i)=>{
+
+            const { tooltip } = d;
+
             return (
                 <div
-                    key={`nav-dot-${shortid.generate()}`}
+                    key={`nav-dot-${tooltip}`}
                     className='tooltip tooltip-top'
-                    aria-label={d.tooltip}
+                    aria-label={tooltip}
                     style={{
                         'width': '12px',
                         'height': '12px',

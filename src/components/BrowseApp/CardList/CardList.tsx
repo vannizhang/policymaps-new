@@ -1,5 +1,4 @@
 import * as React from 'react';
-import shortid from 'shortid';
 
 import Card from './Card';
 
@@ -39,7 +38,7 @@ const CardList: React.FC<Props> = ({
     };
 
     const getList = ()=>{
-        const cards = items.map((item, index)=>{
+        const cards = items.map((item)=>{
 
             const { data, inCollection, viewOnMap, isMyFav } = item;
 
@@ -49,7 +48,7 @@ const CardList: React.FC<Props> = ({
 
             return ( 
                 <div 
-                    key={`list-item-${shortid.generate()}`}
+                    key={`list-item-${id}`}
                     className='block trailer-half'
                 >
                     <Card 

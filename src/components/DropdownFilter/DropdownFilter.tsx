@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import shortid from 'shortid';
 
 interface DataItem {
     label: string;
@@ -79,7 +78,7 @@ const DropdownFilter:React.FC<Props> = ({
 
             return (
                 <div
-                    key={`dropdown-filter-option-${shortid.generate()}`}
+                    key={`dropdown-filter-option-${label}`}
                     className='cursor-pointer'
                     onClick={onClickHandler.bind(this, value)}
                 >
