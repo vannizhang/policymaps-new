@@ -21,7 +21,8 @@ const SiteWrapper:React.FC = ({
 
         try {
             setDefaultOptions({
-                version: '4.15'
+                // version: '4.15',
+                url: 'https://js.arcgis.com/next/'
             });
         
             const esriOAuthUtils = new EsriOAuth({
