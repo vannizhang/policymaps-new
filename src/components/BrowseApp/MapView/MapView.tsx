@@ -4,6 +4,7 @@ import { loadModules, loadCss } from 'esri-loader';
 import IMapView from 'esri/views/MapView';
 import IWebMap from "esri/WebMap";
 import IwatchUtils from 'esri/core/watchUtils';
+import IExtent from "esri/geometry/Extent";
 
 import { 
     AgolItem 
@@ -25,6 +26,44 @@ interface Props {
 
     children?: React.ReactNode;
 };
+
+const getPreferredExtent = async(item:AgolItem):Promise<IExtent>=>{
+
+    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Local') === -1){
+        return null;
+    }
+
+    type Modules = [typeof IExtent];
+
+    const [ 
+        Extent
+    ] = await (loadModules([
+        'esri/geometry/Extent'
+    ]) as Promise<Modules>);
+
+    const [ xmin, ymin ] = item.extent[0];
+    const [ xmax, ymax ] = item.extent[1];
+
+    return new Extent({
+        xmin,
+        xmax,
+        ymin,
+        ymax
+    });
+}
+
+const getPreferredZoom = (item:AgolItem):number=>{
+
+    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Regional') === -1){
+        return 9;
+    }
+
+    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/National') === -1){
+        return 5;
+    }
+
+    return 0;
+}
 
 const MapView:React.FC<Props> = ({
     webmapItem,
@@ -86,6 +125,18 @@ const MapView:React.FC<Props> = ({
                     id: webmapItem.id
                 }
             });
+
+            const preferredExtent = await getPreferredExtent(webmapItem);
+
+            const preferredZoom = await getPreferredZoom(webmapItem);
+
+            if(preferredExtent){
+                mapView.extent = preferredExtent;
+            }
+
+            if(!preferredExtent && preferredZoom > 0){
+                mapView.zoom = preferredZoom;
+            }
 
         } catch(err){   
             console.error(err);

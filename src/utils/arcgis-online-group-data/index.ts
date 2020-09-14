@@ -56,6 +56,7 @@ export interface AgolItem {
     url?: string;
     tags?: string[];
     thumbnail?: string;
+    groupCategories: string[];
     [key: string]: any;
 };
 
