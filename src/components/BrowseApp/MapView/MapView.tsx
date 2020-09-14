@@ -90,6 +90,8 @@ const MapView:React.FC<Props> = ({
                 'esri/WebMap',
             ]) as Promise<Modules>);
 
+            const preferredExtent = await getPreferredExtent(webmapItem);
+
             const view = new MapView({
                 container: mapDivRef.current,
                 map: new WebMap({
@@ -97,8 +99,9 @@ const MapView:React.FC<Props> = ({
                         id: webmapItem.id
                     }  
                 }),
-                center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
-                zoom: initialZoom
+                extent: preferredExtent || undefined,
+                center: initialCenter && !preferredExtent ? [ initialCenter.lon, initialCenter.lat ] : undefined,
+                zoom: initialZoom && !preferredExtent ? initialZoom : undefined
             });
 
             view.when(()=>{
