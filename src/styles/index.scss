@@ -3,3 +3,10 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+#root {
+    .esri-search__submit-button {
+        border: none;
+        border-left: solid 1px #efefef;
+    }
+}

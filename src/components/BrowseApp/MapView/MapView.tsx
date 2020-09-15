@@ -27,9 +27,18 @@ interface Props {
     children?: React.ReactNode;
 };
 
+// get preferred extent for webmap covers local topics
 const getPreferredExtent = async(item:AgolItem):Promise<IExtent>=>{
 
-    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Local') === -1){
+    const isLocal = item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Local') > -1;
+    const isRegional = item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Regional') > -1;
+    const isNational = item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/National') > -1;
+
+    if(isRegional && isNational){
+        return null;
+    }
+
+    if(!isLocal){
         return null;
     }
 
@@ -50,19 +59,7 @@ const getPreferredExtent = async(item:AgolItem):Promise<IExtent>=>{
         ymin,
         ymax
     });
-}
 
-const getPreferredZoom = (item:AgolItem):number=>{
-
-    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/Regional') === -1){
-        return 9;
-    }
-
-    if(item.groupCategories.indexOf('/Categories/Resources/Ready to Use Maps/National') === -1){
-        return 5;
-    }
-
-    return 0;
 }
 
 const MapView:React.FC<Props> = ({
@@ -90,7 +87,7 @@ const MapView:React.FC<Props> = ({
                 'esri/WebMap',
             ]) as Promise<Modules>);
 
-            const preferredExtent = await getPreferredExtent(webmapItem);
+            const preferredExtent = !initialCenter && !initialZoom ? await getPreferredExtent(webmapItem) : undefined;
 
             const view = new MapView({
                 container: mapDivRef.current,
@@ -99,9 +96,9 @@ const MapView:React.FC<Props> = ({
                         id: webmapItem.id
                     }  
                 }),
-                extent: preferredExtent || undefined,
-                center: initialCenter && !preferredExtent ? [ initialCenter.lon, initialCenter.lat ] : undefined,
-                zoom: initialZoom && !preferredExtent ? initialZoom : undefined
+                extent: preferredExtent,
+                center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
+                zoom: initialZoom ? initialZoom : undefined
             });
 
             view.when(()=>{
@@ -131,15 +128,15 @@ const MapView:React.FC<Props> = ({
 
             const preferredExtent = await getPreferredExtent(webmapItem);
 
-            const preferredZoom = await getPreferredZoom(webmapItem);
-
             if(preferredExtent){
                 mapView.extent = preferredExtent;
             }
 
-            if(!preferredExtent && preferredZoom > 0){
-                mapView.zoom = preferredZoom;
-            }
+            // const preferredZoom = await getPreferredZoom(webmapItem);
+
+            // if(!preferredExtent && preferredZoom > 0){
+            //     mapView.zoom = preferredZoom;
+            // }
 
         } catch(err){   
             console.error(err);
