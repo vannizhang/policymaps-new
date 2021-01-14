@@ -11,6 +11,11 @@ import { SiteContextProvider } from '../../contexts/SiteContextProvider';
 import EsriOAuth from '../../utils/Esri-OAuth';
 import { Tier } from '../../AppConfig';
 
+// setDefaultOptions({
+//     // version: '4.15',
+//     url: 'https://js.arcgis.com/next/'
+// });
+
 const SiteWrapper:React.FC = ({
     children
 })=>{
@@ -20,11 +25,6 @@ const SiteWrapper:React.FC = ({
     const init = async()=>{
 
         try {
-            setDefaultOptions({
-                // version: '4.15',
-                url: 'https://js.arcgis.com/next/'
-            });
-        
             const esriOAuthUtils = new EsriOAuth({
                 appId: Tier.PROD.OAUTH_APPID
             });
