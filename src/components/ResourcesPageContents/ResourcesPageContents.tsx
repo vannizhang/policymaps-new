@@ -95,7 +95,7 @@ const ResourcesPageContents:React.FC = ()=>{
                 return b.modified - a.modified
             });
 
-            // console.log(cardsData)
+            console.log(cardsData)
 
             dataBySections[key] = {
                 featured,

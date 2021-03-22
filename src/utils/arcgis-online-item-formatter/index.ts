@@ -22,6 +22,8 @@ export interface AgolItem {
     agolItemUrl?: string;
     itemIconUrl?: string;
     typeDisplayName?: string;
+    // the special item type assigned by policy maps team
+    specialItemType?: string;
     modified?: number;
     created?: number;
     [key: string]: any;
@@ -59,8 +61,25 @@ export const formatAsAgolItem = (item:AgolItem, {
 
     item.url = getUrl(item);
 
+    item.specialItemType = getSpecialItemType(item.groupCategories)
+
     return item;
 };
+
+// get special item type assigned by policy maps team
+const getSpecialItemType = (groupCategories:string[]):string=>{
+
+    const specialItemCategory = groupCategories.filter(catgeory=>{
+        return /Special Item Type/ig.test(catgeory)
+    })[0];
+
+    if(specialItemCategory){
+        const paths = specialItemCategory.split('/');
+        return paths[paths.length -1]
+    }
+
+    return '';
+}
 
 const getUrl = (item:AgolItem, agolHost = 'https://www.arcgis.com')=>{
 

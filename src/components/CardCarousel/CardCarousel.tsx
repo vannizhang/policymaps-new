@@ -57,7 +57,8 @@ const CardCarousel:React.FC<Props> = ({
                     url,
                     title,
                     snippet,
-                    id
+                    id,
+                    specialItemType
                 } = d;
 
                 return (
@@ -67,7 +68,7 @@ const CardCarousel:React.FC<Props> = ({
                         url={url}
                         descriptions={snippet}
                         imageUrl={thumbnailUrl}
-                        imageCaption={typeDisplayName}
+                        imageCaption={specialItemType || typeDisplayName}
                     />
                 );
             });
