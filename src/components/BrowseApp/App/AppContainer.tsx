@@ -11,17 +11,14 @@ import {
     decodeSearchParams
 } from '../../../utils/url-manager/BrowseAppUrlManager';
 
-import { 
-    MapConfig 
-} from '../Config';
-
 import {
     getMyFavItemIds
 } from '../../../utils/my-favorites/myFav';
 
 import { 
     // AgolItem,
-    queryItemsByIds
+    queryItemsByIds,
+    queryItemsByCategory
 } from '../../../utils/arcgis-online-group-data';
 
 import { 
@@ -81,10 +78,18 @@ const BrowseAppContainer:React.FC = ()=>{
 
     const fecthActiveWebmapItem = async()=>{
         const { activeWebmapId } = searchParams;
-        const items = await fetchItems([ activeWebmapId || MapConfig.DEFAULT_WEBMAP_ID ]);
-        // setActiveWebmapItem(items[0]);
 
-        dispatch(setActiveWebmap(items[0]));
+        if(activeWebmapId){
+            // set active map using item id from URL query params
+            const [ item ] = await fetchItems([activeWebmapId])
+            dispatch(setActiveWebmap(item));
+        } else {
+            // set active map using a item from policy maps group
+            // that are pickup up as default webmap by curators 
+            const item = await fetchDefaultWebmap()
+            dispatch(setActiveWebmap(item));
+        }
+
     };
 
     const fetchMyFavItems = async()=>{
@@ -202,6 +207,23 @@ const BrowseAppContainer:React.FC = ()=>{
             console.error(err);
         }
     };
+
+    const fetchDefaultWebmap = async():Promise<AgolItem>=>{
+        // search items from the Policy Maps group that contains 'Default Explore Maps' category
+        try {
+            const items = await queryItemsByCategory({
+                categories: ['/Categories/Resources/Default Explore Maps'],
+                groupId: Tier.PROD.AGOL_GROUP_ID
+            });
+            
+            const randomIdx = Math.floor(Math.random() * items.length)
+            
+            return items[randomIdx];
+
+        } catch(err){
+            console.error(err);
+        }
+    }
 
     React.useEffect(()=>{
 

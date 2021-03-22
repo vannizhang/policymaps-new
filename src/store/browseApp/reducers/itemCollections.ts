@@ -12,14 +12,7 @@ import {
 
 import { 
     AgolItem,
-    formatAsAgolItem
 } from '../../../utils/arcgis-online-item-formatter';
-
-import { 
-    queryItemsByIds
-} from '../../../utils/arcgis-online-group-data';
-
-import { Tier } from '../../../AppConfig';
 
 interface ItemCollectionInitialState {
     byIds: {

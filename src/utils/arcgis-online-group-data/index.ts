@@ -1,6 +1,7 @@
 import axios from 'axios';
-import queryItemsByIds from './queryItemsByIds';
-export { queryItemsByIds };
+import { queryItemsByIds, queryItemsByCategory } from './queryItems';
+
+export { queryItemsByIds, queryItemsByCategory };
 
 export type ContentType = 'maps' | 'layers' | 'apps' | 'tools' | 'files' | 'webmap';
 export type SortField = 'relevance' | 'name' | 'modified';
@@ -56,7 +57,7 @@ export interface AgolItem {
     url?: string;
     tags?: string[];
     thumbnail?: string;
-    groupCategories: string[];
+    groupCategories?: string[];
     [key: string]: any;
 };
 
