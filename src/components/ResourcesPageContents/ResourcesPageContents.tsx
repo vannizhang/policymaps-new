@@ -115,30 +115,30 @@ const ResourcesPageContents:React.FC = ()=>{
         <>
             <TopBanner />
             
-            <IndustryPerspectivesCarousel 
-                data={industryPerspectivesSectionData ? industryPerspectivesSectionData.cardsData : []}
-            />
-
             <InfoCardsGroup 
-                title={'Getting Started'}
-                description={'Explore resources to help you begin planning your policy framework.'}
+                title={'Start here'}
+                description={'Learn how to find and share ready-to-use policy maps about your community.'}
                 featuredCard={gettingStartedSectionData ? gettingStartedSectionData.featured : null}
                 cardsData={gettingStartedSectionData ? gettingStartedSectionData.cardsData : []}
             />
 
             <InfoCardsGroup 
-                title={'Learn Lessons'}
-                description={'Guided lessons based on real-world problems.'}
+                title={'Get inspired'}
+                description={'Find examples from others to kickstart your own policy maps.'}
                 greyBackground={true}
+                featuredCard={bestPracticeSectionData ? bestPracticeSectionData.featured : null}
+                cardsData={bestPracticeSectionData ? bestPracticeSectionData.cardsData : []}
+            />
+
+            <InfoCardsGroup 
+                title={'Apply a policy perspective'}
+                description={'Create your own maps that show opportunities to intervene.'}
                 featuredCard={learnLessonsSectionData ? learnLessonsSectionData.featured : null}
                 cardsData={learnLessonsSectionData ? learnLessonsSectionData.cardsData : []}
             />
 
-            <InfoCardsGroup 
-                title={'Best Practices in Public Policy'}
-                description={'Be inspired by the work of your peers who are leading the charge to tackle today’s issues.'}
-                featuredCard={bestPracticeSectionData ? bestPracticeSectionData.featured : null}
-                cardsData={bestPracticeSectionData ? bestPracticeSectionData.cardsData : []}
+            <IndustryPerspectivesCarousel 
+                data={industryPerspectivesSectionData ? industryPerspectivesSectionData.cardsData : []}
             />
         </>
     );
