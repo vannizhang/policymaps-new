@@ -74,7 +74,7 @@ const CardCarousel:React.FC<Props> = ({
             });
 
         return (
-            <div className='block-group block-group-3-up tablet-block-group-2-up phone-block-group-1-up trailer-1'>
+            <div className='block-group block-group-3-up tablet-block-group-3-up phone-block-group-1-up trailer-1'>
                 {cards}
             </div>
         );
@@ -85,6 +85,7 @@ const CardCarousel:React.FC<Props> = ({
             { getCardsBlock() }
             
             <div 
+                className='tablet-show'
                 style={{
                     'display': 'flex',
                     'alignItems': 'center',

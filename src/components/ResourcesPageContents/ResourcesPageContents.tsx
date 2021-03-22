@@ -123,6 +123,7 @@ const ResourcesPageContents:React.FC = ()=>{
             
             <InfoCardsGroup 
                 title={'Start here'}
+                greyBackground={true}
                 description={'Learn how to find and share ready-to-use policy maps about your community.'}
                 featuredCard={gettingStartedSectionData ? gettingStartedSectionData.featured : null}
                 cardsData={gettingStartedSectionData ? gettingStartedSectionData.cardsData : []}
@@ -131,13 +132,13 @@ const ResourcesPageContents:React.FC = ()=>{
             <InfoCardsGroup 
                 title={'Get inspired'}
                 description={'Find examples from others to kickstart your own policy maps.'}
-                greyBackground={true}
                 featuredCard={bestPracticeSectionData ? bestPracticeSectionData.featured : null}
                 cardsData={bestPracticeSectionData ? bestPracticeSectionData.cardsData : []}
             />
 
             <InfoCardsGroup 
                 title={'Apply a policy perspective'}
+                greyBackground={true}
                 description={'Create your own maps that show opportunities to intervene.'}
                 featuredCard={learnLessonsSectionData ? learnLessonsSectionData.featured : null}
                 cardsData={learnLessonsSectionData ? learnLessonsSectionData.cardsData : []}

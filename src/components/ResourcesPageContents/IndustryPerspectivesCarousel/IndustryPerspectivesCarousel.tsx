@@ -131,7 +131,7 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
         <div 
             style={{
                 'padding': '3rem 0',
-                'backgroundColor': '#f8f8f8'
+                // 'backgroundColor': '#f8f8f8'
             }}
         >
             <div
