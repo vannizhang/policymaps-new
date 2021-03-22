@@ -89,9 +89,9 @@ const RegularCard:React.FC<Props> = ({
 
             <div className='card-content'>
                 <div>
-                    <p className="font-size--1 trailer-quarter">
+                    <div className="font-size--1 trailer-quarter" title={title}>
                         <a href={link} target="_blank">{stringFns.trunc(title, 50, true)}</a>
-                    </p>
+                    </div>
 
                     <p className="font-size--3 trailer-half">
                         { description ? stringFns.trunc(description, 75, true) : '' }
