@@ -1,5 +1,5 @@
 import React from 'react';
-import TopBannerBackgroundImage from '../../statics/img/ResourcesPage/TopBanner.png';
+import TopBannerBackgroundImage from '../../statics/img/ResourcesPage/TopBanner1.png';
 
 const TopBanner:React.FC = ()=>{
 
