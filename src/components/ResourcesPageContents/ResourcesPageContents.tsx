@@ -91,6 +91,12 @@ const ResourcesPageContents:React.FC = ()=>{
 
             });
 
+            cardsData.sort((a, b)=>{
+                return b.modified - a.modified
+            });
+
+            // console.log(cardsData)
+
             dataBySections[key] = {
                 featured,
                 cardsData

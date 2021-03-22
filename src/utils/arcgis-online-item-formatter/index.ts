@@ -22,6 +22,8 @@ export interface AgolItem {
     agolItemUrl?: string;
     itemIconUrl?: string;
     typeDisplayName?: string;
+    modified?: number;
+    created?: number;
     [key: string]: any;
 };
 
