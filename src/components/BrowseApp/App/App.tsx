@@ -10,6 +10,7 @@ import TopNav from '../TopNav';
 import CategoryFilter, { SelectedCategory } from '../CategoryFilter';
 import MyCollection from '../MyCollection/MyCollection';
 import MapView from '../MapView/MapViewContainer';
+import WarningMessage from '../WarningMessage'
 
 import { 
     SearchWidget,
@@ -154,49 +155,52 @@ const BrowseApp:React.FC<Props>= ({
     }
 
     return (
-        <div style={{
-            "position": "absolute",
-            "top": isEmbedded ? '0': "117px",
-            "left": "0",
-            "bottom": "0",
-            "width": "100%",
-            "display": "flex",
-            "flexDirection": "row",
-            "flexWrap": "nowrap",
-            "justifyContent": "flex-start",
-            "alignContent": "stretch",
-            "alignItems": "stretch"
-        }}>
-            <SideBar
-                scrollToBottomHandler={sidebarScrolledToEnd}
-            >
-                { getFilters() }
-
-                <MyCollection />
-
-                { getSearchResultsList() }
-
-            </SideBar>
-
+        <>
             <div style={{
-                "position": "relative",
-                "flexGrow": 1
+                "position": "absolute",
+                "top": isEmbedded ? '0': "117px",
+                "left": "0",
+                "bottom": "0",
+                "width": "100%",
+                "display": "flex",
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignContent": "stretch",
+                "alignItems": "stretch"
             }}>
-                <TopNav
-                    isLegendVisible={isLegendVisible}
-                    toggleLegend={toggleLegend}
-                />
+                <SideBar
+                    scrollToBottomHandler={sidebarScrolledToEnd}
+                >
+                    { getFilters() }
 
-                <MapView>
-                    <SearchWidget/>
-                    <LegendWidget 
-                        isVisible={isLegendVisible}
+                    <MyCollection />
+
+                    { getSearchResultsList() }
+
+                </SideBar>
+
+                <div style={{
+                    "position": "relative",
+                    "flexGrow": 1
+                }}>
+                    <TopNav
+                        isLegendVisible={isLegendVisible}
+                        toggleLegend={toggleLegend}
                     />
-                </MapView>
+
+                    <MapView>
+                        <SearchWidget/>
+                        <LegendWidget 
+                            isVisible={isLegendVisible}
+                        />
+                    </MapView>
+                </div>
+
             </div>
 
-        </div>
-
+            <WarningMessage />
+        </>
     );
 };
 
