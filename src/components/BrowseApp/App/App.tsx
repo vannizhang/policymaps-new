@@ -56,8 +56,6 @@ const BrowseApp:React.FC<Props>= ({
     searchAutoCompleteOnChange
 })=>{
 
-    console.log('render browse app')
-
     const { isEmbedded } = React.useContext(SiteContext);
     const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
     const [ isLegendVisible, setIsLegendVisible ] = React.useState<boolean>(true);
@@ -170,7 +168,6 @@ const BrowseApp:React.FC<Props>= ({
             "alignItems": "stretch"
         }}>
             <SideBar
-                width={UIConfig["side-bar-width"]}
                 scrollToBottomHandler={sidebarScrolledToEnd}
             >
                 { getFilters() }

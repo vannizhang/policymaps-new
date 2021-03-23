@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { urlFns } from 'helper-toolkit-ts';
+import { urlFns, miscFns } from 'helper-toolkit-ts';
 import EsriOAuth from '../utils/Esri-OAuth';
 
 interface SiteContextProps {
@@ -10,6 +10,7 @@ interface SiteContextProps {
     // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
     // if true, disable search related components on Browse page
     isSearchDisabled?: boolean;
+    isMobile?: boolean;
 }
 
 interface SiteContextProviderProps {
@@ -26,10 +27,11 @@ export const SiteContextProvider:React.FC<SiteContextProviderProps> = ({
 
     const hashParams = urlFns.parseHash();
 
-    const value = {
+    const value:SiteContextProps = {
         esriOAuthUtils,
         isEmbedded: hashParams.embed ? true : false,
-        isSearchDisabled: hashParams.disableSearch ? true : false
+        isSearchDisabled: hashParams.disableSearch ? true : false,
+        isMobile: miscFns.isMobileDevice()
     };
 
     return (

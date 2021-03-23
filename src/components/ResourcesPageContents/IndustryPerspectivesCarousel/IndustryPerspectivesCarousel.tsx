@@ -42,16 +42,18 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
     };
 
     const getItemsToDisplay = ()=>{
-        let itemsToDisplay = data.slice(activeIndex, 3);
+        
+        const currItem = data[activeIndex];
 
-        if(itemsToDisplay.length < 3){
-            const numOfItemsToAdd = 3 - itemsToDisplay.length;
-            const itemsToAdd = data.slice(0, numOfItemsToAdd);
+        const prevItem = activeIndex > 0 
+            ? data[activeIndex - 1] 
+            : data[data.length -1];
 
-            itemsToDisplay = itemsToDisplay.concat(itemsToAdd);
-        }
+        const nextItem = activeIndex + 1 < data.length 
+            ? data[activeIndex + 1]
+            : data[0];
 
-        return itemsToDisplay;
+        return [prevItem, currItem, nextItem];
     };
 
     const getCards = ()=>{
@@ -59,7 +61,6 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
         const cardsData = getItemsToDisplay();
 
         const centerItem = cardsData[1];
-        console.log(centerItem)
 
         const cards = cardsData.map((d, i)=>{
             const { id } = d;
