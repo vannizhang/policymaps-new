@@ -6,6 +6,7 @@ import {
     toggleSidebar,
     hideSideBarSelectore
 } from '../../store/browseApp/reducers/UI';
+import { updateSideBarHideInQueryParam } from '../../utils/url-manager/BrowseAppUrlManager';
 import { UIConfig } from './Config';
 
 interface Props {
@@ -134,6 +135,10 @@ const SideBar:React.FC<Props> = ({
             </div>
         )
     }
+
+    React.useEffect(()=>{
+        updateSideBarHideInQueryParam(hideSideBar)
+    }, [hideSideBar])
 
     return (
         <>

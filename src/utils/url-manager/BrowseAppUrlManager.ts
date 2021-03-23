@@ -10,13 +10,6 @@ export interface Location {
     zoom: number;
 }
 
-interface encodeSearchParamsOptions {
-    collections?: string[];
-    activeWebmapId?: string;
-    location?: Location
-    isSideBarHide?: boolean;
-}
-
 interface decodeSearchParamsResponse {
     collections?: string[];
     activeWebmapId?: string;
@@ -33,24 +26,8 @@ const SearchParamKeyLookup: {
     'isSideBarHide': 'hs'
 }
 
-export const encodeSearchParams = ({
-    collections = [],
-    activeWebmapId,
-    location,
-    isSideBarHide
-}: encodeSearchParamsOptions)=>{
-
-    if(location){
-        const key = SearchParamKeyLookup['location'];
-        const value = encodeLocation(location);
-        urlFns.updateQueryParam({
-            key,
-            value
-        });
-    }
-
+export const updateCollectionsInQueryParam = (collections: string[])=>{
     if(collections){
-
         const key = SearchParamKeyLookup['collections'];
         const value = collections.length 
             ? collections.join(',') 
@@ -61,17 +38,32 @@ export const encodeSearchParams = ({
             value
         });
     }
+}
 
-    if(activeWebmapId){
-        const key = SearchParamKeyLookup['activeWebmapId'];
-        const value = activeWebmapId;
-
+export const updateMapCenterLocationInQueryParam = (location:Location)=>{
+    if(location){
+        const key = SearchParamKeyLookup['location'];
+        const value = encodeLocation(location);
         urlFns.updateQueryParam({
             key,
             value
         });
     }
+}
 
+export const updateActiveWebmapIdInQueryParam = (activeWebmapId:string)=>{
+    if(activeWebmapId){
+        const key = SearchParamKeyLookup['activeWebmapId'];
+        const value = activeWebmapId;
+    
+        urlFns.updateQueryParam({
+            key,
+            value
+        });
+    }
+}
+
+export const updateSideBarHideInQueryParam = (isSideBarHide:boolean)=>{
     if(typeof isSideBarHide === 'boolean'){
         const key = SearchParamKeyLookup['isSideBarHide'];
         const value:IsSideBarHideValue = isSideBarHide ? '1' : '0';
@@ -81,8 +73,7 @@ export const encodeSearchParams = ({
             value
         });
     }
-
-};
+}
 
 export const decodeSearchParams = ():decodeSearchParamsResponse=>{
     const searchParams = urlFns.parseQuery();

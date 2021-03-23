@@ -26,10 +26,6 @@ import {
     setMyFavItems
 } from '../../../store/browseApp/reducers/myFavItems';
 
-import {
-    encodeSearchParams
-} from '../../../utils/url-manager/BrowseAppUrlManager';
-
 import ShareDialog from './ShareDialog';
 
 export type SupportedSocialMedia = 'twitter' | 'facebook'
@@ -102,18 +98,19 @@ const ShareDialogContainer:React.FC<Props> = ({
         }
     }
 
+    // React.useEffect(()=>{
+
+    //     encodeSearchParams({
+    //         activeWebmapId: activeWebmap ? activeWebmap.id : '',
+    //         collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+    //         location: centerLocation,
+    //         // isSideBarHide: hideSidebar
+    //     });
+    // }, [itemsCollection, activeWebmap, centerLocation])
+
     React.useEffect(()=>{
-
-        encodeSearchParams({
-            activeWebmapId: activeWebmap ? activeWebmap.id : '',
-            collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
-            location: centerLocation,
-            isSideBarHide: hideSidebar
-        });
-
         setCurrentUrl(window.location.href);
-        
-    }, [itemsCollection, activeWebmap, centerLocation, hideSidebar])
+    }, [window.location.href])
 
     return (
         <ShareDialog 
