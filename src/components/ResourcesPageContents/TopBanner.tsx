@@ -33,7 +33,9 @@ const TopBanner:React.FC = ()=>{
     return (
         <div
             style={{
-                position: 'relative'
+                position: 'relative',
+                paddingTop: '4rem',
+                paddingBottom: '4rem'
             }}
         >
             { getBackgroundImage() }
@@ -41,29 +43,26 @@ const TopBanner:React.FC = ()=>{
             <div
                 className='grid-container'
                 style={{
-                    'padding': '4rem'
+                    position: 'relative',
                 }}
             >
-
-
                 <div 
+                    className='column-12 center-column text-center text-white'
                     style={{
-                        position: 'relative',
+                        
                         textShadow: '0px 0px 3px #000'
                     }}
                 >
-                    <div className='column-12 tablet-column-12 center-column text-center text-white'>
-                        <h2 className="trailer-1">Get the Most Out of the Policy Maps</h2>
-                        <div 
-                            style={{
-                                'height': '3px',
-                                'width': '60px',
-                                'backgroundColor': '#fff',
-                                'margin': '0 auto 10px'
-                            }}
-                        ></div>
-                        <p className="leader-2">To maximize your experience with the Policy Maps, we’ve assembled education, training, best practices, and industry perspectives that help raise your data literacy, provide you with models, and connect you with the work of your peers.</p>
-                    </div>
+                    <h2 className="trailer-1">Get the Most Out of the Policy Maps</h2>
+                    <div 
+                        style={{
+                            'height': '3px',
+                            'width': '60px',
+                            'backgroundColor': '#fff',
+                            'margin': '0 auto 10px'
+                        }}
+                    ></div>
+                    <p className="leader-2">To maximize your experience with the Policy Maps, we’ve assembled education, training, best practices, and industry perspectives that help raise your data literacy, provide you with models, and connect you with the work of your peers.</p>
                 </div>
             </div>
         </div>
