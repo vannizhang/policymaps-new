@@ -53,7 +53,7 @@ const TopBanner:React.FC = ()=>{
                         textShadow: '0px 0px 3px #000'
                     }}
                 >
-                    <h2 className="trailer-1">Get the Most Out of the Policy Maps</h2>
+                    <h2 className="trailer-1">Get the Most Out of Policy Maps</h2>
                     <div 
                         style={{
                             'height': '3px',
@@ -62,7 +62,7 @@ const TopBanner:React.FC = ()=>{
                             'margin': '0 auto 10px'
                         }}
                     ></div>
-                    <p className="leader-2">To maximize your experience with the Policy Maps, we’ve assembled education, training, best practices, and industry perspectives that help raise your data literacy, provide you with models, and connect you with the work of your peers.</p>
+                    <p className="leader-2">To maximize your experience with Policy Maps, we’ve assembled education, training, best practices, and industry perspectives that help raise your data literacy, provide you with models, and connect you with the work of your peers.</p>
                 </div>
             </div>
         </div>
