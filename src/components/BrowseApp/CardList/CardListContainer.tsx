@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 
 import { 
     SiteContext 
@@ -30,6 +30,7 @@ import {
 } from '../../../store/browseApp/reducers/myFavItems';
 
 import { AgolItem } from '../../../utils/arcgis-online-group-data';
+import { toggleSidebar } from '../../../store/browseApp/reducers/UI';
 
 interface Props {
     title: string;
@@ -43,7 +44,7 @@ const CardListContainer:React.FC<Props> = ({
     itemCount = 0
 })=>{
 
-    const { esriOAuthUtils } = React.useContext(SiteContext);
+    const { esriOAuthUtils, isMobile } = React.useContext(SiteContext);
 
     const dispatch = useDispatch();
 
@@ -84,6 +85,11 @@ const CardListContainer:React.FC<Props> = ({
 
             viewBtnOnClick={(item)=>{
                 dispatch(setActiveWebmap(item))
+
+                // on mobile device, need to hide side bar automatically when user select an item 
+                if(isMobile){
+                    dispatch(toggleSidebar())
+                }
             }}
             toggleCollectBtnOnClick={(item)=>{
                 dispatch(toggleCollectionItem(item))
