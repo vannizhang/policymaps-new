@@ -1,7 +1,7 @@
 import '../../styles/index.scss';
 import * as React from 'react';
 
-import { setDefaultOptions } from 'esri-loader';
+// import { setDefaultOptions } from 'esri-loader';
 
 import {
     setPortalData4MyFavItems
