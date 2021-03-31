@@ -39,17 +39,26 @@ const LegendWidget:React.FC<Props> = ({
 
             setLegend(legend);
 
-            if(isMobile){
-                const bgExpand = new Expand({
-                    view: mapView,
-                    content: legend,
-                    expandIconClass: 'esri-icon-legend'
-                });
+            // if(isMobile){
+            //     const bgExpand = new Expand({
+            //         view: mapView,
+            //         content: legend,
+            //         expandIconClass: 'esri-icon-legend'
+            //     });
 
-                mapView.ui.add(bgExpand, "bottom-left");
-            } else {
-                mapView.ui.add(legend, "bottom-left");
-            }
+            //     mapView.ui.add(bgExpand, "bottom-left");
+            // } else {
+            //     mapView.ui.add(legend, "bottom-left");
+            // }
+
+            const bgExpand = new Expand({
+                view: mapView,
+                content: legend,
+                expandIconClass: 'esri-icon-legend',
+                expanded: isMobile ? false : true
+            });
+
+            mapView.ui.add(bgExpand, "bottom-left");
 
         } catch(err){   
             console.error(err);
