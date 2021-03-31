@@ -101,7 +101,12 @@ const MapView:React.FC<Props> = ({
                 }),
                 extent: preferredExtent,
                 center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
-                zoom: initialZoom ? initialZoom : undefined
+                zoom: initialZoom ? initialZoom : undefined,
+                popup: {
+                    dockOptions: {
+                        position: 'bottom-right'
+                    }
+                }
             });
 
             view.when(()=>{
