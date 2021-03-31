@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import classnames from 'classnames';
 
 import {
     NavBtn
@@ -79,7 +80,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
             }}
         >
             <div 
-                className='active-map-title text-ellipsis avenir-demi font-size--0' 
+                className={classnames('active-map-title avenir-demi font-size--0', { 'text-ellipsis': !isMinimal })} 
                 style={{
                     'flexGrow': 1,
                     'flexShrink': 1,

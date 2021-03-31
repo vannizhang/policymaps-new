@@ -68,7 +68,7 @@ const TopNav:React.FC<Props> = ({
                     'zIndex': 5
                 }}
             >
-                <div 
+                {/* <div 
                     style={{
                         'display': 'flex',
                         'alignItems': 'center',
@@ -77,7 +77,7 @@ const TopNav:React.FC<Props> = ({
                     onClick={toggleMenu}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16"><path d="M14 4H2V3h12zM2 9h12V8H2zm0 5h12v-1H2z"/><path fill="none" d="M0 0h16v16H0z"/></svg>
-                </div>
+                </div> */}
 
                 <div
                     id={SearchWidgetContainerId}
