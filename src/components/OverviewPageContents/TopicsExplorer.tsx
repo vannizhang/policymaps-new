@@ -13,6 +13,7 @@ import {
 import backgroundImg from '../../statics/img/OverviewPage/TopicsExplorerBackground.jpg';
 
 import ISearchWidget from 'esri/widgets/Search';
+import { SiteContext } from '../../contexts/SiteContextProvider';
 
 interface HighlightedTopic {
     title: string;
@@ -30,6 +31,8 @@ interface CustomLocation {
 }
 
 const TopicsExplorer:React.FC = ()=>{
+
+    const { isMobile } = React.useContext(SiteContext)
 
     // let autoRotateInterval:NodeJS.Timeout = null;
 
@@ -86,7 +89,7 @@ const TopicsExplorer:React.FC = ()=>{
         const activeTopic = highlightedTopics[index4ActiveTopic];
         let searchParams = activeTopic.value;
 
-        console.log(customLocation)
+        // console.log(customLocation)
 
         if(customLocation){
             searchParams = urlFns.updateKeyValuePairInQueryString({
@@ -133,10 +136,10 @@ const TopicsExplorer:React.FC = ()=>{
                 </div>
 
                 <div
-                    className='padding-leader-3 padding-trailer-3 padding-left-4 padding-right-4 tablet-padding-left-1 tablet-padding-right-1'
+                    className=''
                     style={{
-                        'margin': '0 2rem',
-                        // 'padding': '4rem 6rem',
+                        'margin': isMobile ? 0 : '0 2rem',
+                        'padding': isMobile ? '2rem .5rem' : '4rem',
                         'flexGrow': 1,
                         'background': '#fff',
                         'boxShadow': '1px 1px 4px 1px rgba(40, 40, 40, 0.7)',
@@ -190,7 +193,7 @@ const TopicsExplorer:React.FC = ()=>{
 
             return (
                 <div
-                    key={`nav-dot-${tooltip}`}
+                    key={`nav-dot-${i}`}
                     className='tooltip tooltip-top'
                     aria-label={tooltip}
                     style={{
