@@ -9,6 +9,7 @@ import {
 import {
     AgolItem
 } from '../../../utils/arcgis-online-item-formatter';
+import { SiteContext } from '../../../contexts/SiteContextProvider';
 
 interface Props {
     data: AgolItem[]
@@ -17,6 +18,8 @@ interface Props {
 const IndustryPerspectivesCarousel:React.FC<Props> = ({
     data
 })=>{
+
+    const { isMobile } = React.useContext(SiteContext);
 
     const [ activeIndex, setActiveIndex ] = React.useState<number>(0);
 
@@ -45,6 +48,10 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
         
         const currItem = data[activeIndex];
 
+        if(isMobile){
+            return [currItem]
+        }
+
         const prevItem = activeIndex > 0 
             ? data[activeIndex - 1] 
             : data[data.length -1];
@@ -60,14 +67,16 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
 
         const cardsData = getItemsToDisplay();
 
-        const centerItem = cardsData[1];
+        const centerItem = cardsData.length === 3 
+            ? cardsData[1] 
+            : cardsData[0];
 
         const cards = cardsData.map((d, i)=>{
             const { id } = d;
 
             const classNames = classnames('industry-perspectives-card', {
                 // the second item (out of 3) is always the active one 
-                'is-active': i === 1
+                'is-active': i === Math.floor(cardsData.length / 2)
             });
 
             return (

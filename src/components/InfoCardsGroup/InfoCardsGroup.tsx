@@ -34,6 +34,7 @@ const FearuredCardImage = styled.div<FearuredCardImageProps>`
     background-image: ${(props) => `url(${props.thumbnailImage})`};
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center center;
 
     @media (max-width: ${TABLET_BREAK_POINT}px) {
         width: 100%;

@@ -24,6 +24,7 @@ const Drawer:React.FC<Props> = ({
                     links.map((d)=>{
                         return (
                             <a 
+                                key={d.label}
                                 className='side-nav-link' 
                                 href={d.path}
                                 data-is-current={d.isActive}
