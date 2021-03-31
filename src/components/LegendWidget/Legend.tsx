@@ -51,14 +51,15 @@ const LegendWidget:React.FC<Props> = ({
             //     mapView.ui.add(legend, "bottom-left");
             // }
 
-            const bgExpand = new Expand({
+            const legendWidgetExpand = new Expand({
                 view: mapView,
                 content: legend,
                 expandIconClass: 'esri-icon-legend',
-                expanded: isMobile ? false : true
+                expanded: isMobile ? false : true,
+                mode: 'floating'
             });
 
-            mapView.ui.add(bgExpand, "bottom-left");
+            mapView.ui.add(legendWidgetExpand, "bottom-left");
 
         } catch(err){   
             console.error(err);
