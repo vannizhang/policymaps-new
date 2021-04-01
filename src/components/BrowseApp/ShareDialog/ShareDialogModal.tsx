@@ -40,14 +40,14 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
     sendEmailOnClick,
     shareToSocialMediaOnClick
 }) => {
-    const copyUrl = ()=>{
+    const copyUrl = React.useCallback(()=>{
         const copyText = document.createElement('textarea')
         copyText.value = currentUrl;
         document.body.appendChild(copyText);
         copyText.select();
         document.execCommand("copy");
         document.body.removeChild(copyText);
-    };
+    }, [currentUrl]);
 
     return (
         <div className="js-modal modal-overlay is-active">

@@ -129,7 +129,7 @@ const ActiveMapSwitcher:React.FC<Props> = ({
                     'flexBasis': '1px',
                 }}
             >
-                { activeItemTitle }
+                <span title={activeItemTitle}>{ activeItemTitle }</span>
             </div>
 
             <div
