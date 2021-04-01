@@ -59,14 +59,9 @@ const BrowseApp:React.FC<Props>= ({
 
     const { isEmbedded } = React.useContext(SiteContext);
     const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
-    const [ isLegendVisible, setIsLegendVisible ] = React.useState<boolean>(true);
 
     const toggleCategoryFilter = ()=>{
         setIsCategoryFilterVisible(!isCategoryFilterVisible);
-    };
-
-    const toggleLegend = ()=>{
-        setIsLegendVisible(!isLegendVisible);
     };
 
     const getFilters = ()=>{
@@ -184,16 +179,11 @@ const BrowseApp:React.FC<Props>= ({
                     "position": "relative",
                     "flexGrow": 1
                 }}>
-                    <TopNav
-                        isLegendVisible={isLegendVisible}
-                        toggleLegend={toggleLegend}
-                    />
+                    <TopNav/>
 
                     <MapView>
                         <SearchWidget/>
-                        <LegendWidget 
-                            isVisible={isLegendVisible}
-                        />
+                        <LegendWidget/>
                     </MapView>
                 </div>
 

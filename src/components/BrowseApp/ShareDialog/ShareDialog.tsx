@@ -1,15 +1,17 @@
-import * as React from 'react';
+import React from 'react';
 import { SupportedSocialMedia } from './ShareDialogContainer';
 
-interface Props {
+export type ShareDialogProps = {
     currentUrl: string;
     onClose?: ()=>void; 
-    addToMyFavBtnOnClick:()=>void;
+    addToMyFavBtnOnClick?:()=>void;
     sendEmailOnClick: ()=>void;
     shareToSocialMediaOnClick: (name:SupportedSocialMedia)=>void;
 }
 
-const ShareDialog:React.FC<Props> = ({
+export const BACKGROUND_COLOR = '#0079c1';
+
+const ShareDialog:React.FC<ShareDialogProps> = ({
     currentUrl,
     onClose,
     addToMyFavBtnOnClick,
@@ -32,7 +34,7 @@ const ShareDialog:React.FC<Props> = ({
                 'width': '350px',
                 'padding': '.75rem',
                 'boxSizing': 'border-box',
-                'background': '#0079c1',
+                'background': BACKGROUND_COLOR,
                 'border': '1px solid #005e95',
                 'color': '#fff',
                 'boxShadow': '0 2px 6px rgba(0, 0, 0, 0.2)',

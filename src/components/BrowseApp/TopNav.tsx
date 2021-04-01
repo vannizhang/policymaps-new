@@ -13,11 +13,6 @@ import {
     hideSideBarSelectore
 } from '../../store/browseApp/reducers/UI';
 
-interface Props {
-    toggleLegend?: ()=>void;
-    isLegendVisible?: boolean;
-}
-
 const Config = {
     top: 15,
     right: 20,
@@ -25,10 +20,7 @@ const Config = {
     height: 63
 };
 
-const TopNav:React.FC<Props> = ({
-    toggleLegend,
-    isLegendVisible
-})=>{
+const TopNav:React.FC = ()=>{
 
     const containerRef = React.useRef<HTMLDivElement>();
 
@@ -40,20 +32,11 @@ const TopNav:React.FC<Props> = ({
 
     const [ isShareDialogVisible, setIsShareDialogVisible ] = React.useState<boolean>(true);
 
-    const [ isMenuVisible, setIsMenuVisible ] = React.useState<boolean>(false);
-
     const toggleShareDialog = ()=>{
         setIsShareDialogVisible(!isShareDialogVisible);
     }
 
-    // const toggleMenu = ()=>{
-    //     setIsMenuVisible(!isMenuVisible);
-    // };
-
     const getToggleShareBtn = ()=>{
-        if(showTitleOnly){
-            return null;
-        }
 
         return(
             <div 
@@ -61,8 +44,8 @@ const TopNav:React.FC<Props> = ({
                     'display': 'flex',
                     'alignItems': 'center',
                     'height': '100%',
-                    'paddingLeft': '.75rem',
-                    'borderLeft': '1px solid #efefef',
+                    'paddingLeft': '.5rem',
+                    'borderLeft': isMinimal ? 'none' : '1px solid #efefef',
                     'cursor': 'pointer'
                 }}
                 onClick={toggleShareDialog}
@@ -137,6 +120,28 @@ const TopNav:React.FC<Props> = ({
         );
     };
 
+    const getShareDialog = ()=>{
+        if(!isShareDialogVisible){
+            return null;
+        }
+
+        return (
+            <div
+                style={{
+                    'position': 'absolute',
+                    'top': Config.height,
+                    'right': 0,
+                    'zIndex': 5
+                }}
+            >
+                <ShareDialog 
+                    onClose={toggleShareDialog}
+                    showModal={showTitleOnly}
+                />
+            </div>
+        )
+    }
+
     const resizeHandler = ()=>{
 
         if(containerRef.current){
@@ -147,6 +152,14 @@ const TopNav:React.FC<Props> = ({
             setShowTitleOnly(width < 480);
         }
     };
+
+    React.useEffect(()=>{
+        
+        if(showTitleOnly){
+            setIsShareDialogVisible(false);
+        }
+        
+    }, [showTitleOnly]);
 
     React.useEffect(()=>{
         window.addEventListener('resize', resizeHandler);
@@ -172,38 +185,7 @@ const TopNav:React.FC<Props> = ({
             }
 
             {
-                isShareDialogVisible && !showTitleOnly ? (
-                    <div
-                        style={{
-                            'position': 'absolute',
-                            'top': Config.height,
-                            'right': 0,
-                            'zIndex': 5
-                        }}
-                    >
-                        <ShareDialog 
-                            onClose={toggleShareDialog}
-                        />
-                    </div>
-                ) : null
-            }
-
-            {
-                isMenuVisible && !showTitleOnly  ? (
-                    <div
-                        style={{
-                            'position': 'absolute',
-                            'top': Config.height,
-                            'left': 0,
-                            'zIndex': 5
-                        }}
-                    >
-                        <Menu 
-                            toggleLegend={toggleLegend}
-                            isLegendVisible={isLegendVisible}
-                        />
-                    </div>
-                ) : null
+                getShareDialog()
             }
 
         </div>

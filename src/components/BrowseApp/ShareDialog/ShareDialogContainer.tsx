@@ -14,39 +14,29 @@ import {
 } from '../../../store/browseApp/reducers/itemCollections';
 
 import {
-    activeWebmapSelector,
-    centerLocationSelector
-} from '../../../store/browseApp/reducers/map';
-
-import {
-    hideSideBarSelectore
-} from '../../../store/browseApp/reducers/UI';
-
-import {
     setMyFavItems
 } from '../../../store/browseApp/reducers/myFavItems';
 
 import ShareDialog from './ShareDialog';
+import ShareDialogModal from './ShareDialogModal'
 
 export type SupportedSocialMedia = 'twitter' | 'facebook'
 
 interface Props {
+    // if true, show modal window instead of floating panel
+    // to get better UX in mobile device
+    showModal: boolean;
     onClose?: ()=>void; 
 }
 
 const ShareDialogContainer:React.FC<Props> = ({
+    showModal,
     onClose
 })=>{
 
     const dispatch = useDispatch();
 
     const itemsCollection = useSelector(itemCollectionSelector);
-
-    const activeWebmap = useSelector(activeWebmapSelector);
-
-    const centerLocation = useSelector(centerLocationSelector);
-
-    const hideSidebar = useSelector(hideSideBarSelectore);
 
     const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 
@@ -112,7 +102,16 @@ const ShareDialogContainer:React.FC<Props> = ({
         setCurrentUrl(window.location.href);
     }, [window.location.href])
 
-    return (
+    return showModal 
+    ? (
+        <ShareDialogModal 
+            currentUrl={currentUrl}
+            onClose={onClose}
+            sendEmailOnClick={sendEmail}
+            shareToSocialMediaOnClick={shareToSocialMedia}
+        />
+    ) 
+    : (
         <ShareDialog 
             currentUrl={currentUrl}
             onClose={onClose}
