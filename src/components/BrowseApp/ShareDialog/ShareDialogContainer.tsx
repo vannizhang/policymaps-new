@@ -60,13 +60,17 @@ const ShareDialogContainer:React.FC<Props> = ({
     const sendEmail = ()=>{
 
         const emailSubjectText = 'Policy maps for your consideration';
-        const emailBodyText = 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research';
-
+        
         const shareLink = encodeURIComponent(currentUrl);
         const lineBreak = '%0D%0A';
         const myCollectionItemName = itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.title).join(lineBreak) : ''
+
+        const emailBodyText = myCollectionItemName 
+            ? 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research'
+            : 'I was exploring Esri Policy Maps and found a map I wanted to share with you that might support your policy and legislative research';
+
         const body = myCollectionItemName 
-            ? `${emailBodyText}: ${lineBreak}${myCollectionItemName}${lineBreak}${shareLink}`
+            ? `${emailBodyText}: ${lineBreak}${myCollectionItemName}${lineBreak}${lineBreak}${shareLink}`
             : `${emailBodyText}: ${lineBreak}${shareLink}`
         const emailLink = `mailto:${encodeURIComponent('')}?subject=${emailSubjectText}&body=${body}`;
 
