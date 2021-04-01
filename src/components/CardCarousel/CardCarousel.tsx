@@ -35,6 +35,31 @@ const CardCarousel:React.FC<Props> = ({
         setStartIndex(newStartIndex);
     }
 
+    const getNavBtnsAtBottom = ()=>{
+        return (
+            <div 
+                className='tablet-show'
+                style={{
+                    'display': 'flex',
+                    'alignItems': 'center',
+                    'justifyContent': 'flex-end'
+                }}
+            >
+                <div className='margin-right-half'>
+                    <NavBtn 
+                        direction={'left'}
+                        onClick={showPrev}
+                    />
+                </div>
+
+                <NavBtn 
+                    direction={'right'}
+                    onClick={showNext}
+                />
+            </div>
+        );
+    }
+
     const getCardsBlock = ()=>{
 
         if(!cardsData || !cardsData.length){
@@ -57,7 +82,8 @@ const CardCarousel:React.FC<Props> = ({
                     url,
                     title,
                     snippet,
-                    id
+                    id,
+                    specialItemType
                 } = d;
 
                 return (
@@ -67,41 +93,58 @@ const CardCarousel:React.FC<Props> = ({
                         url={url}
                         descriptions={snippet}
                         imageUrl={thumbnailUrl}
-                        imageCaption={typeDisplayName}
+                        imageCaption={specialItemType || typeDisplayName}
                     />
                 );
             });
 
         return (
-            <div className='block-group block-group-3-up tablet-block-group-2-up phone-block-group-1-up trailer-1'>
-                {cards}
-            </div>
-        );
-    };
-
-    return cardsData && cardsData.length ? (
-        <div>
-            { getCardsBlock() }
-            
-            <div 
+            <div
                 style={{
-                    'display': 'flex',
-                    'alignItems': 'center',
-                    'justifyContent': 'flex-end'
+                    position: 'relative',
+                    // display: 'flex'
                 }}
             >
-                <div className='margin-right-half'>
+                <div 
+                    className='tablet-hide'
+                    style={{
+                        position: 'absolute',
+                        top: `calc(50% - 18px)`,
+                        left: -50
+                    }}
+                >
                     <NavBtn 
                         direction={'left'}
                         onClick={showPrev}
                     />
                 </div>
 
-                <NavBtn 
-                    direction={'right'}
-                    onClick={showNext}
-                />
+                <div className='block-group block-group-3-up tablet-block-group-3-up phone-block-group-1-up trailer-1'>
+                    {cards}
+                </div>
+
+                <div 
+                    className='tablet-hide'
+                    style={{
+                        position: 'absolute',
+                        top: `calc(50% - 18px)`,
+                        right: -50
+                    }}
+                >
+                    <NavBtn 
+                        direction={'right'}
+                        onClick={showNext}
+                    />
+                </div>
             </div>
+
+        );
+    };
+
+    return cardsData && cardsData.length ? (
+        <div>
+            { getCardsBlock() }
+            { getNavBtnsAtBottom() }
         </div>
     ) : null;
 };

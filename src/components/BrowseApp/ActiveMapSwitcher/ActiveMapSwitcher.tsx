@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import classnames from 'classnames';
 
 import {
     NavBtn
@@ -6,6 +7,7 @@ import {
 
 interface Props {
     isMinimal: boolean;
+    showTitleOnly: boolean;
 
     activeItemId: string;
     activeItemTitle: string;
@@ -16,7 +18,7 @@ interface Props {
 
 const ActiveMapSwitcher:React.FC<Props> = ({
     isMinimal,
-
+    showTitleOnly,
     activeItemId,
     activeItemTitle,
     allItemIds,
@@ -49,16 +51,57 @@ const ActiveMapSwitcher:React.FC<Props> = ({
     };
 
     // get message that indicate the position of active webmap in the item collections (e.g. Map 2 of 5)
-    const getActiveItemIndicator = ():string=>{
+    const getActiveItemIndicator = ()=>{
 
         const index = getIndexForActiveWebmap();
 
         if(index === -1){
-            return '';
+            return null;
         }
 
-        return `Map ${ index + 1 } of ${allItemIds.length}`;
+        const text = `Map ${ index + 1 } of ${allItemIds.length}`;
+
+        return (
+            <div 
+                className='tablet-hide'
+                style={{ 
+                    'padding': '0 .5rem',
+                    'display': !isMinimal ? 'block' : 'none'
+                }}
+            >
+                <span>
+                    { text }
+                </span>
+            </div>
+        );
     };
+
+    const getNavBtns = ()=>{
+
+        if(showTitleOnly){
+            return null;
+        }
+
+        return (
+            <>
+                <div style={{ padding: '0 .25rem' }}>
+                    <NavBtn 
+                        direction='left'
+                        onClick={showPrev}
+                        isDisabled={ getIndexForActiveWebmap() === -1 }
+                    />
+                </div>
+
+                <div style={{ padding: '0 .25rem' }}>
+                    <NavBtn 
+                        direction='right'
+                        onClick={showNext}
+                        isDisabled={ getIndexForActiveWebmap() === -1 }
+                    />
+                </div>
+            </>
+        )
+    }
 
     return (
         <div
@@ -79,14 +122,14 @@ const ActiveMapSwitcher:React.FC<Props> = ({
             }}
         >
             <div 
-                className='active-map-title text-ellipsis avenir-demi font-size--0' 
+                className={classnames('active-map-title avenir-demi font-size--0', { 'text-ellipsis': !isMinimal })} 
                 style={{
                     'flexGrow': 1,
                     'flexShrink': 1,
                     'flexBasis': '1px',
                 }}
             >
-                { activeItemTitle }
+                <span title={activeItemTitle}>{ activeItemTitle }</span>
             </div>
 
             <div
@@ -97,33 +140,9 @@ const ActiveMapSwitcher:React.FC<Props> = ({
                 }}
             >
 
-                <div 
-                    className='tablet-hide'
-                    style={{ 
-                        'padding': '0 .5rem',
-                        'display': !isMinimal ? 'block' : 'none'
-                    }}
-                >
-                    <span>
-                        { getActiveItemIndicator() }
-                    </span>
-                </div>
+                { getActiveItemIndicator() }
 
-                <div style={{ padding: '0 .25rem' }}>
-                    <NavBtn 
-                        direction='left'
-                        onClick={showPrev}
-                        isDisabled={ getIndexForActiveWebmap() === -1 }
-                    />
-                </div>
-
-                <div style={{ padding: '0 .25rem' }}>
-                    <NavBtn 
-                        direction='right'
-                        onClick={showNext}
-                        isDisabled={ getIndexForActiveWebmap() === -1 }
-                    />
-                </div>
+                { getNavBtns() }
 
             </div>
 

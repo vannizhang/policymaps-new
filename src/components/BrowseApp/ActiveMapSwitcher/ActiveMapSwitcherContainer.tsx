@@ -15,10 +15,12 @@ import {
 
 interface Props {
     isMinimal: boolean;
+    showTitleOnly: boolean;
 }
 
 const ActiveMapSwitcherContainer:React.FC<Props> = ({
-    isMinimal
+    isMinimal,
+    showTitleOnly
 })=>{
 
     const dispatch = useDispatch();
@@ -35,6 +37,7 @@ const ActiveMapSwitcherContainer:React.FC<Props> = ({
     return activeWebmapItem ? (
         <ActiveMapSwitcher 
             isMinimal={isMinimal}
+            showTitleOnly={showTitleOnly}
             activeItemId={activeWebmapItem.id}
             activeItemTitle={activeWebmapItem.title}
             allItemIds={itemsCollection.map(d=>d.id)}

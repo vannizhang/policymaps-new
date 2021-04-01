@@ -10,6 +10,7 @@ import TopNav from '../TopNav';
 import CategoryFilter, { SelectedCategory } from '../CategoryFilter';
 import MyCollection from '../MyCollection/MyCollection';
 import MapView from '../MapView/MapViewContainer';
+import WarningMessage from '../WarningMessage'
 
 import { 
     SearchWidget,
@@ -56,18 +57,11 @@ const BrowseApp:React.FC<Props>= ({
     searchAutoCompleteOnChange
 })=>{
 
-    console.log('render browse app')
-
     const { isEmbedded } = React.useContext(SiteContext);
     const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
-    const [ isLegendVisible, setIsLegendVisible ] = React.useState<boolean>(true);
 
     const toggleCategoryFilter = ()=>{
         setIsCategoryFilterVisible(!isCategoryFilterVisible);
-    };
-
-    const toggleLegend = ()=>{
-        setIsLegendVisible(!isLegendVisible);
     };
 
     const getFilters = ()=>{
@@ -156,50 +150,47 @@ const BrowseApp:React.FC<Props>= ({
     }
 
     return (
-        <div style={{
-            "position": "absolute",
-            "top": isEmbedded ? '0': "117px",
-            "left": "0",
-            "bottom": "0",
-            "width": "100%",
-            "display": "flex",
-            "flexDirection": "row",
-            "flexWrap": "nowrap",
-            "justifyContent": "flex-start",
-            "alignContent": "stretch",
-            "alignItems": "stretch"
-        }}>
-            <SideBar
-                width={UIConfig["side-bar-width"]}
-                scrollToBottomHandler={sidebarScrolledToEnd}
-            >
-                { getFilters() }
-
-                <MyCollection />
-
-                { getSearchResultsList() }
-
-            </SideBar>
-
+        <>
             <div style={{
-                "position": "relative",
-                "flexGrow": 1
+                "position": "absolute",
+                "top": isEmbedded ? '0': "117px",
+                "left": "0",
+                "bottom": "0",
+                "width": "100%",
+                "display": "flex",
+                "flexDirection": "row",
+                "flexWrap": "nowrap",
+                "justifyContent": "flex-start",
+                "alignContent": "stretch",
+                "alignItems": "stretch"
             }}>
-                <TopNav
-                    isLegendVisible={isLegendVisible}
-                    toggleLegend={toggleLegend}
-                />
+                <SideBar
+                    scrollToBottomHandler={sidebarScrolledToEnd}
+                >
+                    { getFilters() }
 
-                <MapView>
-                    <SearchWidget/>
-                    <LegendWidget 
-                        isVisible={isLegendVisible}
-                    />
-                </MapView>
+                    <MyCollection />
+
+                    { getSearchResultsList() }
+
+                </SideBar>
+
+                <div style={{
+                    "position": "relative",
+                    "flexGrow": 1
+                }}>
+                    <TopNav/>
+
+                    <MapView>
+                        <SearchWidget/>
+                        <LegendWidget/>
+                    </MapView>
+                </div>
+
             </div>
 
-        </div>
-
+            <WarningMessage />
+        </>
     );
 };
 

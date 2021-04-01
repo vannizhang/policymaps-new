@@ -9,6 +9,7 @@ import {
 import {
     AgolItem
 } from '../../../utils/arcgis-online-item-formatter';
+import { SiteContext } from '../../../contexts/SiteContextProvider';
 
 interface Props {
     data: AgolItem[]
@@ -17,6 +18,8 @@ interface Props {
 const IndustryPerspectivesCarousel:React.FC<Props> = ({
     data
 })=>{
+
+    const { isMobile } = React.useContext(SiteContext);
 
     const [ activeIndex, setActiveIndex ] = React.useState<number>(0);
 
@@ -42,31 +45,38 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
     };
 
     const getItemsToDisplay = ()=>{
-        let itemsToDisplay = data.slice(activeIndex, 3);
+        
+        const currItem = data[activeIndex];
 
-        if(itemsToDisplay.length < 3){
-            const numOfItemsToAdd = 3 - itemsToDisplay.length;
-            const itemsToAdd = data.slice(0, numOfItemsToAdd);
-
-            itemsToDisplay = itemsToDisplay.concat(itemsToAdd);
+        if(isMobile){
+            return [currItem]
         }
 
-        return itemsToDisplay;
+        const prevItem = activeIndex > 0 
+            ? data[activeIndex - 1] 
+            : data[data.length -1];
+
+        const nextItem = activeIndex + 1 < data.length 
+            ? data[activeIndex + 1]
+            : data[0];
+
+        return [prevItem, currItem, nextItem];
     };
 
     const getCards = ()=>{
 
         const cardsData = getItemsToDisplay();
 
-        const centerItem = cardsData[1];
-        console.log(centerItem)
+        const centerItem = cardsData.length === 3 
+            ? cardsData[1] 
+            : cardsData[0];
 
         const cards = cardsData.map((d, i)=>{
             const { id } = d;
 
             const classNames = classnames('industry-perspectives-card', {
                 // the second item (out of 3) is always the active one 
-                'is-active': i === 1
+                'is-active': i === Math.floor(cardsData.length / 2)
             });
 
             return (
@@ -131,7 +141,7 @@ const IndustryPerspectivesCarousel:React.FC<Props> = ({
         <div 
             style={{
                 'padding': '3rem 0',
-                'backgroundColor': '#f8f8f8'
+                // 'backgroundColor': '#f8f8f8'
             }}
         >
             <div

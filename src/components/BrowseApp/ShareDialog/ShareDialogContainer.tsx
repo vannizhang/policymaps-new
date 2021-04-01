@@ -14,43 +14,29 @@ import {
 } from '../../../store/browseApp/reducers/itemCollections';
 
 import {
-    activeWebmapSelector,
-    centerLocationSelector
-} from '../../../store/browseApp/reducers/map';
-
-import {
-    hideSideBarSelectore
-} from '../../../store/browseApp/reducers/UI';
-
-import {
     setMyFavItems
 } from '../../../store/browseApp/reducers/myFavItems';
 
-import {
-    encodeSearchParams
-} from '../../../utils/url-manager/BrowseAppUrlManager';
-
 import ShareDialog from './ShareDialog';
+import ShareDialogModal from './ShareDialogModal'
 
 export type SupportedSocialMedia = 'twitter' | 'facebook'
 
 interface Props {
+    // if true, show modal window instead of floating panel
+    // to get better UX in mobile device
+    showModal: boolean;
     onClose?: ()=>void; 
 }
 
 const ShareDialogContainer:React.FC<Props> = ({
+    showModal,
     onClose
 })=>{
 
     const dispatch = useDispatch();
 
     const itemsCollection = useSelector(itemCollectionSelector);
-
-    const activeWebmap = useSelector(activeWebmapSelector);
-
-    const centerLocation = useSelector(centerLocationSelector);
-
-    const hideSidebar = useSelector(hideSideBarSelectore);
 
     const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 
@@ -64,7 +50,7 @@ const ShareDialogContainer:React.FC<Props> = ({
 
         const socialMedia = socialmediaLookUp[name];
 
-        const text = 'Policy maps for your consideration from esri policymaps site';
+        const text = 'Policy maps for your consideration from the Esri Maps for Public Policy site';
 
         const urlToOpen = `https://www.arcgis.com/home/socialnetwork.html?t=${text}&n=${socialMedia}&u=${currentUrl}&h=policymaps`;
 
@@ -74,12 +60,18 @@ const ShareDialogContainer:React.FC<Props> = ({
     const sendEmail = ()=>{
 
         const emailSubjectText = 'Policy maps for your consideration';
-        const emailBodyText = 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research';
-
+        
         const shareLink = encodeURIComponent(currentUrl);
         const lineBreak = '%0D%0A';
         const myCollectionItemName = itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.title).join(lineBreak) : ''
-        const body = `${emailBodyText}: ${lineBreak}${lineBreak}${myCollectionItemName}${lineBreak}${lineBreak}${shareLink}`;
+
+        const emailBodyText = itemsCollection && itemsCollection.length >= 2 
+            ? 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research'
+            : 'I was exploring Esri Policy Maps and found a map I wanted to share with you that might support your policy and legislative research';
+
+        const body = myCollectionItemName 
+            ? `${emailBodyText}: ${lineBreak}${myCollectionItemName}${lineBreak}${lineBreak}${shareLink}`
+            : `${emailBodyText}: ${lineBreak}${shareLink}`
         const emailLink = `mailto:${encodeURIComponent('')}?subject=${emailSubjectText}&body=${body}`;
 
         window.location.href = emailLink;
@@ -102,20 +94,30 @@ const ShareDialogContainer:React.FC<Props> = ({
         }
     }
 
+    // React.useEffect(()=>{
+
+    //     encodeSearchParams({
+    //         activeWebmapId: activeWebmap ? activeWebmap.id : '',
+    //         collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
+    //         location: centerLocation,
+    //         // isSideBarHide: hideSidebar
+    //     });
+    // }, [itemsCollection, activeWebmap, centerLocation])
+
     React.useEffect(()=>{
-
-        encodeSearchParams({
-            activeWebmapId: activeWebmap ? activeWebmap.id : '',
-            collections: itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.id) : [],
-            location: centerLocation,
-            isSideBarHide: hideSidebar
-        });
-
         setCurrentUrl(window.location.href);
-        
-    }, [itemsCollection, activeWebmap, centerLocation, hideSidebar])
+    }, [window.location.href])
 
-    return (
+    return showModal 
+    ? (
+        <ShareDialogModal 
+            currentUrl={currentUrl}
+            onClose={onClose}
+            sendEmailOnClick={sendEmail}
+            shareToSocialMediaOnClick={shareToSocialMedia}
+        />
+    ) 
+    : (
         <ShareDialog 
             currentUrl={currentUrl}
             onClose={onClose}

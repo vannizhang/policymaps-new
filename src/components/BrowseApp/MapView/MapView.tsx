@@ -13,6 +13,7 @@ import {
 import {
     Location
 } from '../../../utils/url-manager/BrowseAppUrlManager';
+import { SiteContext } from '../../../contexts/SiteContextProvider';
 
 interface Props {
     webmapItem?: AgolItem;
@@ -72,6 +73,8 @@ const MapView:React.FC<Props> = ({
 
     const mapDivRef = React.useRef<HTMLDivElement>();
 
+    const { isMobile } = React.useContext(SiteContext)
+
     const [ mapView, setMapView] = React.useState<IMapView>(null);
 
     const initMapView = async()=>{
@@ -98,7 +101,12 @@ const MapView:React.FC<Props> = ({
                 }),
                 extent: preferredExtent,
                 center: initialCenter ? [ initialCenter.lon, initialCenter.lat ] : undefined,
-                zoom: initialZoom ? initialZoom : undefined
+                zoom: initialZoom ? initialZoom : undefined,
+                popup: {
+                    dockOptions: {
+                        position: 'bottom-right'
+                    }
+                }
             });
 
             view.when(()=>{
@@ -207,11 +215,11 @@ const MapView:React.FC<Props> = ({
                 style={{
                     position: 'absolute',
                     top: 0,
+                    bottom: isMobile ? 40 : 0,
                     left: 0,
                     margin: 0,
                     padding: 0,
-                    width: '100%',
-                    height: '100%',
+                    width: '100%'
                 }}
                 ref={mapDivRef}
             ></div>

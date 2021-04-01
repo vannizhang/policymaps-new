@@ -153,7 +153,7 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './browse/index.html',
                 chunks: ['browse'],
-                title: `Browse | ${SiteTitle}`,
+                title: `Explore | ${SiteTitle}`,
                 meta: {
                     description: 'Access maps and analysis that act as the baseline for your research and policy decisions'
                 },
@@ -220,8 +220,8 @@ module.exports =  (env, options)=> {
                     useShortDoctype                : true
                 }
             }),
-            new CleanWebpackPlugin(),
-            new BundleAnalyzerPlugin()
+            !devMode ? new CleanWebpackPlugin() : false,
+            !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
         optimization: {
             minimizer: [

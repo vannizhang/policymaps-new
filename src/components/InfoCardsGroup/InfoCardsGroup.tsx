@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 import {
     CardCarousel
@@ -7,6 +8,50 @@ import {
 import {
     AgolItem
 } from '../../utils/arcgis-online-item-formatter';
+
+const FEATURED_CARD_HEIGHT = 320;
+const TABLET_BREAK_POINT = 768;
+
+const FearuredCardContainer = styled.div`
+    display: flex;
+    align-content: stretch;
+    align-items: stretch;
+    min-height: ${FEATURED_CARD_HEIGHT}px;
+    margin-Bottom: 1rem;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 16px 0 rgba(0, 0, 0, 0.05);
+
+    @media (max-width: ${TABLET_BREAK_POINT}px) {
+        display: block;
+    }
+`;
+
+type FearuredCardImageProps = {
+    thumbnailImage: string;
+};
+
+const FearuredCardImage = styled.div<FearuredCardImageProps>`
+    width: 50%;
+    background-image: ${(props) => `url(${props.thumbnailImage})`};
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    @media (max-width: ${TABLET_BREAK_POINT}px) {
+        width: 100%;
+        height: ${FEATURED_CARD_HEIGHT}px;
+    }
+`;
+
+const FearuredCardContent = styled.div`
+    width: 50%;
+    box-sizing: border-box;
+    padding: 1rem;
+    background-color: #efefef;
+
+    @media (max-width: ${TABLET_BREAK_POINT}px) {
+        width: 100%;
+    }
+`;
 
 interface Props {
     title: string;
@@ -37,38 +82,13 @@ const InfoCardsGroup:React.FC<Props> = ({
         } = featuredCard;
 
         return (
-            <div 
-                style={{
-                    'display': 'flex',
-                    'alignContent': 'strech',
-                    'alignItems': 'strech',
-                    'minHeight': '320px',
-                    'marginBottom': '1rem',
-                    'boxShadow': '0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 16px 0 rgba(0, 0, 0, 0.05)'
-                }}
-            >   
-                <div
-                    style={{
-                        'flexGrow': 1,
-                        'flexBasis': '250px',
-                        'flexShrink': 0,
-                        'backgroundImage': `url(${thumbnailUrl})`,
-                        'backgroundSize': 'cover',
-                        'backgroundRepeat': 'no-repeat'
-                    }}
-                >
-                </div>
+            <FearuredCardContainer>   
 
-                <div
-                    style={{
-                        'flexGrow': 1,
-                        'flexBasis': '250px',
-                        'flexShrink': 0,
-                        'boxSizing': 'border-box',
-                        'padding': '1rem',
-                        'backgroundColor': '#efefef'
-                    }}
-                >
+                <FearuredCardImage 
+                    thumbnailImage={thumbnailUrl}
+                />
+
+                <FearuredCardContent>
                     <p className="font-size-2 trailer-half">
                         <a target="_blank" href={url}>{title}</a>
                     </p>
@@ -76,8 +96,8 @@ const InfoCardsGroup:React.FC<Props> = ({
                     <p className="font-size--1">
                         { snippet }
                     </p>
-                </div>
-            </div>
+                </FearuredCardContent>
+            </FearuredCardContainer>
         );
     }
 

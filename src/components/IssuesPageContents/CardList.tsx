@@ -42,9 +42,10 @@ const CardList:React.FC<Props> = ({
                     }}
                 >
                     <div
+                        className='phone-hide'
                         style={{
-                            'width': '30%',
-                            'maxWidth': '230px',
+                            // 'width': '30%',
+                            'width': '230px',
                             'backgroundImage': `url(${thumbnailUrl})`, 
                             'backgroundSize': 'cover',
                             'backgroundRepeat': 'no-repeat'
@@ -55,12 +56,12 @@ const CardList:React.FC<Props> = ({
                         style={{
                             'flexGrow': 1,
                             'flexShrink': 0,
-                            'flexBasis': '200px',
+                            'flexBasis': '50px',
                             'boxSizing': 'border-box',
                             'padding': '.5rem 1rem'
                         }}
                     >
-                        <div className='trailer-half text-ellipsis'>
+                        <div className='trailer-half'>
                             <a className='link-darkest-gray font-size-0' href={agolItemUrl} target='_blank'>{title}</a>
                         </div>
 

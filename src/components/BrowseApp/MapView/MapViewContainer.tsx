@@ -7,6 +7,11 @@ import {
 	activeWebmapSelector
 } from '../../../store/browseApp/reducers/map';
 
+import { 
+    updateActiveWebmapIdInQueryParam, 
+    updateMapCenterLocationInQueryParam 
+} from '../../../utils/url-manager/BrowseAppUrlManager';
+
 import MapView from './MapView';
 
 interface Props {
@@ -22,6 +27,18 @@ const MapViewContainer:React.FC<Props> = ({
     const activeWebmapItem = useSelector(activeWebmapSelector);
 
     const mapCenterLocation = useSelector(centerLocationSelector);
+
+    React.useEffect(()=>{
+        if(activeWebmapItem){
+            updateActiveWebmapIdInQueryParam(activeWebmapItem.id)
+        }
+    }, [activeWebmapItem])
+
+    React.useEffect(()=>{
+        if(mapCenterLocation){
+            updateMapCenterLocationInQueryParam(mapCenterLocation)
+        }
+    }, [mapCenterLocation])
 
     return  (
         <MapView

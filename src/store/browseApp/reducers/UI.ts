@@ -13,16 +13,27 @@ import {
     decodeSearchParams
 } from '../../../utils/url-manager/BrowseAppUrlManager';
 
+import {
+    miscFns
+} from 'helper-toolkit-ts'
+
 interface UIInitialState {
     hideSideBar: boolean;
 };
 
 const { isSideBarHide } = decodeSearchParams();
 
+const isMobile = miscFns.isMobileDevice();
+
+// sidebar should be hidden by default when using mobile device
+const initialState4HideSidebar = isMobile 
+    ? true 
+    : isSideBarHide;
+
 const slice = createSlice({
     name: 'ui',
     initialState: {
-        hideSideBar: isSideBarHide
+        hideSideBar: initialState4HideSidebar
     } as UIInitialState,
     reducers: {
         hideSideBarToggled: (state)=>{
