@@ -50,7 +50,7 @@ const ShareDialogContainer:React.FC<Props> = ({
 
         const socialMedia = socialmediaLookUp[name];
 
-        const text = 'Policy maps for your consideration from esri policymaps site';
+        const text = 'Policy maps for your consideration from the Esri Maps for Public Policy site';
 
         const urlToOpen = `https://www.arcgis.com/home/socialnetwork.html?t=${text}&n=${socialMedia}&u=${currentUrl}&h=policymaps`;
 

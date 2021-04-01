@@ -69,9 +69,9 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                     </svg>
                 </div>
 
-                {/* <div>
-                    <p>Share this map</p>
-                </div> */}
+                <div className='text-center'>
+                    <p className='trailer-half font-size-1 avenir-light'>Share your collection of maps</p>
+                </div>
 
                 <div
 
