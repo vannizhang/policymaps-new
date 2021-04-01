@@ -65,7 +65,9 @@ const ShareDialogContainer:React.FC<Props> = ({
         const shareLink = encodeURIComponent(currentUrl);
         const lineBreak = '%0D%0A';
         const myCollectionItemName = itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.title).join(lineBreak) : ''
-        const body = `${emailBodyText}: ${lineBreak}${lineBreak}${myCollectionItemName}${lineBreak}${lineBreak}${shareLink}`;
+        const body = myCollectionItemName 
+            ? `${emailBodyText}: ${lineBreak}${myCollectionItemName}${lineBreak}${shareLink}`
+            : `${emailBodyText}: ${lineBreak}${shareLink}`
         const emailLink = `mailto:${encodeURIComponent('')}?subject=${emailSubjectText}&body=${body}`;
 
         window.location.href = emailLink;
