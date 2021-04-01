@@ -65,7 +65,7 @@ const ShareDialogContainer:React.FC<Props> = ({
         const lineBreak = '%0D%0A';
         const myCollectionItemName = itemsCollection && itemsCollection.length ? itemsCollection.map(d=>d.title).join(lineBreak) : ''
 
-        const emailBodyText = myCollectionItemName 
+        const emailBodyText = itemsCollection && itemsCollection.length >= 2 
             ? 'I was exploring Esri Policy Maps and found a collection of maps I wanted to share with you that might support your policy and legislative research'
             : 'I was exploring Esri Policy Maps and found a map I wanted to share with you that might support your policy and legislative research';
 
