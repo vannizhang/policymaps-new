@@ -7,7 +7,7 @@ const hasSeenWarningMessage = localStorage.getItem(itemLey4HasSeenWarningMessage
 
 const WarningMessage:React.FC = () => {
     const { isMobile } = React.useContext(SiteContext);
-    const [isVisible, setIsVisible] = React.useState<boolean>(isMobile);
+    const [isVisible, setIsVisible] = React.useState<boolean>(!hasSeenWarningMessage && isMobile);
 
     React.useEffect(()=>{
         // set has seen warning message to '1' to only show the warning message once
