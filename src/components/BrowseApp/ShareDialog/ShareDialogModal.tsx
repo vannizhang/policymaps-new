@@ -18,6 +18,7 @@ const ShareBtnContainer:React.FC<ShareBtnContainerProps> = ({
     return(
         <div
             onClick={onClick}
+            className='btn'
             style={{
                 width: '60px',
                 height: '60px',
@@ -40,6 +41,9 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
     sendEmailOnClick,
     shareToSocialMediaOnClick
 }) => {
+
+    const [ showCopiedMessage, setShowCopiedMessage ] = React.useState<boolean>(false);
+
     const copyUrl = React.useCallback(()=>{
         const copyText = document.createElement('textarea')
         copyText.value = currentUrl;
@@ -47,7 +51,17 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
         copyText.select();
         document.execCommand("copy");
         document.body.removeChild(copyText);
+
+        setShowCopiedMessage(true);
     }, [currentUrl]);
+
+    React.useEffect(()=>{
+        if(showCopiedMessage){
+            setTimeout(()=>{
+                setShowCopiedMessage(false);
+            }, 2000)
+        }
+    }, [showCopiedMessage])
 
     return (
         <div className="js-modal modal-overlay is-active">
@@ -70,7 +84,7 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                 </div>
 
                 <div className='text-center'>
-                    <p className='trailer-half font-size-1 avenir-light'>Share your collection of maps</p>
+                    <p className='trailer-half font-size-1 avenir-light'>{showCopiedMessage ? 'Link copied!' : 'Share your collection of maps'}</p>
                 </div>
 
                 <div
@@ -108,6 +122,14 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                     <span className="icon-social-twitter margin-left-quarter" aria-label="twitter" onClick={shareToSocialMediaOnClick.bind(this,'twitter')}></span>
                     <span className="icon-social-facebook margin-left-quarter" aria-label="facebook" onClick={shareToSocialMediaOnClick.bind(this,'facebook')}></span> */}
                 </div>
+
+                {/* {
+                    showCopiedMessage ? (
+                        <div className='text-center'>
+                            <p className='font-size--1'>link copied!</p>
+                        </div>
+                    ) : null
+                } */}
 
             </div>
         </div>
