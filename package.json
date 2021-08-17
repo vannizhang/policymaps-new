@@ -64,7 +64,7 @@
     "classnames": "^2.2.6",
     "esri-global-nav": "github:Esri/global-nav",
     "esri-loader": "^2.16.0",
-    "helper-toolkit-ts": "^1.1.10",
+    "helper-toolkit-ts": "^1.1.14",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.2.0",

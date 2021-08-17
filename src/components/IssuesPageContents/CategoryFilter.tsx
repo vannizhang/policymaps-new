@@ -52,7 +52,7 @@ const CategoryFilter:React.FC<Props> = ({
 
             return (
                 <div
-                    key={`catgeory-filter-option-${subcategory}`}
+                    key={`catgeory-filter-option-${title}`}
                     style={{
                         ...optionBtnStyle,
                         'borderLeft': activeSubCategories.length === 1 && activeSubCategories[0] === title

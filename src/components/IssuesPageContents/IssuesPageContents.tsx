@@ -34,6 +34,7 @@ import {
     ContentTypeFilterData,
     SortFilterData
 } from './Config';
+import { updateHashParam, getHashParams } from '../../utils/url-manager/issuesPageUrlParams';
 
 const IssuesPage:React.FC<{}> = ()=>{
 
@@ -57,18 +58,23 @@ const IssuesPage:React.FC<{}> = ()=>{
             return item.title !== 'Resources';
         });
 
+        console.log(categorySchema)
+
         setCategorySchema(categorySchema);
     }
 
     // init the module that will be used to query items from the Policy Maps group on ArcGIS online
     const initAgolGroupData = async ()=>{
 
+        const { type, sort, q } = getHashParams();
+
         const arcGISOnlineGroupData = new ArcGISOnlineGroupData({
             groupId: Tier.PROD.AGOL_GROUP_ID,
             categorySchema,
             queryParams: {
-                // contentType: 'webmap',
-                sortField: 'modified'
+                contentType: type as ContentType,
+                sortField: sort as SortField,
+                searchTerm: q
             }
         });
 
@@ -97,7 +103,7 @@ const IssuesPage:React.FC<{}> = ()=>{
         response.results = response.results
             .map(d=>formatAsAgolItem(d));
         
-        console.log('search response', response);
+        // console.log('search response', response);
 
         setSearchReponse(response);
     };
@@ -105,21 +111,30 @@ const IssuesPage:React.FC<{}> = ()=>{
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
         agolGroupData.updateSelectedCategory(mainCategoryTitle, activeSubcategories);
         searchItems();
+        // console.log(mainCategoryTitle, activeSubcategories)
+
+        const val = activeSubcategories.length >  1 
+            ? mainCategoryTitle 
+            : `${mainCategoryTitle}:${activeSubcategories[0]}`;
+        updateHashParam('category', val)
     };
 
     const searchAutoCompleteOnChange = (val:string)=>{
         agolGroupData.updateSearchTerm(val);
         searchItems();
+        updateHashParam('q', val)
     };
 
     const contentTypeOnChange = (val:ContentType)=>{
         agolGroupData.updateContentType(val);
         searchItems();
+        updateHashParam('type', val)
     };
 
     const sortFieldOnChange = (val:SortField)=>{
         agolGroupData.updateSortField(val);
         searchItems();
+        updateHashParam('sort', val);
     };
 
     // fetch the category schema first
