@@ -36,6 +36,8 @@ import {
 } from './Config';
 import { updateHashParam, getHashParams } from '../../utils/url-manager/issuesPageUrlParams';
 
+const hashParams = getHashParams();
+
 const IssuesPage:React.FC<{}> = ()=>{
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
@@ -66,7 +68,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     // init the module that will be used to query items from the Policy Maps group on ArcGIS online
     const initAgolGroupData = async ()=>{
 
-        const { type, sort, q } = getHashParams();
+        const { type, sort, q } = hashParams;
 
         const arcGISOnlineGroupData = new ArcGISOnlineGroupData({
             groupId: Tier.PROD.AGOL_GROUP_ID,
@@ -168,6 +170,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                             groupId={Tier.PROD.AGOL_GROUP_ID }
                             onSelect={searchAutoCompleteOnChange}
                             placeholder={'Search items'}
+                            deafultVal={hashParams.q || ''}
                         />
                     </div>
 
@@ -185,6 +188,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                             data={ContentTypeFilterData}
                             title={'Item Type'}
                             onChange={contentTypeOnChange}
+                            activeValueByDefault={hashParams.type || ''}
                         />
                     </div>
 
@@ -193,7 +197,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                             data={SortFilterData}
                             title={'Sort By'}
                             onChange={sortFieldOnChange}
-                            activeValueByDefault={'modified'}
+                            activeValueByDefault={hashParams.sort || 'modified'}
                         />
                     </div>
 

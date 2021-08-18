@@ -13,6 +13,7 @@ interface Props {
     placeholder?: string;
     // type:"web map"
     filters?: string;
+    deafultVal?: string;
 
     onSelect?: (val:string)=>void;
 }
@@ -21,13 +22,14 @@ const SearchAutoComplete:React.FC<Props> = ({
     groupId,
     agolHost = 'https://www.arcgis.com',
     placeholder = 'Search items',
+    deafultVal='',
     filters = '',
     onSelect
 })=>{
 
     const containerRef = React.useRef<HTMLDivElement>();
 
-    const [ searchTerm, setSearchTerm ] = React.useState<string>('');
+    const [ searchTerm, setSearchTerm ] = React.useState<string>(deafultVal);
     const [ suggestions, setSuggestions ] = React.useState<SuggestResult[]>([]);
     const [ suggestionCandidateIndex, setSuggestionCandidateIndex] = React.useState<number>(-1);
 
