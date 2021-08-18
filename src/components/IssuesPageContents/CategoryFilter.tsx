@@ -7,12 +7,14 @@ import {
 interface Props {
     categorySchema: CategorySchemaDataItem;
     activeMainCategoryTitle: string;
+    defaultSubCategory? :string;
     onSelect?: (activeMainCategoryTitle:string, activeSubCategories:string[])=>void
 }
 
 const CategoryFilter:React.FC<Props> = ({
     categorySchema,
     activeMainCategoryTitle,
+    defaultSubCategory,
     onSelect
 })=>{
 
@@ -93,11 +95,17 @@ const CategoryFilter:React.FC<Props> = ({
 
     React.useEffect(()=>{
 
-        if(categorySchema){
-            selectAllSubcategories();
+        if(categorySchema && activeMainCategoryTitle){
+
+            if(defaultSubCategory && activeSubCategories.length === 0){
+                setActiveSubcategories([defaultSubCategory])
+            } else {
+                selectAllSubcategories();
+            }
+            
         }
 
-    }, [ activeMainCategoryTitle ]);
+    }, [ categorySchema, activeMainCategoryTitle]);
 
 
     React.useEffect(()=>{

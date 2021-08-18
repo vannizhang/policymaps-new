@@ -12,16 +12,18 @@ import classnames from 'classnames';
 
 interface Props {
     categorySchema: CategorySchemaDataItem;
+    activeMainCategoryTitle: string;
     onSelect: (activeMainCategoryTitle:string)=>void
 }
 
 const HeroBanner:React.FC<Props> = ({
     categorySchema,
+    activeMainCategoryTitle,
     onSelect
 })=>{
 
     // active main catgeory that displays the all subcategory options
-    const [ activeMainCategoryTitle, setActiveMainCategoryTitle ] = React.useState<string>();
+    // const [ activeMainCategoryTitle, setActiveMainCategoryTitle ] = React.useState<string>();
 
     const getContent = ()=>{
         const activeCategory = categorySchema.categories
@@ -57,7 +59,7 @@ const HeroBanner:React.FC<Props> = ({
                 <span 
                     key={`sub-nav-link-${title}`}
                     className={classNames}
-                    onClick={setActiveMainCategoryTitle.bind(this, title)}
+                    onClick={onSelect.bind(this, title)}
                 >
                     {title}
                 </span>
@@ -72,17 +74,17 @@ const HeroBanner:React.FC<Props> = ({
     };
 
     React.useEffect(()=>{
-        if(categorySchema){
+        if(categorySchema && !activeMainCategoryTitle){
             const activeCategory = categorySchema.categories[0];
-            setActiveMainCategoryTitle(activeCategory.title);
+            onSelect(activeCategory.title);
         }
     }, [categorySchema]);
 
-    React.useEffect(()=>{
-        if(activeMainCategoryTitle){
-            onSelect(activeMainCategoryTitle);
-        }
-    }, [activeMainCategoryTitle])
+    // React.useEffect(()=>{
+    //     if(activeMainCategoryTitle){
+    //         onSelect(activeMainCategoryTitle);
+    //     }
+    // }, [activeMainCategoryTitle])
 
     return categorySchema && activeMainCategoryTitle ? (
         <div

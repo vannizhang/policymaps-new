@@ -44,7 +44,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
 
-    const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>();
+    const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>(hashParams.category ? hashParams.category.split(':')[0] : '');
 
     const initCategorySchema = async () =>{
 
@@ -113,7 +113,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
         agolGroupData.updateSelectedCategory(mainCategoryTitle, activeSubcategories);
         searchItems();
-        // console.log(mainCategoryTitle, activeSubcategories)
+        console.log(mainCategoryTitle, activeSubcategories)
 
         const val = activeSubcategories.length >  1 
             ? mainCategoryTitle 
@@ -155,6 +155,7 @@ const IssuesPage:React.FC<{}> = ()=>{
         <div>
             <HeroBanner 
                 categorySchema={categorySchema}
+                activeMainCategoryTitle={activeMainCategoryTitle}
                 onSelect={setActiveMainCategoryTitle}
             />
 
@@ -178,6 +179,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                         <CategoryFilter 
                             categorySchema={categorySchema}
                             activeMainCategoryTitle={activeMainCategoryTitle}
+                            defaultSubCategory={hashParams.category ? hashParams.category.split(':')[1] : ''}
                             onSelect={categoryFilterOnChange}
                         />
                     </div>
