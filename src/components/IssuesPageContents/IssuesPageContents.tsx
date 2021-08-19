@@ -60,7 +60,7 @@ const IssuesPage:React.FC<{}> = ()=>{
             return item.title !== 'Resources';
         });
 
-        console.log(categorySchema)
+        // console.log(categorySchema)
 
         setCategorySchema(categorySchema);
     }
@@ -94,6 +94,8 @@ const IssuesPage:React.FC<{}> = ()=>{
             console.error('no more items to load');
             return;
         }
+
+        setSearchReponse(null)
 
         const response = await agolGroupData.search({
             start: ( searchNextSet && searchResponse ) 
@@ -139,6 +141,52 @@ const IssuesPage:React.FC<{}> = ()=>{
         updateHashParam('sort', val);
     };
 
+    const getSearchResult = ()=>{
+        // console.log(searchResponse)
+
+        if(!searchResponse){
+            return (
+                <div className='text-center'>
+                    <div className="loader is-active padding-leader-5 padding-trailer-3">
+                        <div className="loader-bars"></div>
+                    </div>
+                </div>
+            )
+        }
+
+        if(!searchResponse.total){
+            return (
+                <div className='text-center padding-leader-5 padding-trailer-4'>
+                    <p >No results match your search criteria. Try different criteria or explore <a href={`https://livingatlas.arcgis.com/en/browse/`} target='_blank'>ArcGIS Living Atlas of the World</a> for additional maps, apps, and more.</p>
+                </div>
+            )
+        }
+
+        return (
+            <>
+                <div className='trailer-1'>
+                    <CardList 
+                        data={ searchResponse ? searchResponse.results : [] }
+                    />
+                </div>
+
+                <PageNav 
+                    searchResponse={searchResponse}
+                    prevBtnOnClick={()=>{
+                        searchItems({
+                            start: searchResponse.start - 10
+                        })
+                    }}
+                    nextBtnOnClick={()=>{
+                        searchItems({
+                            searchNextSet: true
+                        })
+                    }}
+                />
+            </>
+        )
+    }
+
     // fetch the category schema first
     React.useEffect(()=>{
         initCategorySchema();
@@ -164,7 +212,8 @@ const IssuesPage:React.FC<{}> = ()=>{
 
                     <div className='trailer-half'
                         style={{
-                            'border': '1px solid #efefef'
+                            'border': '1px solid #efefef',
+                            'paddingLeft': '.5rem'
                         }}
                     >
                         <SearchAutoComplete 
@@ -189,6 +238,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                         <DropdownFilter 
                             data={ContentTypeFilterData}
                             title={'Item Type'}
+                            expandedByDefault={hashParams.type && hashParams.type !== ''}
                             onChange={contentTypeOnChange}
                             activeValueByDefault={hashParams.type || ''}
                         />
@@ -198,6 +248,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                         <DropdownFilter 
                             data={SortFilterData}
                             title={'Sort By'}
+                            expandedByDefault={hashParams.sort && hashParams.sort !== 'modified'}
                             onChange={sortFieldOnChange}
                             activeValueByDefault={hashParams.sort || 'modified'}
                         />
@@ -206,27 +257,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                 </div>
 
                 <div className='column-19 trailer-2'>
-
-                    <div className='trailer-1'>
-                        <CardList 
-                            data={ searchResponse ? searchResponse.results : [] }
-                        />
-                    </div>
-
-                    <PageNav 
-                        searchResponse={searchResponse}
-                        prevBtnOnClick={()=>{
-                            searchItems({
-                                start: searchResponse.start - 10
-                            })
-                        }}
-                        nextBtnOnClick={()=>{
-                            searchItems({
-                                searchNextSet: true
-                            })
-                        }}
-                    />
-
+                    { getSearchResult() }
                 </div>
             </div>
         </div>
