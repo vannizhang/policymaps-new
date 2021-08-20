@@ -4,6 +4,10 @@ import {
     CopyIcon, EmailIcon, TwitterIcon, FacebookIcon
 } from './icons'
 
+type Props = ShareDialogProps & {
+    title?: string;
+}
+
 type ShareBtnContainerProps = {
     color?: string;
     icon: JSX.Element;
@@ -35,8 +39,9 @@ const ShareBtnContainer:React.FC<ShareBtnContainerProps> = ({
     )
 }
 
-const ShareDialogModal:React.FC<ShareDialogProps> = ({
+const ShareDialogModal:React.FC<Props> = ({
     currentUrl,
+    title,
     onClose,
     sendEmailOnClick,
     shareToSocialMediaOnClick
@@ -66,7 +71,7 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
     return (
         <div className="js-modal modal-overlay is-active">
             <div 
-                className="modal-content column-12" 
+                className="modal-content column-6" 
                 role="dialog" 
                 aria-labelledby="modal"
                 style={{
@@ -75,7 +80,7 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                 }}
             >
                 <div
-                    className='text-right'
+                    className='text-right cursor-pointer'
                     onClick={onClose}
                 >
                     <svg height="32" width="32" viewBox="0 0 32 32" fill='#fff'>
@@ -84,7 +89,7 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                 </div>
 
                 <div className='text-center'>
-                    <p className='trailer-half font-size-1 avenir-light'>{showCopiedMessage ? 'Link copied!' : 'Share your collection of maps'}</p>
+                    <p className='trailer-half font-size-1 avenir-light'>{showCopiedMessage ? 'Link copied!' : title}</p>
                 </div>
 
                 <div
@@ -101,10 +106,14 @@ const ShareDialogModal:React.FC<ShareDialogProps> = ({
                         icon={CopyIcon}
                     />
 
-                    <ShareBtnContainer 
-                        onClick={sendEmailOnClick}
-                        icon={EmailIcon}
-                    />
+                    {
+                        sendEmailOnClick && (
+                            <ShareBtnContainer 
+                                onClick={sendEmailOnClick}
+                                icon={EmailIcon}
+                            />
+                        )
+                    }
 
                     <ShareBtnContainer 
                         onClick={shareToSocialMediaOnClick.bind(this,'twitter')}

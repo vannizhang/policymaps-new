@@ -5,7 +5,7 @@ export type ShareDialogProps = {
     currentUrl: string;
     onClose?: ()=>void; 
     addToMyFavBtnOnClick?:()=>void;
-    sendEmailOnClick: ()=>void;
+    sendEmailOnClick?: ()=>void;
     shareToSocialMediaOnClick: (name:SupportedSocialMedia)=>void;
 }
 

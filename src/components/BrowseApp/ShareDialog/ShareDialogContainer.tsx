@@ -29,6 +29,22 @@ interface Props {
     onClose?: ()=>void; 
 }
 
+export const shareToSocialMedia = (name:SupportedSocialMedia, text?:string)=>{
+    const socialmediaLookUp = {
+        'twitter': 'tw',
+        'facebook': 'fb',
+    };
+
+    const socialMedia = socialmediaLookUp[name];
+
+    text = text || 'Policy maps for your consideration from the Esri Maps for Public Policy site';
+
+    const urlToOpen = `https://www.arcgis.com/home/socialnetwork.html?t=${text}&n=${socialMedia}&u=${window.location.href}&h=policymaps`;
+
+    window.open(urlToOpen);
+};
+
+
 const ShareDialogContainer:React.FC<Props> = ({
     showModal,
     onClose
@@ -41,21 +57,6 @@ const ShareDialogContainer:React.FC<Props> = ({
     const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
 
     const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
-
-    const shareToSocialMedia = (name:SupportedSocialMedia)=>{
-        const socialmediaLookUp = {
-            'twitter': 'tw',
-            'facebook': 'fb',
-        };
-
-        const socialMedia = socialmediaLookUp[name];
-
-        const text = 'Policy maps for your consideration from the Esri Maps for Public Policy site';
-
-        const urlToOpen = `https://www.arcgis.com/home/socialnetwork.html?t=${text}&n=${socialMedia}&u=${currentUrl}&h=policymaps`;
-
-        window.open(urlToOpen);
-    };
 
     const sendEmail = ()=>{
 
@@ -112,6 +113,7 @@ const ShareDialogContainer:React.FC<Props> = ({
     ? (
         <ShareDialogModal 
             currentUrl={currentUrl}
+            title='Share your collection of maps'
             onClose={onClose}
             sendEmailOnClick={sendEmail}
             shareToSocialMediaOnClick={shareToSocialMedia}

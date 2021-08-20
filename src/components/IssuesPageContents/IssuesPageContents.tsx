@@ -29,12 +29,14 @@ import HeroBanner from './HeroBanner';
 import CategoryFilter from './CategoryFilter';
 import CardList from './CardList';
 import PageNav from './PageNav';
+import ShareDialogModal from '../BrowseApp/ShareDialog/ShareDialogModal'
 
 import {
     ContentTypeFilterData,
     SortFilterData
 } from './Config';
 import { updateHashParam, getHashParams } from '../../utils/url-manager/issuesPageUrlParams';
+import { shareToSocialMedia } from '../BrowseApp/ShareDialog/ShareDialogContainer';
 
 const hashParams = getHashParams();
 
@@ -44,6 +46,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ isLoading, setIsLoading] = React.useState<boolean>(true)
+    const [ isShareDialogOn, setIsShareDialogOn] = React.useState<boolean>(false) 
 
     const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>(hashParams.category ? hashParams.category.split(':')[0] : '');
 
@@ -207,67 +210,91 @@ const IssuesPage:React.FC<{}> = ()=>{
     }, [searchResponse])
 
     return (
-        <div>
-            <HeroBanner 
-                categorySchema={categorySchema}
-                activeMainCategoryTitle={activeMainCategoryTitle}
-                onSelect={setActiveMainCategoryTitle}
-            />
+        <>
+            <div>
+                <HeroBanner 
+                    categorySchema={categorySchema}
+                    activeMainCategoryTitle={activeMainCategoryTitle}
+                    onSelect={setActiveMainCategoryTitle}
+                />
 
-            <div className='grid-container leader-2'>
-                <div className='column-5 tablet-column-12 trailer-1'>
+                <div className='grid-container leader-2'>
+                    <div className='column-5 tablet-column-12 trailer-1'>
 
-                    <div className='trailer-half'
-                        style={{
-                            'border': '1px solid #efefef',
-                            'paddingLeft': '.5rem'
-                        }}
-                    >
-                        <SearchAutoComplete 
-                            groupId={Tier.PROD.AGOL_GROUP_ID }
-                            onSelect={searchAutoCompleteOnChange}
-                            placeholder={'Search items'}
-                            deafultVal={hashParams.q || ''}
-                        />
+                        <div className='trailer-half'
+                            style={{
+                                'border': '1px solid #efefef',
+                                'paddingLeft': '.5rem'
+                            }}
+                        >
+                            <SearchAutoComplete 
+                                groupId={Tier.PROD.AGOL_GROUP_ID }
+                                onSelect={searchAutoCompleteOnChange}
+                                placeholder={'Search items'}
+                                deafultVal={hashParams.q || ''}
+                            />
+                        </div>
+
+                        <div className='trailer-half'>
+                            <CategoryFilter 
+                                categorySchema={categorySchema}
+                                activeMainCategoryTitle={activeMainCategoryTitle}
+                                defaultSubCategory={hashParams.category ? hashParams.category.split(':')[1] : ''}
+                                onSelect={categoryFilterOnChange}
+                            />
+                        </div>
+
+
+                        <div className='trailer-half'>
+                            <DropdownFilter 
+                                data={ContentTypeFilterData}
+                                title={'Item Type'}
+                                expandedByDefault={hashParams.type && hashParams.type !== ''}
+                                onChange={contentTypeOnChange}
+                                activeValueByDefault={hashParams.type || ''}
+                            />
+                        </div>
+
+                        <div className='trailer-half'>
+                            <DropdownFilter 
+                                data={SortFilterData}
+                                title={'Sort By'}
+                                expandedByDefault={hashParams.sort && hashParams.sort !== 'modified'}
+                                onChange={sortFieldOnChange}
+                                activeValueByDefault={hashParams.sort || 'modified'}
+                            />
+                        </div>
+
+                        <div className='trailer-half'>
+                            <div className='btn btn-fill btn-clear'
+                                onClick={setIsShareDialogOn.bind(undefined, true)}
+                            >
+                                Share these items
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div className='trailer-half'>
-                        <CategoryFilter 
-                            categorySchema={categorySchema}
-                            activeMainCategoryTitle={activeMainCategoryTitle}
-                            defaultSubCategory={hashParams.category ? hashParams.category.split(':')[1] : ''}
-                            onSelect={categoryFilterOnChange}
-                        />
+                    <div className='column-19 trailer-2'>
+                        { getSearchResult() }
                     </div>
-
-
-                    <div className='trailer-half'>
-                        <DropdownFilter 
-                            data={ContentTypeFilterData}
-                            title={'Item Type'}
-                            expandedByDefault={hashParams.type && hashParams.type !== ''}
-                            onChange={contentTypeOnChange}
-                            activeValueByDefault={hashParams.type || ''}
-                        />
-                    </div>
-
-                    <div className='trailer-half'>
-                        <DropdownFilter 
-                            data={SortFilterData}
-                            title={'Sort By'}
-                            expandedByDefault={hashParams.sort && hashParams.sort !== 'modified'}
-                            onChange={sortFieldOnChange}
-                            activeValueByDefault={hashParams.sort || 'modified'}
-                        />
-                    </div>
-
-                </div>
-
-                <div className='column-19 trailer-2'>
-                    { getSearchResult() }
                 </div>
             </div>
-        </div>
+
+            {
+                isShareDialogOn && (
+                    <ShareDialogModal 
+                        title='Share these items'
+                        currentUrl={window.location.href}
+                        onClose={setIsShareDialogOn.bind(undefined, false)}
+                        shareToSocialMediaOnClick={(name)=>{
+                            shareToSocialMedia(name, 'Check out these policy mapping items from the Esri Maps for Public Policy site')
+                        }}
+                    />
+                )
+            }
+            
+        </>
     )
 };
 
