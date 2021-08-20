@@ -43,6 +43,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
+    const [ isLoading, setIsLoading] = React.useState<boolean>(true)
 
     const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>(hashParams.category ? hashParams.category.split(':')[0] : '');
 
@@ -95,7 +96,7 @@ const IssuesPage:React.FC<{}> = ()=>{
             return;
         }
 
-        setSearchReponse(null)
+        setIsLoading(true);
 
         const response = await agolGroupData.search({
             start: ( searchNextSet && searchResponse ) 
@@ -144,7 +145,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const getSearchResult = ()=>{
         // console.log(searchResponse)
 
-        if(!searchResponse){
+        if(isLoading){
             return (
                 <div className='text-center'>
                     <div className="loader is-active padding-leader-5 padding-trailer-3">
@@ -154,7 +155,7 @@ const IssuesPage:React.FC<{}> = ()=>{
             )
         }
 
-        if(!searchResponse.total){
+        if(!searchResponse || !searchResponse.total){
             return (
                 <div className='text-center padding-leader-5 padding-trailer-4'>
                     <p >No results match your search criteria. Try different criteria or explore <a href={`https://livingatlas.arcgis.com/en/browse/`} target='_blank'>ArcGIS Living Atlas of the World</a> for additional maps, apps, and more.</p>
@@ -198,6 +199,12 @@ const IssuesPage:React.FC<{}> = ()=>{
             initAgolGroupData();
         }
     }, [ categorySchema ]);
+
+    React.useEffect(()=>{
+        if(searchResponse){
+            setIsLoading(false);
+        }
+    }, [searchResponse])
 
     return (
         <div>
