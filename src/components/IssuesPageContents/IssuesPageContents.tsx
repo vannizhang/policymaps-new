@@ -118,8 +118,19 @@ const IssuesPage:React.FC<{}> = ()=>{
 
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
         agolGroupData.updateSelectedCategory(mainCategoryTitle, activeSubcategories);
-        searchItems();
-        console.log(mainCategoryTitle, activeSubcategories)
+
+        // the first search request is triggered by this event when category filter is ready,
+        // and if the searchResponse is null, then we know it's the first time we call searchItems,
+        // therefore we should try to use the start from hash params
+        let start = 1;
+
+        if(!searchResponse){
+            start = +hashParams.start || 1
+        }
+
+        searchItems({ start });
+        
+        // console.log(mainCategoryTitle, activeSubcategories)
 
         const val = activeSubcategories.length >  1 
             ? mainCategoryTitle 
@@ -206,7 +217,11 @@ const IssuesPage:React.FC<{}> = ()=>{
     React.useEffect(()=>{
         if(searchResponse){
             setIsLoading(false);
+
+            const start = searchResponse.start
+            updateHashParam('start', start.toString())
         }
+        // console.log(searchResponse)
     }, [searchResponse])
 
     return (

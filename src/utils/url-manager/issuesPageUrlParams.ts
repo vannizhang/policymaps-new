@@ -1,6 +1,6 @@
 import { urlFns } from 'helper-toolkit-ts';
 
-type ParamKeys = 'q' | 'type' | 'sort' | 'category';
+type ParamKeys = 'q' | 'type' | 'sort' | 'category' | 'start';
 
 const hashParamsData = urlFns.parseHash();
 
@@ -10,12 +10,13 @@ export const updateHashParam = (key:ParamKeys, value:string)=>{
 
 export const getHashParams = ():Record<ParamKeys, string>=>{
 
-    const { q, type, sort, category } = hashParamsData;
+    const { q, type, sort, category, start } = hashParamsData;
 
     return {
         q, 
         type, 
         sort, 
-        category
+        category,
+        start: start || '1'
     }
 }
