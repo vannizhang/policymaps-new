@@ -121,7 +121,7 @@ export default class GroupData {
 
     };
 
-    getCategoryPath(){
+    getCategoryPath(mainCategoryOnly=false){
 
         const selectedMainCategory = this.categorySchema.categories
             .filter(mainCategory=>{ 
@@ -132,6 +132,10 @@ export default class GroupData {
         if(!selectedMainCategory){
             return `/${this.categorySchema.title}`;
         };
+
+        if(mainCategoryOnly){
+            return `/${this.categorySchema.title}/${selectedMainCategory.title}`;
+        }
 
         const selectedSubCategories = selectedMainCategory.categories
             .filter(subcategory=>{ 
@@ -184,30 +188,31 @@ export default class GroupData {
         return lookup[contentType] || '';
     };
 
-    private getQueryString(): string {
-
+    private getSearchTerm(): string {
         const { 
             searchTerm,
-            contentType
         } = this.queryParams;
 
-        const queryStrings = [];
+        if(!searchTerm){
+            return ''
+        };
 
-        if(searchTerm){
-            
-            const cleanedSearchTerm = searchTerm
-                .replace(/[!@#\$%\^&\*\(\)\{\}\?<>\+:;",\.\\]/g,'')
-                .replace(/\s+/g, ' ');
+        const cleanedSearchTerm = searchTerm
+            .replace(/[!@#\$%\^&\*\(\)\{\}\?<>\+:;",\.\\]/g,'')
+            .replace(/\s+/g, ' ');
 
-            queryStrings.push(`(${cleanedSearchTerm})`);
-        }
+        return `(${cleanedSearchTerm})`
+    }
 
-        if(contentType){
-            const contentTypeStr = this.getContentTypeStr();
-            queryStrings.push(contentTypeStr);
-        }
+    private getQueryString(): string {
 
-        return queryStrings.join(' ');
+        const searchTerm = this.getSearchTerm()
+
+        const contentTypeStr = this.getContentTypeStr();
+
+        return [searchTerm, contentTypeStr]
+            .filter(str=>str)
+            .join(' ');
     };
 
     private getSortStr(): {
@@ -238,18 +243,24 @@ export default class GroupData {
 
     private getQueryParams({
         start = 1,
-        num = 10
+        num = 10,
+        searchAlternative = false
     }={}): string{
-        const q = this.getQueryString();
 
-        const categories = this.getCategoryPath();
+        // only need to use search term when search for alternative items 
+        const q = !searchAlternative 
+            ? this.getQueryString()
+            : this.getSearchTerm();
+
+            // only use main category when search for alternative items
+        const categories = this.getCategoryPath(searchAlternative);
 
         const { sortField, sortOrder } = this.getSortStr()
 
         const params = {
             f: 'json',
-            start,
-            num,
+            start: !searchAlternative ? start : 1,
+            num: !searchAlternative ? num : 0,
             q,
             categories,
             sortField,
@@ -262,13 +273,14 @@ export default class GroupData {
 
         return paramsStr;
     };
-    
+
     async search({
         start = 1,
-        num = 10
+        num = 10,
+        searchAlternative = false
     }={}): Promise<SearchResponse>{
 
-        const params = this.getQueryParams({ start, num });
+        const params = this.getQueryParams({ start, num, searchAlternative });
 
         const urlForSearchOperation = getUrlForSearchOperation(this.AgolGroupId, this.AgolHost)
 

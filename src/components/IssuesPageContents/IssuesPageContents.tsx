@@ -40,11 +40,17 @@ import { shareToSocialMedia } from '../BrowseApp/ShareDialog/ShareDialogContaine
 
 const hashParams = getHashParams();
 
+type SearchResult = {
+    searchResponse: SearchResponse;
+    isForAlternativeItems: boolean;
+}
+
 const IssuesPage:React.FC<{}> = ()=>{
 
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
-    const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
+    // const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
+    const [ searchResult, setSearchResult ] = React.useState<SearchResult>();
     const [ isLoading, setIsLoading] = React.useState<boolean>(true)
     const [ isShareDialogOn, setIsShareDialogOn] = React.useState<boolean>(false) 
 
@@ -101,6 +107,8 @@ const IssuesPage:React.FC<{}> = ()=>{
 
         setIsLoading(true);
 
+        const searchResponse = searchResult?.searchResponse;
+
         const response = await agolGroupData.search({
             start: ( searchNextSet && searchResponse ) 
                 ? searchResponse.nextStart
@@ -111,9 +119,18 @@ const IssuesPage:React.FC<{}> = ()=>{
         response.results = response.results
             .map(d=>formatAsAgolItem(d));
         
-        // console.log('search response', response);
+        const response4Alternatives = response.total === 0 
+            ? await agolGroupData.search({
+                searchAlternative: true
+            })
+            : null
 
-        setSearchReponse(response);
+        setSearchResult({
+            searchResponse: response.total === 0 ? response4Alternatives : response,
+            isForAlternativeItems: response4Alternatives !== null
+        });
+        
+        console.log('search response', response);
     };
 
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
@@ -124,7 +141,7 @@ const IssuesPage:React.FC<{}> = ()=>{
         // therefore we should try to use the start from hash params
         let start = 1;
 
-        if(!searchResponse){
+        if(!searchResult){
             start = +hashParams.start || 1
         }
 
@@ -169,13 +186,23 @@ const IssuesPage:React.FC<{}> = ()=>{
             )
         }
 
-        if(!searchResponse || !searchResponse.total){
+        if(!searchResult || searchResult.isForAlternativeItems){
             return (
-                <div className='text-center padding-leader-5 padding-trailer-4'>
-                    <p >No results match your search criteria. Try different criteria or explore <a href={`https://livingatlas.arcgis.com/en/browse/`} target='_blank'>ArcGIS Living Atlas of the World</a> for additional maps, apps, and more.</p>
+                <div className='padding-leader-5 padding-trailer-4'>
+                    {/* <p >No results match your search criteria. Try different criteria or explore <a href={`https://livingatlas.arcgis.com/en/browse/`} target='_blank'>ArcGIS Living Atlas of the World</a> for additional maps, apps, and more.</p> */}
+
+                    <p>No results match your search criteria. Suggestions:</p>
+
+                    <ul>
+                        <li>Try different search terms</li>  
+                        <li>Expand this search</li>  
+                        <li>Search ArcGIS Living Atlas of the World for your criteria </li>  
+                    </ul>
                 </div>
             )
         }
+
+        const searchResponse = searchResult?.searchResponse;
 
         return (
             <>
@@ -215,14 +242,16 @@ const IssuesPage:React.FC<{}> = ()=>{
     }, [ categorySchema ]);
 
     React.useEffect(()=>{
-        if(searchResponse){
+        if(searchResult){
             setIsLoading(false);
 
-            const start = searchResponse.start
+            const { searchResponse } = searchResult;
+
+            const start = searchResponse.start;
             updateHashParam('start', start.toString())
         }
         // console.log(searchResponse)
-    }, [searchResponse])
+    }, [searchResult])
 
     return (
         <>
