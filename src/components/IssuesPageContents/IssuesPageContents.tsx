@@ -55,6 +55,7 @@ const IssuesPage:React.FC<{}> = ()=>{
     const [ isShareDialogOn, setIsShareDialogOn] = React.useState<boolean>(false) 
 
     const [ activeMainCategoryTitle, setActiveMainCategoryTitle] = React.useState<string>(hashParams.category ? hashParams.category.split(':')[0] : '');
+    const searchTermRef = React.useRef<string>(hashParams.q || '');
 
     const initCategorySchema = async () =>{
 
@@ -159,6 +160,7 @@ const IssuesPage:React.FC<{}> = ()=>{
         agolGroupData.updateSearchTerm(val);
         searchItems();
         updateHashParam('q', val)
+        searchTermRef.current = val;
     };
 
     const contentTypeOnChange = (val:ContentType)=>{
@@ -171,6 +173,15 @@ const IssuesPage:React.FC<{}> = ()=>{
         agolGroupData.updateSortField(val);
         searchItems();
         updateHashParam('sort', val);
+    };
+
+    const expandSearch = ()=>{
+
+    };
+
+    const searchOnLivingAtlas = ()=>{
+        const link = `https://livingatlas.arcgis.com/en/browse/#d=2&q=${searchTermRef.current}`
+        window.open(link, 'blank')
     };
 
     const getSearchResult = ()=>{
@@ -187,17 +198,31 @@ const IssuesPage:React.FC<{}> = ()=>{
         }
 
         if(!searchResult || searchResult.isForAlternativeItems){
+
+            const searchResponse = searchResult?.searchResponse;
+
+            const secondOption = searchResponse && searchResponse.total
+                ? <a href="javascript:void(0);" onClick={expandSearch}>Expand this search</a>
+                : <span>Check each of the major categories at the top of this section, just above</span>;
+
             return (
-                <div className='padding-leader-5 padding-trailer-4'>
+                <div className='padding-leader-5 padding-trailer-4'
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <div>
+                        <p className='font-size-1 avenir-light'>No results match your search criteria. Suggestions:</p>
+
+                        <ul>
+                            <li>Try different search terms</li>  
+                            <li>{secondOption}</li>  
+                            <li>Search <a href="javascript:void(0);" onClick={searchOnLivingAtlas}>ArcGIS Living Atlas of the World</a> for your criteria </li>  
+                        </ul>
+                    </div>
+
                     {/* <p >No results match your search criteria. Try different criteria or explore <a href={`https://livingatlas.arcgis.com/en/browse/`} target='_blank'>ArcGIS Living Atlas of the World</a> for additional maps, apps, and more.</p> */}
-
-                    <p>No results match your search criteria. Suggestions:</p>
-
-                    <ul>
-                        <li>Try different search terms</li>  
-                        <li>Expand this search</li>  
-                        <li>Search ArcGIS Living Atlas of the World for your criteria </li>  
-                    </ul>
                 </div>
             )
         }
