@@ -12,10 +12,10 @@ interface Props {
     categorySchema: CategorySchemaDataItem;
     agolHost?: string;
     // default query params
-    queryParams?: QueryParams; 
+    filters?: Filters; 
 };
 
-interface QueryParams {
+interface Filters {
     searchTerm?: string;
     contentType?: ContentType | '';
     sortField?: SortField | '';
@@ -79,27 +79,31 @@ export default class GroupData {
     private AgolGroupId: string;
     private AgolHost: string;
     private categorySchema: CategorySchemaDataItem;
-    private queryParams:QueryParams;
+    private filters:Filters;
 
     constructor(props: Props){
         this.AgolGroupId = props.groupId;
         this.AgolHost = props.agolHost || 'https://www.arcgis.com';
         this.categorySchema = props.categorySchema;
 
-        this.queryParams = props.queryParams || {}
+        this.filters = props.filters || {
+            searchTerm: '',
+            contentType: '',
+            sortField: 'modified',
+        } as Filters
     };
 
     updateSearchTerm(val=''){
         val = val.length <= 250 ? val : val.substring(0, 250);
-        this.queryParams.searchTerm = val; 
+        this.filters.searchTerm = val; 
     };
 
     updateContentType(val?:ContentType){
-        this.queryParams.contentType = val;
+        this.filters.contentType = val;
     };
 
     updateSortField(val?:SortField){
-        this.queryParams.sortField = val;
+        this.filters.sortField = val;
     };
 
     updateSelectedCategory(titleForSelectedMainCategory?:string, titlesForSelectedSubCategories?:string[]){
@@ -120,6 +124,24 @@ export default class GroupData {
         });
 
     };
+
+    encodeSelectedCategory(){
+        const selectedMainCategory = this.categorySchema.categories
+            .filter(mainCategory=>{ 
+                return mainCategory.selected;
+            })[0];
+
+        const selectedSubCategories = selectedMainCategory.categories
+            .filter(subcategory=>{ 
+                return subcategory.selected === true; 
+            });
+
+        if(selectedSubCategories.length === selectedMainCategory.categories.length){
+            return selectedMainCategory.title
+        }
+
+        return `${selectedMainCategory.title}:${selectedSubCategories[0].title}`
+    }
 
     getCategoryPath(mainCategoryOnly=false){
 
@@ -160,22 +182,9 @@ export default class GroupData {
 
     };
 
-
-    // updateDate(val?:DateFilter){
-    //     this.queryParams.date = val;
-    // };
-
-    // updateIsEsriOnlyContent(val:boolean){
-    //     this.queryParams.isEsriOnlyContent = val;
-    // };
-
-    // updateIsAuthoritativeOnly(val:boolean){
-    //     this.queryParams.isAuthoritativeOnly = val;
-    // };
-
     private getContentTypeStr(): string {
 
-        const { contentType } = this.queryParams;
+        const { contentType } = this.filters;
 
         const lookup = {
             "maps": '(type:("Project Package" OR "Windows Mobile Package" OR "Map Package" OR "Basemap Package" OR "Mobile Basemap Package" OR "Mobile Map Package" OR "Pro Map" OR "Project Package" OR "Web Map" OR "CityEngine Web Scene" OR "Map Document" OR "Globe Document" OR "Scene Document" OR "Published Map" OR "Explorer Map" OR "ArcPad Package" OR "Map Template") -type:("Web Mapping Application" OR "Layer Package"))',
@@ -191,7 +200,7 @@ export default class GroupData {
     private getSearchTerm(): string {
         const { 
             searchTerm,
-        } = this.queryParams;
+        } = this.filters;
 
         if(!searchTerm){
             return ''
@@ -220,7 +229,7 @@ export default class GroupData {
         sortOrder: string
     }{
 
-        const { sortField } = this.queryParams;
+        const { sortField } = this.filters;
 
         const lookup = {
             'relevance': {
@@ -291,5 +300,23 @@ export default class GroupData {
 
         return data;
     };
+
+    getCurrentFilterValues(){
+
+        const {
+            searchTerm,
+            contentType,
+            sortField
+        } = this.filters;
+
+        const categories = this.encodeSelectedCategory();
+
+        return {
+            searchTerm,
+            contentType,
+            sortField,
+            categories
+        }
+    }
 
 };

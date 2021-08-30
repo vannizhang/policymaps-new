@@ -35,7 +35,7 @@ import {
     ContentTypeFilterData,
     SortFilterData
 } from './Config';
-import { updateHashParam, getHashParams } from '../../utils/url-manager/issuesPageUrlParams';
+import { batchUpdateHashParam, getHashParams } from '../../utils/url-manager/issuesPageUrlParams';
 import { shareToSocialMedia } from '../BrowseApp/ShareDialog/ShareDialogContainer';
 
 const hashParams = getHashParams();
@@ -84,7 +84,7 @@ const IssuesPage:React.FC<{}> = ()=>{
         const arcGISOnlineGroupData = new ArcGISOnlineGroupData({
             groupId: Tier.PROD.AGOL_GROUP_ID,
             categorySchema,
-            queryParams: {
+            filters: {
                 contentType: type as ContentType,
                 sortField: sort as SortField,
                 searchTerm: q
@@ -147,32 +147,22 @@ const IssuesPage:React.FC<{}> = ()=>{
         }
 
         searchItems({ start });
-        
-        // console.log(mainCategoryTitle, activeSubcategories)
-
-        const val = activeSubcategories.length >  1 
-            ? mainCategoryTitle 
-            : `${mainCategoryTitle}:${activeSubcategories[0]}`;
-        updateHashParam('category', val)
     };
 
     const searchAutoCompleteOnChange = (val:string)=>{
         agolGroupData.updateSearchTerm(val);
         searchItems();
-        updateHashParam('q', val)
         searchTermRef.current = val;
     };
 
     const contentTypeOnChange = (val:ContentType)=>{
         agolGroupData.updateContentType(val);
         searchItems();
-        updateHashParam('type', val)
     };
 
     const sortFieldOnChange = (val:SortField)=>{
         agolGroupData.updateSortField(val);
         searchItems();
-        updateHashParam('sort', val);
     };
 
     const expandSearch = ()=>{
@@ -273,7 +263,21 @@ const IssuesPage:React.FC<{}> = ()=>{
             const { searchResponse } = searchResult;
 
             const start = searchResponse.start;
-            updateHashParam('start', start.toString())
+
+            const {
+                searchTerm,
+                sortField,
+                contentType,
+                categories
+            } = agolGroupData.getCurrentFilterValues();
+
+            batchUpdateHashParam({
+                q: searchTerm,
+                sort: sortField,
+                types: contentType,
+                category: categories,
+                start: start.toString()
+            });
         }
         // console.log(searchResponse)
     }, [searchResult])
