@@ -99,7 +99,7 @@ export default class GroupData {
     };
 
     updateContentType(val?:ContentType){
-        this.filters.contentType = val;
+        this.filters.contentType = val || '';
     };
 
     updateSortField(val?:SortField){
@@ -124,6 +124,17 @@ export default class GroupData {
         });
 
     };
+
+    selectAllSubcategories(){
+        const selectedMainCategory = this.categorySchema.categories
+        .filter(mainCategory=>{ 
+            return mainCategory.selected;
+        })[0];
+
+        selectedMainCategory.categories.forEach(subcategory=>{
+            subcategory.selected = true;
+        })
+    }
 
     encodeSelectedCategory(){
         const selectedMainCategory = this.categorySchema.categories

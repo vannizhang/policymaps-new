@@ -166,7 +166,12 @@ const IssuesPage:React.FC<{}> = ()=>{
     };
 
     const expandSearch = ()=>{
+        // // remove content type filter
+        // agolGroupData.updateContentType();
+        // // remove sub category files
+        // agolGroupData.selectAllSubcategories();
 
+        // searchItems();
     };
 
     const searchOnLivingAtlas = ()=>{
@@ -192,7 +197,8 @@ const IssuesPage:React.FC<{}> = ()=>{
             const searchResponse = searchResult?.searchResponse;
 
             const secondOption = searchResponse && searchResponse.total
-                ? <a href="javascript:void(0);" onClick={expandSearch}>Expand this search</a>
+                // ? <span className="btn btn-transparent padding-left-0 padding-right-0" onClick={expandSearch}>Expand this search</span>
+                ? <span className="">Expand this search</span>
                 : <span>Check each of the major categories at the top of this section, just above</span>;
 
             return (
@@ -208,7 +214,7 @@ const IssuesPage:React.FC<{}> = ()=>{
                         <ul>
                             <li>Try different search terms</li>  
                             <li>{secondOption}</li>  
-                            <li>Search <a href="javascript:void(0);" onClick={searchOnLivingAtlas}>ArcGIS Living Atlas of the World</a> for your criteria </li>  
+                            <li>Search <span className="btn btn-transparent padding-left-0 padding-right-0 padding-leader-0" onClick={searchOnLivingAtlas}>ArcGIS Living Atlas of the World</span> for your criteria </li>  
                         </ul>
                     </div>
 
