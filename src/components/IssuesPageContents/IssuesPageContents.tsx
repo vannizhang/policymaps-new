@@ -131,7 +131,7 @@ const IssuesPage:React.FC<{}> = ()=>{
             isForAlternativeItems: response4Alternatives !== null
         });
         
-        console.log('search response', response);
+        // console.log('search response', response);
     };
 
     const categoryFilterOnChange = (mainCategoryTitle:string, activeSubcategories:string[])=>{
@@ -165,14 +165,14 @@ const IssuesPage:React.FC<{}> = ()=>{
         searchItems();
     };
 
-    const expandSearch = ()=>{
-        // // remove content type filter
-        // agolGroupData.updateContentType();
-        // // remove sub category files
-        // agolGroupData.selectAllSubcategories();
+    // const expandSearch = ()=>{
+    //     // remove content type filter
+    //     agolGroupData.updateContentType();
+    //     // remove sub category files
+    //     agolGroupData.selectAllSubcategories();
 
-        // searchItems();
-    };
+    //     searchItems();
+    // };
 
     const searchOnLivingAtlas = ()=>{
         const link = `https://livingatlas.arcgis.com/en/browse/#d=2&q=${searchTermRef.current}`
@@ -194,12 +194,12 @@ const IssuesPage:React.FC<{}> = ()=>{
 
         if(!searchResult || searchResult.isForAlternativeItems){
 
-            const searchResponse = searchResult?.searchResponse;
+            // const searchResponse = searchResult?.searchResponse;
 
-            const secondOption = searchResponse && searchResponse.total
-                // ? <span className="btn btn-transparent padding-left-0 padding-right-0" onClick={expandSearch}>Expand this search</span>
-                ? <span className="">Expand this search</span>
-                : <span>Check each of the major categories at the top of this section, just above</span>;
+            // const secondOption = searchResponse && searchResponse.total
+            //     // ? <span className="btn btn-transparent padding-left-0 padding-right-0" onClick={expandSearch}>Expand this search</span>
+            //     ? <span className="">Expand this search</span>
+            //     : <span>Check each of the major categories at the top of this section, just above</span>;
 
             return (
                 <div className='padding-leader-5 padding-trailer-4'
@@ -212,8 +212,8 @@ const IssuesPage:React.FC<{}> = ()=>{
                         <p className='font-size-1 avenir-light'>No results match your search criteria. Suggestions:</p>
 
                         <ul>
-                            <li>Try different search terms</li>  
-                            <li>{secondOption}</li>  
+                            <li>Try different search terms, change both filters to "All" at left, or change category just above.</li>  
+                            {/* <li>{secondOption}</li>   */}
                             <li>Search <span className="btn btn-transparent padding-left-0 padding-right-0 padding-leader-0" onClick={searchOnLivingAtlas}>ArcGIS Living Atlas of the World</span> for your criteria </li>  
                         </ul>
                     </div>
