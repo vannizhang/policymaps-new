@@ -122,7 +122,7 @@ const BrowseAppContainer:React.FC = ()=>{
         const arcGISOnlineGroupData = new ArcGISOnlineGroupData({
             groupId: Tier.PROD.AGOL_GROUP_ID,
             categorySchema,
-            queryParams: {
+            filters: {
                 contentType: 'webmap',
                 sortField: 'modified'
             }
