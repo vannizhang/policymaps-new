@@ -84,8 +84,8 @@ const ShareDialog:React.FC<ShareDialogProps> = ({
             }}>
                 <div>
                     <span className="icon-social-contact" aria-label="email" onClick={sendEmailOnClick}></span>
-                    <span className="icon-social-twitter margin-left-quarter" aria-label="twitter" onClick={shareToSocialMediaOnClick.bind(this,'twitter')}></span>
-                    <span className="icon-social-facebook margin-left-quarter" aria-label="facebook" onClick={shareToSocialMediaOnClick.bind(this,'facebook')}></span>
+                    <span className="icon-social-twitter margin-left-quarter" aria-label="twitter" onClick={shareToSocialMediaOnClick.bind(this,'twitter', null)}></span>
+                    <span className="icon-social-facebook margin-left-quarter" aria-label="facebook" onClick={shareToSocialMediaOnClick.bind(this,'facebook', null)}></span>
                 </div>
 
 
