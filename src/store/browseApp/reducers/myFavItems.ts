@@ -9,7 +9,7 @@ import {
     StoreGetState
 } from '../configureStore';
 
-interface MyFavItemsInitialState {
+export interface MyFavItemsState {
     allIds: string[];
 };
 
@@ -18,11 +18,13 @@ interface MyFavItemsChangedAction {
     payload: string[];
 }
 
+export const initialMyFavItemsState:MyFavItemsState = {
+    allIds: []
+}
+
 const slice = createSlice({
     name: 'myFavItems',
-    initialState: {
-        allIds: []
-    } as MyFavItemsInitialState,
+    initialState: initialMyFavItemsState,
     reducers: {
         myFavItemsChanged: (state, action:MyFavItemsChangedAction)=>{
             state.allIds = action.payload;

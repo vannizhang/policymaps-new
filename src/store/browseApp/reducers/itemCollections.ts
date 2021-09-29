@@ -14,7 +14,7 @@ import {
     AgolItem,
 } from '../../../utils/arcgis-online-item-formatter';
 
-interface ItemCollectionInitialState {
+export interface ItemCollectionState {
     byIds: {
         [key:string]: AgolItem
     };
@@ -31,12 +31,14 @@ interface ItemToggledAction {
     payload: AgolItem
 };
 
+export const initialItemCollectionState:ItemCollectionState = {
+    byIds: {},
+    allIds: []
+}
+
 const slice = createSlice({
     name: 'itemCollection',
-    initialState: {
-        byIds: {},
-        allIds: []
-    } as ItemCollectionInitialState,
+    initialState: initialItemCollectionState,
     reducers: {
         itemsLoaded: ({ byIds, allIds }, action:ItemsLoadedAction)=>{
             const items= action.payload;

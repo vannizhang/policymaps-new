@@ -10,9 +10,15 @@ import {
 
 import SiteWrapper from '../SiteWrapper/SiteWrapper';
 
-import store from '../../store/browseApp/configureStore';
+import configureStore, { getPreloadedState, PartialRootState } from '../../store/browseApp/configureStore';
 
-const BrowsePage:React.FC = ()=> {
+type Props = {
+    preloadedState: PartialRootState
+}
+
+const BrowsePage:React.FC<Props> = ({
+    preloadedState
+}: Props)=> {
 
     return (
         <SiteWrapper>
@@ -20,7 +26,7 @@ const BrowsePage:React.FC = ()=> {
                 shouldHideEsriFooter={true}
             >
                 <Provider
-                    store={store}
+                    store={configureStore(preloadedState)}
                 >
                     <BrowseApp />
 
@@ -31,7 +37,16 @@ const BrowsePage:React.FC = ()=> {
     );
 };
 
-ReactDOM.render(
-    <BrowsePage />, 
-    document.getElementById('root')
-);
+const initPage = async () => {
+
+    const preloadedState = await getPreloadedState()
+
+    ReactDOM.render(
+        <BrowsePage 
+            preloadedState={preloadedState}
+        />, 
+        document.getElementById('root')
+    );
+}
+
+initPage();

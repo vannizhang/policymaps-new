@@ -7,32 +7,32 @@ import {
 
 import BrowseApp from './App';
 
-import {
-    decodeSearchParams
-} from '../../../utils/url-manager/BrowseAppUrlManager';
+// import {
+//     decodeSearchParams
+// } from '../../../utils/url-manager/BrowseAppUrlManager';
 
 import {
     getMyFavItemIds
 } from '../../../utils/my-favorites/myFav';
 
-import { 
-    // AgolItem,
-    queryItemsByIds,
-    queryItemsByCategory
-} from '../../../utils/arcgis-online-group-data';
+// import { 
+//     // AgolItem,
+//     queryItemsByIds,
+//     queryItemsByCategory
+// } from '../../../utils/arcgis-online-group-data';
 
 import { 
     AgolItem,
     formatAsAgolItem
 } from '../../../utils/arcgis-online-item-formatter';
 
-import {
-    loadCollectionItems
-} from '../../../store/browseApp/reducers/itemCollections';
+// import {
+//     loadCollectionItems
+// } from '../../../store/browseApp/reducers/itemCollections';
 
-import {
-    setActiveWebmap
-} from '../../../store/browseApp/reducers/map';
+// import {
+//     setActiveWebmap
+// } from '../../../store/browseApp/reducers/map';
 
 import {
     setMyFavItems
@@ -54,43 +54,13 @@ import { SelectedCategory } from '../CategoryFilter';
 const BrowseAppContainer:React.FC = ()=>{
 
     const dispatch = useDispatch();
-    const searchParams = decodeSearchParams();
+    // const searchParams = decodeSearchParams();
 
     const { isSearchDisabled } = React.useContext(SiteContext);
     const [ categorySchema, setCategorySchema ] = React.useState<CategorySchemaDataItem>();
     const [ agolGroupData, setAgolGroupData ] = React.useState<ArcGISOnlineGroupData>();
     const [ searchResponse, setSearchReponse ] = React.useState<SearchResponse>();
     const [ webMapItems, setWebMapItems ] = React.useState<AgolItem[]>([]);
-
-    const fetchItemCollections = async()=>{
-        const { collections } = searchParams;
-
-        const sortedResults: AgolItem[] = [];
-        const items = collections.length ? await fetchItems(collections) : [];
-        
-        items.forEach(item=>{
-            const index = collections.indexOf(item.id);
-            sortedResults[index] = item;
-        });
-
-        dispatch(loadCollectionItems(sortedResults))
-    };
-
-    const fecthActiveWebmapItem = async()=>{
-        const { activeWebmapId } = searchParams;
-
-        if(activeWebmapId){
-            // set active map using item id from URL query params
-            const [ item ] = await fetchItems([activeWebmapId])
-            dispatch(setActiveWebmap(item));
-        } else {
-            // set active map using a item from policy maps group
-            // that are pickup up as default webmap by curators 
-            const item = await fetchDefaultWebmap()
-            dispatch(setActiveWebmap(item));
-        }
-
-    };
 
     const fetchMyFavItems = async()=>{
         const myFavItems = await getMyFavItemIds();
@@ -191,44 +161,10 @@ const BrowseAppContainer:React.FC = ()=>{
         });
     }
 
-    const fetchItems = async(itemIds: string[])=>{
-        try {
-
-            let items = await queryItemsByIds({
-                itemIds,
-                groupId: Tier.PROD.AGOL_GROUP_ID
-            });
-
-            items = items.map(item=>formatAsAgolItem(item, { thumbnailWidth: 200 }));
-
-            return items;
-
-        } catch(err){
-            console.error(err);
-        }
-    };
-
-    const fetchDefaultWebmap = async():Promise<AgolItem>=>{
-        // search items from the Policy Maps group that contains 'Default Explore Maps' category
-        try {
-            const items = await queryItemsByCategory({
-                categories: ['/Categories/Resources/Default Explore Maps'],
-                groupId: Tier.PROD.AGOL_GROUP_ID
-            });
-            
-            const randomIdx = Math.floor(Math.random() * items.length)
-            
-            return items[randomIdx];
-
-        } catch(err){
-            console.error(err);
-        }
-    }
-
     React.useEffect(()=>{
 
-        fetchItemCollections();
-        fecthActiveWebmapItem();
+        // fetchItemCollections();
+        // fecthActiveWebmapItem();
         fetchMyFavItems();
 
         if(!isSearchDisabled){

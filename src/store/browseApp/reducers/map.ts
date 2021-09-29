@@ -15,10 +15,10 @@ import {
 
 import {
     Location,
-    decodeSearchParams
+    // decodeSearchParams
 } from '../../../utils/url-manager/BrowseAppUrlManager';
 
-interface MapInitialState {
+export interface MapState {
     activeWebmap: AgolItem;
     centerLocation: Location;
 };
@@ -33,14 +33,14 @@ interface CenterLocationChangedAction {
     payload: Location;
 };
 
-const { location } = decodeSearchParams();
+export const initialMapState:MapState = {
+    activeWebmap: null,
+    centerLocation: null
+}
 
 const slice = createSlice({
     name: 'map',
-    initialState: {
-        activeWebmap: null,
-        centerLocation: location
-    } as MapInitialState,
+    initialState: initialMapState,
     reducers: {
         activeMapChanged: (map, action:ActiveMapChangedAction)=>{
             map.activeWebmap = action.payload;

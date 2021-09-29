@@ -9,32 +9,28 @@ import {
     StoreGetState
 } from '../configureStore';
 
-import {
-    decodeSearchParams
-} from '../../../utils/url-manager/BrowseAppUrlManager';
+// import {
+//     decodeSearchParams
+// } from '../../../utils/url-manager/BrowseAppUrlManager';
 
-import {
-    miscFns
-} from 'helper-toolkit-ts'
+// import {
+//     miscFns
+// } from 'helper-toolkit-ts'
 
-interface UIInitialState {
+export interface UIState {
     hideSideBar: boolean;
 };
 
-const { isSideBarHide } = decodeSearchParams();
+// const { isSideBarHide } = decodeSearchParams();
+// const isMobile = miscFns.isMobileDevice();
 
-const isMobile = miscFns.isMobileDevice();
-
-// sidebar should be hidden by default when using mobile device
-const initialState4HideSidebar = isMobile 
-    ? true 
-    : isSideBarHide;
+export const initialUIState:UIState = {
+    hideSideBar: false
+}
 
 const slice = createSlice({
     name: 'ui',
-    initialState: {
-        hideSideBar: initialState4HideSidebar
-    } as UIInitialState,
+    initialState: initialUIState,
     reducers: {
         hideSideBarToggled: (state)=>{
             const { hideSideBar } = state;
