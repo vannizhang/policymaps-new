@@ -10,17 +10,33 @@ import {
 
 import SiteWrapper from '../SiteWrapper/SiteWrapper';
 
-import configureStore, { getPreloadedState, PartialRootState } from '../../store/browseApp/configureStore';
+import configureStore, { getPreloadedState } from '../../store/browseApp/configureStore';
 
-type Props = {
-    preloadedState: PartialRootState
-}
+import {
+    setDefaultGroupOptions,
+    loadGroupCategorySchema,
+} from '@vannizhang/arcgis-rest-helper';
+import { Tier } from '../../AppConfig';
+import { IGroupCategory } from '@esri/arcgis-rest-portal';
 
-const BrowsePage:React.FC<Props> = ({
-    preloadedState
-}: Props)=> {
+const initPage = async () => {
 
-    return (
+    const preloadedState = await getPreloadedState()
+
+    setDefaultGroupOptions({
+        groupId: Tier.PROD.AGOL_GROUP_ID,
+    });
+
+    const categorySchemaJSON = await loadGroupCategorySchema();
+
+    const categorySchema:IGroupCategory = categorySchemaJSON.categorySchema[0];
+
+    // filter out 'Resources' category
+    categorySchema.categories = categorySchema.categories.filter(item=>{
+        return item.title !== 'Resources';
+    });
+
+    ReactDOM.render(
         <SiteWrapper>
             <PageLayout
                 shouldHideEsriFooter={true}
@@ -28,23 +44,13 @@ const BrowsePage:React.FC<Props> = ({
                 <Provider
                     store={configureStore(preloadedState)}
                 >
-                    <BrowseApp />
-
+                    <BrowseApp 
+                        categorySchema={categorySchema}
+                    />
                 </Provider>
 
             </PageLayout>
-        </SiteWrapper>
-    );
-};
-
-const initPage = async () => {
-
-    const preloadedState = await getPreloadedState()
-
-    ReactDOM.render(
-        <BrowsePage 
-            preloadedState={preloadedState}
-        />, 
+        </SiteWrapper>, 
         document.getElementById('root')
     );
 }

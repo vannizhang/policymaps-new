@@ -4,11 +4,14 @@ import { initialUIState, UIState } from './reducers/UI';
 import { initialMapState, MapState} from './reducers/map';
 import { initialItemCollectionState, ItemCollectionState} from './reducers/itemCollections';
 import { initialMyFavItemsState, MyFavItemsState } from './reducers/myFavItems';
+import { initialState4GroupContent, GroupContentState } from './reducers/groupContent';
+
 import { decodeSearchParams, Location } from '../../utils/url-manager/BrowseAppUrlManager';
 import { AgolItem, formatAsAgolItem } from '../../utils/arcgis-online-item-formatter';
 import { queryItemsByCategory, queryItemsByIds } from '../../utils/arcgis-online-group-data';
 import { Tier } from '../../AppConfig';
 import { miscFns } from 'helper-toolkit-ts';
+import { getMyFavItemIds } from '../../utils/my-favorites/myFav';
 
 const isMobile = miscFns.isMobileDevice();
 
@@ -100,10 +103,27 @@ const getPreloadedState4ItemCollection = async(): Promise<ItemCollectionState> =
     return state;
 };
 
-const getPreloadedState4MyFavItems = (): MyFavItemsState => {
+const getPreloadedState4MyFavItems = async(): Promise<MyFavItemsState> => {
+
+    const itemIds = await getMyFavItemIds();
 
     const state: MyFavItemsState = {
         ...initialMyFavItemsState,
+        allIds: itemIds
+    };
+
+    return state;
+};
+
+const getPreloadedState4GroupContent = (): GroupContentState => {
+
+    const state: GroupContentState = {
+        ...initialState4GroupContent,
+        filters: {
+            ...initialState4GroupContent.filters,
+            contentType: 'webmap',
+            sort: 'modified'
+        }
     };
 
     return state;
@@ -116,8 +136,9 @@ const getPreloadedState = async (): Promise<PartialRootState> => {
         map: await getPreloadedState4Map(),
         entities: {
             itemCollection: await getPreloadedState4ItemCollection(),
-            myFavItems: getPreloadedState4MyFavItems()
-        }
+            myFavItems: await getPreloadedState4MyFavItems()
+        },
+        groupContent:getPreloadedState4GroupContent()
     } as PartialRootState;
 
     return preloadedState;

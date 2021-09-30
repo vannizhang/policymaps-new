@@ -1,13 +1,8 @@
+import { IGroupCategory } from '@esri/arcgis-rest-portal';
 import * as React from 'react';
 
-import { 
-    CategorySchemaDataItem,
-    CategorySchemaMainCategory,
-    // CategorySchemaSubCategory
-} from '../../utils/category-schema-manager';
-
 interface Props {
-    categorySchema: CategorySchemaDataItem;
+    categorySchema: IGroupCategory;
     onChange: (data:SelectedCategory)=>void;
 };
 
@@ -34,7 +29,7 @@ const CategoryFilter:React.FC<Props> = ({
         setActiveMainCategoryTitle(newVal);
     };
 
-    const toggleAllSubcategories = (mainCategory:CategorySchemaMainCategory)=>{
+    const toggleAllSubcategories = (mainCategory:IGroupCategory)=>{
 
         const allSubcategories = mainCategory.categories.map(d=>d.title);
 
@@ -59,7 +54,7 @@ const CategoryFilter:React.FC<Props> = ({
         });
     }
 
-    const toggleSubcategory = (mainCategory?:CategorySchemaMainCategory, subcategoryTitle?:string)=>{
+    const toggleSubcategory = (mainCategory?:IGroupCategory, subcategoryTitle?:string)=>{
 
         if( !selectedCategory ||
             selectedCategory.title !== mainCategory.title 
@@ -112,7 +107,7 @@ const CategoryFilter:React.FC<Props> = ({
         });
     }
 
-    const getToggleSelectAllOption = (mainCategory:CategorySchemaMainCategory)=>{
+    const getToggleSelectAllOption = (mainCategory:IGroupCategory)=>{
 
         const selected = (
             selectedCategory &&
@@ -134,7 +129,7 @@ const CategoryFilter:React.FC<Props> = ({
 
     };
 
-    const getSubCategoryFilters = (mainCategory:CategorySchemaMainCategory)=>{
+    const getSubCategoryFilters = (mainCategory:IGroupCategory)=>{
 
         const filters = mainCategory.categories.map((subcategory, index)=>{
 

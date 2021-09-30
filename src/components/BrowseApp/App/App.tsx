@@ -22,24 +22,25 @@ import {
     Tier
 } from '../../../AppConfig';
 
-import {
-    UIConfig
-} from '../Config';
+// import {
+//     UIConfig
+// } from '../Config';
 
 import {
     AgolItem
 } from '../../../utils/arcgis-online-item-formatter';
+import { IGroupCategory } from '@esri/arcgis-rest-portal';
 
-import { 
-    CategorySchemaDataItem
-} from '../../../utils/category-schema-manager';
+// import { 
+//     CategorySchemaDataItem
+// } from '../../../utils/category-schema-manager';
 
 interface Props {
     // this site can also be embbeded in an iframe with search and search results hide if the "disableSearch" hash param is true
     disableSearch?: boolean
     searchResults: AgolItem[];
     searchResultsCount: number;
-    categorySchema: CategorySchemaDataItem;
+    categorySchema: IGroupCategory;
 
     sidebarScrolledToEnd?: ()=>void
     categoryFilterOnChange?: (data:SelectedCategory)=>void;

@@ -4,6 +4,7 @@ import itemCollectionsReducer from './itemCollections';
 import myFavItemsReducer from './myFavItems';
 import mapReducer from './map';
 import uiReducer from './UI';
+import groupContent from './groupContent'
 
 const entities = combineReducers({
     itemCollection: itemCollectionsReducer,
@@ -13,5 +14,6 @@ const entities = combineReducers({
 export default combineReducers({
     entities,
     map: mapReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    groupContent
 });
