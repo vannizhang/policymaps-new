@@ -16,9 +16,17 @@ import { Tier } from '../../AppConfig';
 //     url: 'https://js.arcgis.com/next/'
 // });
 
-const SiteWrapper:React.FC = ({
+type Props = {
+    isEmbedded: boolean;
+    isSearchDisabled: boolean;
+    children: React.ReactNode;
+}
+
+const SiteWrapper:React.FC<Props> = ({
+    isEmbedded,
+    isSearchDisabled,
     children
-})=>{
+}:Props)=>{
 
     const [ esriOAuthUtils, setEsriOAuthUtils ] = React.useState<EsriOAuth>();
 
@@ -41,7 +49,7 @@ const SiteWrapper:React.FC = ({
                 });
             }
     
-            console.log(esriOAuthUtils);
+            // console.log(esriOAuthUtils);
     
             setEsriOAuthUtils(esriOAuthUtils);
 
@@ -57,6 +65,8 @@ const SiteWrapper:React.FC = ({
 
     return (
         <SiteContextProvider 
+            isEmbedded={isEmbedded}
+            isSearchDisabled={isSearchDisabled}
             esriOAuthUtils={esriOAuthUtils}
         >
             { esriOAuthUtils ? children : null }

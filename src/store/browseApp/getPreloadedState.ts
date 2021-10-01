@@ -6,7 +6,7 @@ import { initialItemCollectionState, ItemCollectionState} from './reducers/itemC
 import { initialMyFavItemsState, MyFavItemsState } from './reducers/myFavItems';
 import { initialState4GroupContent, GroupContentState } from './reducers/groupContent';
 
-import { decodeSearchParams, Location } from '../../utils/url-manager/BrowseAppUrlManager';
+import { DecodedURLParams, decodeSearchParams, Location } from '../../utils/url-manager/BrowseAppUrlManager';
 import { AgolItem, formatAsAgolItem } from '../../utils/arcgis-online-item-formatter';
 import { queryItemsByCategory, queryItemsByIds } from '../../utils/arcgis-online-group-data';
 import { Tier } from '../../AppConfig';
@@ -15,7 +15,7 @@ import { getMyFavItemIds } from '../../utils/my-favorites/myFav';
 
 const isMobile = miscFns.isMobileDevice();
 
-const searchParams = decodeSearchParams();
+let urlData:DecodedURLParams = null;
 
 const fetchItems = async(itemIds: string[])=>{
     try {
@@ -53,7 +53,7 @@ const fetchDefaultWebmap = async():Promise<AgolItem>=>{
 
 const getPreloadedState4UI = (): UIState => {
 
-    const { isSideBarHide } = searchParams
+    const { isSideBarHide } = urlData
 
     const state: UIState = {
         ...initialUIState,
@@ -65,7 +65,7 @@ const getPreloadedState4UI = (): UIState => {
 
 const getPreloadedState4Map = async(): Promise<MapState> => {
 
-    const { activeWebmapId, location } = searchParams;
+    const { activeWebmapId, location } = urlData;
 
     let activeWebmap: AgolItem = activeWebmapId 
         ? (await fetchItems([activeWebmapId]))[0]
@@ -82,7 +82,7 @@ const getPreloadedState4Map = async(): Promise<MapState> => {
 
 const getPreloadedState4ItemCollection = async(): Promise<ItemCollectionState> => {
 
-    const { collections } = searchParams;
+    const { collections } = urlData;
 
     const items = collections.length 
         ? await fetchItems(collections) 
@@ -129,7 +129,9 @@ const getPreloadedState4GroupContent = (): GroupContentState => {
     return state;
 };
 
-const getPreloadedState = async (): Promise<PartialRootState> => {
+const getPreloadedState = async (urlParamsData:DecodedURLParams): Promise<PartialRootState> => {
+
+    urlData = urlParamsData;
 
     const preloadedState = {
         ui: getPreloadedState4UI(),

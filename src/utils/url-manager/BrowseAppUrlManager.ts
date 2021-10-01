@@ -1,6 +1,6 @@
 import { urlFns } from 'helper-toolkit-ts';
 
-type SearhParamKeys = 'col' | 'viz' | 'loc' | 'hs';
+type SearhParamKeys = 'col' | 'viz' | 'loc' | 'hs' | 'embed' | 'disableSearch';
 
 type IsSideBarHideValue = '0' | '1';
 
@@ -10,11 +10,13 @@ export interface Location {
     zoom: number;
 }
 
-interface decodeSearchParamsResponse {
+export interface DecodedURLParams {
     collections?: string[];
     activeWebmapId?: string;
     location?: Location
     isSideBarHide?: boolean;
+    isEmbedded?: boolean;
+    isSearchDisabled?: boolean;
 }
 
 const SearchParamKeyLookup: {
@@ -82,11 +84,11 @@ export const updateSideBarHideInQueryParam = (isSideBarHide:boolean)=>{
     }
 }
 
-export const decodeSearchParams = ():decodeSearchParamsResponse=>{
+export const decodeSearchParams = ():DecodedURLParams=>{
 
-    const urlData:URLData = Object.keys(urlHashData).length
-        ? urlHashData
-        : urlQueryData;
+    const urlData:URLData = Object.keys(urlQueryData).length
+        ? urlQueryData
+        : urlHashData;
 
     // const searchParams = urlFns.parseQuery();
 
@@ -104,6 +106,9 @@ export const decodeSearchParams = ():decodeSearchParamsResponse=>{
         ? true 
         : false;
 
+    const isEmbedded = urlHashData.embed ? true : false;
+    const isSearchDisabled = urlHashData.disableSearch ? true : false;
+
     // // the app used to save UI states in URL Search Params, which is not ideal as it makes very hard for the CDN to cache all of those URLs,
     // // this is the reason why we switched from using Search Params to Hash Params. And we need to remove Search Params from the URL to keep the URL clean and unique.
     if(Object.keys(urlQueryData).length){
@@ -115,7 +120,9 @@ export const decodeSearchParams = ():decodeSearchParamsResponse=>{
         collections,
         activeWebmapId,
         location,
-        isSideBarHide
+        isSideBarHide,
+        isEmbedded,
+        isSearchDisabled
     };
 };
 

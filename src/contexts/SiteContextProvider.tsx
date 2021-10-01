@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { urlFns, miscFns } from 'helper-toolkit-ts';
+import {  miscFns } from 'helper-toolkit-ts';
 import EsriOAuth from '../utils/Esri-OAuth';
 
 interface SiteContextProps {
@@ -14,6 +14,8 @@ interface SiteContextProps {
 }
 
 interface SiteContextProviderProps {
+    isEmbedded: boolean;
+    isSearchDisabled: boolean;
     esriOAuthUtils: EsriOAuth;
     children: React.ReactNode;
 };
@@ -22,15 +24,15 @@ export const SiteContext = React.createContext<SiteContextProps>(null);
 
 export const SiteContextProvider:React.FC<SiteContextProviderProps> = ({ 
     esriOAuthUtils,
+    isEmbedded,
+    isSearchDisabled,
     children,
 })=>{
 
-    const hashParams = urlFns.parseHash();
-
     const value:SiteContextProps = {
         esriOAuthUtils,
-        isEmbedded: hashParams.embed ? true : false,
-        isSearchDisabled: hashParams.disableSearch ? true : false,
+        isEmbedded,
+        isSearchDisabled,
         isMobile: miscFns.isMobileDevice()
     };
 

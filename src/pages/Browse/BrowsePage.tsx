@@ -18,10 +18,13 @@ import {
 } from '@vannizhang/arcgis-rest-helper';
 import { Tier } from '../../AppConfig';
 import { IGroupCategory } from '@esri/arcgis-rest-portal';
+import { decodeSearchParams } from '../../utils/url-manager/BrowseAppUrlManager';
 
 const initPage = async () => {
 
-    const preloadedState = await getPreloadedState()
+    const urlParamsData = decodeSearchParams()
+
+    const preloadedState = await getPreloadedState(urlParamsData)
 
     setDefaultGroupOptions({
         groupId: Tier.PROD.AGOL_GROUP_ID,
@@ -37,7 +40,10 @@ const initPage = async () => {
     });
 
     ReactDOM.render(
-        <SiteWrapper>
+        <SiteWrapper
+            isEmbedded={urlParamsData.isEmbedded}
+            isSearchDisabled={urlParamsData.isSearchDisabled}
+        >
             <PageLayout
                 shouldHideEsriFooter={true}
             >
