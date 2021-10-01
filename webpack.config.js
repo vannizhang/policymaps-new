@@ -6,6 +6,7 @@ const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const SiteTitle = 'Esri Maps for Public Policy';
 
@@ -107,6 +108,7 @@ module.exports =  (env, options)=> {
             ]
         },
         plugins: [
+            new ForkTsCheckerWebpackPlugin(),
             devMode ? new CopyPlugin([
                 { 
                     from: './src/media', 

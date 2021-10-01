@@ -17,14 +17,14 @@ import { Tier } from '../../AppConfig';
 // });
 
 type Props = {
-    isEmbedded: boolean;
-    isSearchDisabled: boolean;
+    isEmbedded?: boolean;
+    isSearchDisabled?: boolean;
     children: React.ReactNode;
 }
 
 const SiteWrapper:React.FC<Props> = ({
-    isEmbedded,
-    isSearchDisabled,
+    isEmbedded=false,
+    isSearchDisabled=false,
     children
 }:Props)=>{
 
