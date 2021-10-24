@@ -13,7 +13,7 @@ import SiteWrapper from '../SiteWrapper/SiteWrapper';
 import configureStore, { getPreloadedState } from '../../store/browseApp/configureStore';
 
 import {
-    setDefaultGroupOptions,
+    setDefaultOptions,
     loadGroupCategorySchema,
 } from '@vannizhang/arcgis-rest-helper';
 import { Tier } from '../../AppConfig';
@@ -22,13 +22,13 @@ import { decodeSearchParams } from '../../utils/url-manager/BrowseAppUrlManager'
 
 const initPage = async () => {
 
+    setDefaultOptions({
+        groupId: Tier.PROD.AGOL_GROUP_ID,
+    });
+
     const urlParamsData = decodeSearchParams()
 
     const preloadedState = await getPreloadedState(urlParamsData)
-
-    setDefaultGroupOptions({
-        groupId: Tier.PROD.AGOL_GROUP_ID,
-    });
 
     const categorySchemaJSON = await loadGroupCategorySchema();
 
