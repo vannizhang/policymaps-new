@@ -36,7 +36,7 @@ const SideBar:React.FC<Props> = ({
 
         const sidebarDiv = sidebarRef.current;
 
-        if( (sidebarDiv.scrollHeight - sidebarDiv.scrollTop) <= sidebarDiv.clientHeight ){
+        if( sidebarDiv.scrollHeight <= Math.ceil(sidebarDiv.clientHeight + sidebarDiv.scrollTop) ){
             // console.log('hit to bottom');
             scrollToBottomHandler();
         }
