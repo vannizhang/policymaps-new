@@ -19,6 +19,7 @@ import {
 
 import ShareDialog from './ShareDialog';
 import ShareDialogModal from './ShareDialogModal'
+import { showAddCollections2MyFavDialogToggled } from '../../../store/browseApp/reducers/UI';
 
 export type SupportedSocialMedia = 'twitter' | 'facebook'
 
@@ -54,7 +55,7 @@ const ShareDialogContainer:React.FC<Props> = ({
 
     const itemsCollection = useSelector(itemCollectionSelector);
 
-    const { esriOAuthUtils, isEmbedded } = React.useContext(SiteContext);
+    const { isEmbedded } = React.useContext(SiteContext);
 
     const [ currentUrl, setCurrentUrl ] = React.useState<string>(window.location.href);
 
@@ -85,14 +86,17 @@ const ShareDialogContainer:React.FC<Props> = ({
             return;
         }
 
-        try {
-            const itemIds = itemsCollection.map(d=>d.id);
-            const myFavItems = await batchAdd(itemIds);
-            // setMyFavItems(myFavItems);
-            dispatch(setMyFavItems(myFavItems));
-        } catch(err){
-            esriOAuthUtils.sigIn();
-        }
+        // open dialog to start adding items in my collections to my fav group 
+        dispatch(showAddCollections2MyFavDialogToggled())
+
+        // try {
+        //     const itemIds = itemsCollection.map(d=>d.id);
+        //     const myFavItems = await batchAdd(itemIds);
+        //     // setMyFavItems(myFavItems);
+        //     dispatch(setMyFavItems(myFavItems));
+        // } catch(err){
+        //     esriOAuthUtils.sigIn();
+        // }
     }
 
     // React.useEffect(()=>{
@@ -123,6 +127,7 @@ const ShareDialogContainer:React.FC<Props> = ({
         <ShareDialog 
             currentUrl={currentUrl}
             onClose={onClose}
+            shouldDisabledAddToMyFavBtn={itemsCollection.length === 0}
             addToMyFavBtnOnClick={addToMyFavBtnOnClick}
             sendEmailOnClick={sendEmail}
             shareToSocialMediaOnClick={shareToSocialMedia}

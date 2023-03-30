@@ -30,6 +30,9 @@ import {
     AgolItem
 } from '../../../utils/arcgis-online-item-formatter';
 import { IGroupCategory } from '@esri/arcgis-rest-portal';
+import AddCollectionToMyFav from '../AddCollectionToMyFavDialog/AddCollectionToMyFav';
+import { useSelector } from 'react-redux';
+import { selectShowAddCollections2MyFavDialog } from '../../../store/browseApp/reducers/UI';
 
 // import { 
 //     CategorySchemaDataItem
@@ -60,6 +63,8 @@ const BrowseApp:React.FC<Props>= ({
 
     const { isEmbedded } = React.useContext(SiteContext);
     const [ isCategoryFilterVisible, setIsCategoryFilterVisible ] = React.useState<boolean>(true);
+
+    const showAddCollections2MyFavDialog = useSelector(selectShowAddCollections2MyFavDialog)
 
     const toggleCategoryFilter = ()=>{
         setIsCategoryFilterVisible(!isCategoryFilterVisible);
@@ -191,6 +196,10 @@ const BrowseApp:React.FC<Props>= ({
             </div>
 
             <WarningMessage />
+
+            { showAddCollections2MyFavDialog && (
+                <AddCollectionToMyFav />
+            )}
         </>
     );
 };

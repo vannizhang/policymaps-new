@@ -132,4 +132,14 @@ export default class OAuthUtils {
             favGroupId
         }
     }
+
+    getPortalBaseUrl() {
+        if (!this.userPortal) {
+            return null;
+        }
+    
+        const { urlKey, url, customBaseUrl } = this.userPortal;
+    
+        return urlKey ? `https://${urlKey}.${customBaseUrl}` : `${url}`;
+    }
 }

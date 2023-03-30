@@ -3,6 +3,7 @@ import { SupportedSocialMedia } from './ShareDialogContainer';
 
 export type ShareDialogProps = {
     currentUrl: string;
+    shouldDisabledAddToMyFavBtn?: boolean;
     onClose?: ()=>void; 
     addToMyFavBtnOnClick?:()=>void;
     sendEmailOnClick?: ()=>void;
@@ -13,6 +14,7 @@ export const BACKGROUND_COLOR = '#0079c1';
 
 const ShareDialog:React.FC<ShareDialogProps> = ({
     currentUrl,
+    shouldDisabledAddToMyFavBtn=false,
     onClose,
     addToMyFavBtnOnClick,
     sendEmailOnClick,
@@ -98,9 +100,16 @@ const ShareDialog:React.FC<ShareDialogProps> = ({
                     <span 
                         className="font-size--2 text-white" 
                         style={{ 
-                            'cursor': 'pointer' 
+                            'cursor': shouldDisabledAddToMyFavBtn ? 'auto' :'pointer',
+                            'opacity': shouldDisabledAddToMyFavBtn ? '.5' : '1'
                         }}
-                        onClick={addToMyFavBtnOnClick}
+                        onClick={()=>{
+                            if(shouldDisabledAddToMyFavBtn){
+                                return;
+                            }
+
+                            addToMyFavBtnOnClick()
+                        }}
                     >Add map collection to Favorites</span>
                 </div>
                 
