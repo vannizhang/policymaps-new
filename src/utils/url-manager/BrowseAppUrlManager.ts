@@ -148,7 +148,7 @@ const decodeLocation = (val:string): Location=>{
 }
 
 /**
- * Save hash params to browse storage so the state of app can be restored after signing in
+ * Save hash params to session storage so the state of app can be restored after signing in
  */
 export const saveBrowseAppHashParamsToLocalStorage = ()=>{
     sessionStorage.setItem(SESSION_STORAGE_KEY_EXPLORER_APP_HASH_PARAM, window.location.hash)

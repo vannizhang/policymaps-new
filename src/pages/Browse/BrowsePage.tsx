@@ -10,7 +10,7 @@ import {
 
 import SiteWrapper from '../SiteWrapper/SiteWrapper';
 
-import configureStore, { getPreloadedState } from '../../store/browseApp/configureStore';
+import configureStore, { getPreloadedState, PartialRootState } from '../../store/browseApp/configureStore';
 
 import {
     setDefaultOptions,
@@ -20,45 +20,69 @@ import { Tier } from '../../AppConfig';
 import { IGroupCategory } from '@esri/arcgis-rest-portal';
 import { decodeSearchParams } from '../../utils/url-manager/BrowseAppUrlManager';
 
-const initPage = async () => {
+const urlParamsData = decodeSearchParams()
 
-    setDefaultOptions({
-        groupId: Tier.PROD.AGOL_GROUP_ID,
-    });
+const BrowsePage:React.FC = ()=>{
 
-    const urlParamsData = decodeSearchParams()
+    const [preloadedState, setPreloadedState] = React.useState<PartialRootState>()
 
-    const preloadedState = await getPreloadedState(urlParamsData)
+    const [categorySchema, setCategorySchema] = React.useState<IGroupCategory>()
 
-    const categorySchemaJSON = await loadGroupCategorySchema();
+    const init = async()=>{
+        setDefaultOptions({
+            groupId: Tier.PROD.AGOL_GROUP_ID,
+        });
+    
+        const preloadedState = await getPreloadedState(urlParamsData)
+    
+        const categorySchemaJSON = await loadGroupCategorySchema();
+    
+        const categorySchema:IGroupCategory = categorySchemaJSON.categorySchema[0];
+    
+        // filter out 'Resources' category
+        categorySchema.categories = categorySchema.categories.filter(item=>{
+            return item.title !== 'Resources';
+        });
 
-    const categorySchema:IGroupCategory = categorySchemaJSON.categorySchema[0];
+        setPreloadedState(preloadedState)
 
-    // filter out 'Resources' category
-    categorySchema.categories = categorySchema.categories.filter(item=>{
-        return item.title !== 'Resources';
-    });
+        setCategorySchema(categorySchema)
+    }
 
+    React.useEffect(()=>{
+        init()
+    }, [])
+
+    if(!preloadedState || !categorySchema){
+        return null
+    }
+
+    return (
+        <PageLayout
+            shouldHideEsriFooter={true}
+        >
+            <Provider
+                store={configureStore(preloadedState)}
+            >
+                <BrowseApp 
+                    categorySchema={categorySchema}
+                />
+            </Provider>
+
+        </PageLayout>
+    )
+}
+
+const initBrowsePage = async () => {
     ReactDOM.render(
         <SiteWrapper
             isEmbedded={urlParamsData.isEmbedded}
             isSearchDisabled={urlParamsData.isSearchDisabled}
         >
-            <PageLayout
-                shouldHideEsriFooter={true}
-            >
-                <Provider
-                    store={configureStore(preloadedState)}
-                >
-                    <BrowseApp 
-                        categorySchema={categorySchema}
-                    />
-                </Provider>
-
-            </PageLayout>
+            <BrowsePage />
         </SiteWrapper>, 
         document.getElementById('root')
     );
 }
 
-initPage();
+initBrowsePage();
