@@ -32,7 +32,7 @@ type URLData = {
     [key in SearhParamKeys]: string;
 }
 
-const urlQueryData: URLData = urlFns.parseQuery();
+// const urlQueryData: URLData = urlFns.parseQuery();
 const urlHashData: URLData = urlFns.parseHash();
 
 export const updateCollectionsInQueryParam = (collections: string[])=>{
@@ -86,35 +86,39 @@ export const updateSideBarHideInQueryParam = (isSideBarHide:boolean)=>{
 
 export const decodeSearchParams = ():DecodedURLParams=>{
 
-    const urlData:URLData = Object.keys(urlQueryData).length
-        ? urlQueryData
-        : urlHashData;
+    // const urlData:URLData = Object.keys(urlQueryData).length
+    //     ? urlQueryData
+    //     : urlHashData;
+
+    const urlData = window.location.search
+        ? new URLSearchParams(window.location.search.slice(1))
+        : new URLSearchParams(window.location.hash.slice(1))
 
     // const searchParams = urlFns.parseQuery();
 
-    const collections = urlData['col'] && urlData['col'] !== 'null'
-        ? urlData['col'].split(',') 
+    const collections = urlData.has('col') && urlData.get('col') !== 'null'
+        ? urlData.get('col').split(',') 
         : [];
 
-    const activeWebmapId = urlData['viz'] || ''; 
+    const activeWebmapId = urlData.get('viz') || ''; 
 
-    const location = urlData['loc'] 
-        ? decodeLocation(urlData['loc']) 
+    const location = urlData.has('loc')
+        ? decodeLocation(urlData.get('loc')) 
         : null;
 
-    const isSideBarHide = urlData['hs'] && urlData['hs'] === '1' 
+    const isSideBarHide = urlData.get('hs') === '1' 
         ? true 
         : false;
 
     const isEmbedded = urlHashData.embed ? true : false;
     const isSearchDisabled = urlHashData.disableSearch ? true : false;
 
-    // // the app used to save UI states in URL Search Params, which is not ideal as it makes very hard for the CDN to cache all of those URLs,
-    // // this is the reason why we switched from using Search Params to Hash Params. And we need to remove Search Params from the URL to keep the URL clean and unique.
-    if(Object.keys(urlQueryData).length){
-        // remove the query string from URL
-        window.history.pushState({}, document.title, window.location.pathname);
-    }
+    // // // the app used to save UI states in URL Search Params, which is not ideal as it makes very hard for the CDN to cache all of those URLs,
+    // // // this is the reason why we switched from using Search Params to Hash Params. And we need to remove Search Params from the URL to keep the URL clean and unique.
+    // if(Object.keys(urlQueryData).length){
+    //     // remove the query string from URL
+    //     window.history.pushState({}, document.title, window.location.pathname);
+    // }
 
     return {
         collections,
