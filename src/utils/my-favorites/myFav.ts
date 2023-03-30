@@ -25,7 +25,7 @@ interface ShareOperationResponse {
 
 let myFavItemIds:string[] = [];
 
-const LOCAL_STORAGE_KEY_ADD = 'itemsToBeAddedToAgolFavGroup';
+const STORAGE_KEY_ADD_2_MY_FAV = 'itemsToBeAddedToAgolFavGroup';
 
 const portalData = {
     agolHost: '',
@@ -81,7 +81,7 @@ const addToMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
 
         if(!favGroupId || !token){
 
-            saveToLocalStorage(LOCAL_STORAGE_KEY_ADD, itemId);
+            saveToLocalStorage(STORAGE_KEY_ADD_2_MY_FAV, itemId);
 
             // console.error('favorite group id and token are required to add fav item');
             reject({
@@ -128,35 +128,34 @@ const removeFromMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
     })
 };
 
-const addUnSavedItemToMyFav = (): Promise<string>=>{
+const addUnsavedItemsToMyFav = async(): Promise<string[]>=>{
 
-    const itemId = localStorage.getItem(LOCAL_STORAGE_KEY_ADD) ? localStorage.getItem(LOCAL_STORAGE_KEY_ADD): null;
+    const itemId = sessionStorage.getItem(STORAGE_KEY_ADD_2_MY_FAV) 
+        ? sessionStorage.getItem(STORAGE_KEY_ADD_2_MY_FAV)
+        : null;
+    
+    resetLocalStorage(STORAGE_KEY_ADD_2_MY_FAV);
 
-    return new Promise(async(resolve, reject)=>{
+    if(!itemId){
+        return []
+    }
 
-        if(itemId){
-        
-            resetLocalStorage(LOCAL_STORAGE_KEY_ADD);
+    try {
+        await toggleShareAsMyFav(itemId, true);
+        return [itemId]
+    } catch(err){
+        console.log(err);
+    }
 
-            try {
-                const res = await addToMyFavGroup(itemId);
-                resolve(itemId);
-            } catch(err){
-                reject(err);
-            }
-            
-        } else {
-            reject('no items to be added to my fav');
-        }
-    })
+    return []
 };
 
 const saveToLocalStorage = (key='', itemIds='')=>{
-    localStorage.setItem(key, itemIds);
+    sessionStorage.setItem(key, itemIds);
 };
 
 const resetLocalStorage = (key='')=>{
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
 };
 
 const toggleMyFavItemIds = (itemId:string)=>{
@@ -217,13 +216,18 @@ export const getMyFavItemIds = async()=>{
             return d.id;
         });
 
-        // there could be item in the localstorage that still needs to be share to the fav group,
-        // this could be caused by tring to add item to fav group anomanonsly. 
+        // there could be item in the session storage that still needs to be share to the fav group,
+        // this is caused by attempting to add item to my fav group anomanonsly. 
         // so we need to make sure this item is shared to fav and add the id to myFavItemIds
-        const idForUnsavedItem = await addUnSavedItemToMyFav();
+        const idsForUnsavedItem = await addUnsavedItemsToMyFav();
 
-        if(idForUnsavedItem){
-            myFavItemIds.push(idForUnsavedItem);
+        if(idsForUnsavedItem){
+            
+            for(const id of idsForUnsavedItem){
+                if(myFavItemIds.indexOf(id) === -1){
+                    myFavItemIds.push(id);
+                }
+            }
         }
 
     } catch(err){
