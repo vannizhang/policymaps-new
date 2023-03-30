@@ -25,7 +25,7 @@ interface ShareOperationResponse {
 
 let myFavItemIds:string[] = [];
 
-const STORAGE_KEY_ADD_2_MY_FAV = 'itemsToBeAddedToAgolFavGroup';
+const STORAGE_KEY_ADD_2_MY_FAV = 'itemToBeAddedToAgolFavGroup';
 
 const portalData = {
     agolHost: '',
@@ -80,8 +80,7 @@ const addToMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
     return new Promise(async(resolve, reject)=>{
 
         if(!favGroupId || !token){
-
-            saveToLocalStorage(STORAGE_KEY_ADD_2_MY_FAV, itemId);
+            sessionStorage.setItem(STORAGE_KEY_ADD_2_MY_FAV, itemId);
 
             // console.error('favorite group id and token are required to add fav item');
             reject({
@@ -130,32 +129,27 @@ const removeFromMyFavGroup = (itemId=''): Promise<ShareOperationResponse>=>{
 
 const addUnsavedItemsToMyFav = async(): Promise<string[]>=>{
 
-    const itemId = sessionStorage.getItem(STORAGE_KEY_ADD_2_MY_FAV) 
-        ? sessionStorage.getItem(STORAGE_KEY_ADD_2_MY_FAV)
-        : null;
-    
-    resetLocalStorage(STORAGE_KEY_ADD_2_MY_FAV);
+    const val = sessionStorage.getItem(STORAGE_KEY_ADD_2_MY_FAV);
+    sessionStorage.removeItem(STORAGE_KEY_ADD_2_MY_FAV);
 
-    if(!itemId){
+    if(!val){
         return []
     }
 
+    const itemIds = val.split(',')
+
     try {
-        await toggleShareAsMyFav(itemId, true);
-        return [itemId]
+
+        const requests = itemIds.map(itemId=>toggleShareAsMyFav(itemId, true))
+
+        await Promise.all(requests)
+
+        return itemIds
     } catch(err){
         console.log(err);
     }
 
     return []
-};
-
-const saveToLocalStorage = (key='', itemIds='')=>{
-    sessionStorage.setItem(key, itemIds);
-};
-
-const resetLocalStorage = (key='')=>{
-    sessionStorage.removeItem(key);
 };
 
 const toggleMyFavItemIds = (itemId:string)=>{
@@ -271,13 +265,14 @@ export const toggleAsMyFavItem = (itemId:string): Promise<string[]>=>{
 
 export const batchAdd = (itemIds: string[]): Promise<string[]>=>{
 
-
     return new Promise(async(resolve, reject)=>{
 
         const { favGroupId, token } = portalData;
 
         if(!favGroupId || !token){
+            sessionStorage.setItem(STORAGE_KEY_ADD_2_MY_FAV, itemIds.join(','));
             reject('favorite group id and token are required to remove fav item, please sign in first');
+            return
         }
 
         try {
