@@ -32,6 +32,8 @@ type URLData = {
     [key in SearhParamKeys]: string;
 }
 
+const SESSION_STORAGE_KEY_EXPLORER_APP_HASH_PARAM = 'PolicyMapsExplorerAppHashParam'
+
 // const urlQueryData: URLData = urlFns.parseQuery();
 const urlHashData: URLData = urlFns.parseHash();
 
@@ -90,9 +92,10 @@ export const decodeSearchParams = ():DecodedURLParams=>{
     //     ? urlQueryData
     //     : urlHashData;
 
-    const urlData = window.location.search
-        ? new URLSearchParams(window.location.search.slice(1))
-        : new URLSearchParams(window.location.hash.slice(1))
+    const urlData = new URLSearchParams(
+        getHashParamsFromLocalStorage() || 
+        window.location.hash.slice(1)
+    )
 
     // const searchParams = urlFns.parseQuery();
 
@@ -142,4 +145,21 @@ const decodeLocation = (val:string): Location=>{
         lat: +values[1],
         zoom: +values[2]
     }
+}
+
+/**
+ * Save hash params to browse storage so the state of app can be restored after signing in
+ */
+export const saveBrowseAppHashParamsToLocalStorage = ()=>{
+    sessionStorage.setItem(SESSION_STORAGE_KEY_EXPLORER_APP_HASH_PARAM, window.location.hash)
+}
+
+/**
+ * Retrive the hash params before user getting redirected to the ArcGIS Online sign in page
+ * @returns 
+ */
+const getHashParamsFromLocalStorage = ()=>{
+    const val = sessionStorage.getItem(SESSION_STORAGE_KEY_EXPLORER_APP_HASH_PARAM)
+    sessionStorage.removeItem(SESSION_STORAGE_KEY_EXPLORER_APP_HASH_PARAM)
+    return val ? val.slice(1) : '';
 }

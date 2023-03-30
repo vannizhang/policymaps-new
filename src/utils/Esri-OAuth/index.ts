@@ -5,6 +5,7 @@ import IIdentityManager from 'esri/identity/IdentityManager';
 import IPortal from 'esri/portal/Portal';
 import ICredential from 'esri/identity/Credential';
 import IPortalUser from 'esri/portal/PortalUser';
+import { saveBrowseAppHashParamsToLocalStorage } from '../url-manager/BrowseAppUrlManager';
 
 interface Props {
     appId: string;
@@ -84,6 +85,10 @@ export default class OAuthUtils {
     }
 
     sigIn() {
+        if(window.location.pathname.includes('browse')){
+            saveBrowseAppHashParamsToLocalStorage()
+        }
+
         this.esriId
             .getCredential(this.oauthInfo.portalUrl + '/sharing')
             .then((res: ICredential) => {
