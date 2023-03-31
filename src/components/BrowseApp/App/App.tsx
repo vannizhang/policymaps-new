@@ -33,6 +33,7 @@ import { IGroupCategory } from '@esri/arcgis-rest-portal';
 import AddCollectionToMyFav from '../AddCollectionToMyFavDialog/AddCollectionToMyFav';
 import { useSelector } from 'react-redux';
 import { selectShowAddCollections2MyFavDialog } from '../../../store/browseApp/reducers/UI';
+import Alert from '../Alert/AlertContainer';
 
 // import { 
 //     CategorySchemaDataItem
@@ -200,6 +201,8 @@ const BrowseApp:React.FC<Props>= ({
             { showAddCollections2MyFavDialog && (
                 <AddCollectionToMyFav />
             )}
+
+            <Alert />
         </>
     );
 };

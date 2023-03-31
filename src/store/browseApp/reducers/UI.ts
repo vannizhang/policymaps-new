@@ -1,6 +1,7 @@
 import { 
     createSlice,
-    createSelector
+    createSelector,
+    PayloadAction
 } from '@reduxjs/toolkit';
 
 import {
@@ -17,12 +18,18 @@ import {
 //     miscFns
 // } from 'helper-toolkit-ts'
 
+export type AlertType = 'hitMaxNumOfItemsInMyCollection'
+
 export interface UIState {
     hideSideBar: boolean;
     /**
      * if true, show dialog of adding items in my collections to my favorites group
      */
     showAddCollections2MyFavDialog: boolean;
+    /**
+     * active alert to be displayed
+     */
+    activeAlert?: AlertType
 };
 
 // const { isSideBarHide } = decodeSearchParams();
@@ -31,6 +38,7 @@ export interface UIState {
 export const initialUIState:UIState = {
     hideSideBar: false, 
     showAddCollections2MyFavDialog: false,
+    activeAlert: null
 }
 
 const slice = createSlice({
@@ -43,6 +51,9 @@ const slice = createSlice({
         },
         showAddCollections2MyFavDialogToggled: (state)=>{
             state.showAddCollections2MyFavDialog = !state.showAddCollections2MyFavDialog
+        },
+        activeAlertUpdated: (state, action:PayloadAction<AlertType>)=>{
+            state.activeAlert = action.payload;
         }
     }
 });
@@ -53,7 +64,8 @@ const {
 
 export const {
     hideSideBarToggled,
-    showAddCollections2MyFavDialogToggled
+    showAddCollections2MyFavDialogToggled,
+    activeAlertUpdated
 } = slice.actions;
 
 export const toggleSidebar = ()=> (dispatch:StoreDispatch, getState:StoreGetState)=>{
@@ -68,6 +80,11 @@ export const hideSideBarSelectore = createSelector(
 export const selectShowAddCollections2MyFavDialog = createSelector(
     (state:RootState)=>state.ui.showAddCollections2MyFavDialog,
     showAddCollections2MyFavDialog => showAddCollections2MyFavDialog
+)
+
+export const selectActiveAlert = createSelector(
+    (state:RootState)=>state.ui.activeAlert,
+    activeAlert => activeAlert
 )
 
 export default reducer;

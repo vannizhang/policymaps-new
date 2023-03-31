@@ -13,6 +13,7 @@ import {
 import { 
     AgolItem,
 } from '../../../utils/arcgis-online-item-formatter';
+import { activeAlertUpdated } from './UI';
 
 export interface ItemCollectionState {
     byIds: {
@@ -20,6 +21,11 @@ export interface ItemCollectionState {
     };
     allIds: string[];
 };
+
+/**
+ * maximum number of items that can be added to my collections
+ */
+const MAX_NUM_COLLECTIONS = 20;
 
 interface ItemsLoadedAction {
     type: string;
@@ -85,10 +91,16 @@ export const loadCollectionItems = (items:AgolItem[])=> async(dispatch:StoreDisp
 export const toggleCollectionItem = (item:AgolItem)=> (dispatch:StoreDispatch, getState:StoreGetState)=>{
     const { id } = item;
     const state = getState()
-    const byIds = state.entities.itemCollection.byIds;
+    const {byIds, allIds} = state.entities.itemCollection;
 
     if(!byIds[id]){
-        dispatch(itemAdded(item));
+
+        if(allIds.length < MAX_NUM_COLLECTIONS){
+            dispatch(itemAdded(item));
+        } else {
+            // show alert message to inform the user that it has hit the max limit
+            dispatch(activeAlertUpdated('hitMaxNumOfItemsInMyCollection'))
+        }
     } else {
         dispatch(itemRemoved(item));
     }
