@@ -1,11 +1,6 @@
 {
     "topics": [
         {
-            "title": "What maps can I view relating to my community and <span class='highlight'>coronavirus</span>?",
-			"tooltip": "Coronavirus",
-			"value": "col=c6ba9c02006948b9bdc1d66436fa5d29,787722665db94bfa80fe36bd38848430,9919f2bdba8942cd9ac1933a8dc581f8,5e9915a0aee64854b0d7393d5b5039e0,2c800edb14df4e51828d50696331f1e0,612f5d8a84794e668a9d218ff666cfe8,5c3261c2ceac4df9a68c6d0aa54ef2cb,6ee2f43020e443d8b2aaa4b613b3227c,02a82293e2dd475391cb3699b5e82d61,2c8fdc6267e4439e968837020e7618f3,45e6bb0c0960449cb29031f590af9a59,48a70b524601428ba297e3106b751401,073ec89c20f84cd896fa8d3bac31d356&hs=1&viz=c6ba9c02006948b9bdc1d66436fa5d29&loc=-95.606,38.414,4&hs=1"
-        },
-        {
             "title": "What can I learn about the <span class='highlight'>people</span> in my community?",
 			"tooltip": "Population",
 			"value": "loc=-95.429,29.833,9&col=56b6fdc881f64e5f83ebabea46191cb5,9fd7fbc0f731409abd57cfd15d963683,5841f98da3ac428ea766919430b675a1,26e3ab93740d41cfa97f073bd40b8aeb,66cc32395ee742c795c5c4a5c3390691,405f4e40dee141b7b685e758ef2fb5c4,7a544141327e43cc8c17cf0c4cee6b45,cabbd03603ce405bbacac205034b7143&viz=56b6fdc881f64e5f83ebabea46191cb5&hs=1"
