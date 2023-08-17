@@ -12,6 +12,7 @@ import { UIConfig } from './Config';
 interface Props {
     width?: number;
     scrollToBottomHandler?:()=>void;
+    children?: React.ReactNode
 }
 
 const SideBar:React.FC<Props> = ({

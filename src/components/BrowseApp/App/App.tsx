@@ -48,7 +48,7 @@ interface Props {
 
     sidebarScrolledToEnd?: ()=>void
     categoryFilterOnChange?: (data:SelectedCategory)=>void;
-    searchAutoCompleteOnChange?: (searchTerm:string)=>void
+    searchAutoCompleteOnChange?: (searchTerm:string)=>void;
 }
 
 const BrowseApp:React.FC<Props>= ({

@@ -2,10 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const SiteTitle = 'Esri Maps for Public Policy';
@@ -26,6 +26,7 @@ module.exports =  (env, options)=> {
             filename: '[name].[contenthash].js',
             // publicPath: '/'
             // chunkFilename: '[name].[contenthash].js',
+            clean: true
         },
         devtool: 'source-map',
         resolve: {
@@ -109,12 +110,14 @@ module.exports =  (env, options)=> {
         },
         plugins: [
             new ForkTsCheckerWebpackPlugin(),
-            devMode ? new CopyPlugin([
-                { 
-                    from: './src/media', 
-                    to: 'media/policymaps'
-                }
-            ]) : false,
+            devMode ? new CopyPlugin({
+                patterns: [
+                    { 
+                        from: 'src/media/**/*', 
+                        to: 'media/policymaps'
+                    }
+                ]
+            }) : false,
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
@@ -222,7 +225,7 @@ module.exports =  (env, options)=> {
                     useShortDoctype                : true
                 }
             }),
-            !devMode ? new CleanWebpackPlugin() : false,
+            // !devMode ? new CleanWebpackPlugin() : false,
             // !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
         optimization: {
@@ -235,7 +238,7 @@ module.exports =  (env, options)=> {
                         }
                     }
                 }), 
-                new OptimizeCSSAssets({})
+                // new OptimizeCSSAssets({})
             ]
         },
     }
