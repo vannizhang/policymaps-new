@@ -1,5 +1,5 @@
 import './style.scss';
-import globalNav from 'esri-global-nav';
+import globalNav from './lib/esri-global-nav';
 import placeHolderUserThumbnail from './img/placeholder-user-thumb.jpg';
 
 import menuData from './MenuData';
