@@ -6,14 +6,48 @@ At [this site](esri.com/policymaps), you can explore issues, such as housing, he
 
 ![screenshot](./src/statics/img/screenshot.png)
 
+## Getting Started 
+
+Before we begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point. 
+
+To begin, clone this repository (or your fork) to your computer:
+
+```sh
+https://github.com/vannizhang/policymaps-new.git
+```
+
+From the project's root directory, install the required packages (dependencies):
+
+```sh
+npm install
+```
+
+## Running the app 
+Now you can start the webpack dev server to test the app on your local machine:
+
+```sh
+# it will start a server instance and begin listening for connections from localhost on port 8080
+npm run start
+```
+
+## Deployment
+To build the app, you can simply run:
+
+```sh
+# it will place all files needed for deployment into the /build directory 
+npm run build
+```
+
 ## Resources
 - [Explore, Collect, and Share Maps About Issues Important to Your Community](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/local-government/explore-collect-and-share-maps-about-issues-important-to-your-community/)
 - [Top 10 Tips for Policy Mapping](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/mapping/top-10-tips-for-policy-mapping/)
 - [ArcGIS Living Atlas of the World](https://livingatlas.arcgis.com/en/)
 
 ## Issues
-
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.
+
+## Contributing
+Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
 
 ## Licensing
 Copyright 2020 Esri
