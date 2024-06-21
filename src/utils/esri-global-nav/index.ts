@@ -41,7 +41,7 @@ export const initEsriGlobalNav = ({
     globalNav.create({
         headerElm: `.${config.header.elementClassName}`, 
         footerElm: `.${config.footer.elementClassName}`,
-        menuData
+        menuData: menuData as any
     });
 
     const esriHeader = document.querySelector('.esri-header-barrier');
