@@ -1,6 +1,6 @@
 import './style.scss';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { 
@@ -19,6 +19,9 @@ import {
 import { Tier } from '../../AppConfig';
 import { IGroupCategory } from '@esri/arcgis-rest-portal';
 import { decodeSearchParams } from '../../utils/url-manager/BrowseAppUrlManager';
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
 
 const urlParamsData = decodeSearchParams()
 
@@ -74,14 +77,13 @@ const BrowsePage:React.FC = ()=>{
 }
 
 const initBrowsePage = async () => {
-    ReactDOM.render(
+    root.render(
         <SiteWrapper
             isEmbedded={urlParamsData.isEmbedded}
             isSearchDisabled={urlParamsData.isSearchDisabled}
         >
             <BrowsePage />
-        </SiteWrapper>, 
-        document.getElementById('root')
+        </SiteWrapper>
     );
 }
 

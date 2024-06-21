@@ -8,6 +8,10 @@ import {
 
 import SiteWrapper from '../SiteWrapper/SiteWrapper';
 
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
+
 const IssuesPage:React.FC = ()=>{
     
     return (
@@ -19,7 +23,6 @@ const IssuesPage:React.FC = ()=>{
     );
 };
 
-ReactDOM.render(
-    <IssuesPage />, 
-    document.getElementById('root')
+root.render(
+    <IssuesPage />
 );

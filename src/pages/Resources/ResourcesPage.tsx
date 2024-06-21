@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import * as ReactDOM from 'react-dom';
 
 import { 
     PageLayout,
@@ -7,6 +7,10 @@ import {
 } from '../../components'
 
 import SiteWrapper from '../SiteWrapper/SiteWrapper';
+
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
 
 const ResourcesPage:React.FC = ()=>{
     return (
@@ -18,7 +22,6 @@ const ResourcesPage:React.FC = ()=>{
     );
 };
 
-ReactDOM.render(
-    <ResourcesPage />, 
-    document.getElementById('root')
+root.render(
+    <ResourcesPage />
 );
