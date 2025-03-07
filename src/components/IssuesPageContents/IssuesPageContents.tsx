@@ -68,9 +68,7 @@ const IssuesPage:React.FC<{}> = ()=>{
 
         // filter out 'Resources' category
         categorySchema.categories = categorySchema.categories.filter(item=>{
-            return item.title !== 'Resources' &&
-             item.title !== 'Population' && 
-             item.title !== 'Housing';
+            return item.title !== 'Resources'
         });
 
         // console.log(categorySchema)

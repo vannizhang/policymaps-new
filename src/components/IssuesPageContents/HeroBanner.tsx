@@ -4,9 +4,9 @@ import {
     CategorySchemaDataItem
 } from '../../utils/category-schema-manager';
 
-import {
-    CategoryDescriptions
-} from '../../AppConfig';
+// import {
+//     CategoryDescriptions
+// } from '../../AppConfig';
 
 import classnames from 'classnames';
 
@@ -26,11 +26,17 @@ const HeroBanner:React.FC<Props> = ({
     // const [ activeMainCategoryTitle, setActiveMainCategoryTitle ] = React.useState<string>();
 
     const getContent = ()=>{
-        const activeCategory = categorySchema.categories
-            .filter(category=>category.title === activeMainCategoryTitle)[0];
+        // const activeCategory = categorySchema.categories
+        //     .filter(category=>category.title === activeMainCategoryTitle)[0];
 
-        const descriptionData = CategoryDescriptions
-            .filter(data=>data.title === activeMainCategoryTitle)[0];
+        // const descriptionData = CategoryDescriptions
+        //     .filter(data=>data.title === activeMainCategoryTitle)[0];
+
+        const title = `How do you view your community?`
+
+        const description = `
+        The categories below contain some of the more useful maps, layers and data about your community. It starts with understanding the people in your community, their opportunities, local environment and resources, and the infrastructure available. Browse what's available below to see what other communities are doing, what data exists for a topic and share what you find with your colleagues and your GIS community.
+        `
 
         return (
             <div 
@@ -39,8 +45,8 @@ const HeroBanner:React.FC<Props> = ({
                     'minHeight': '160px'
                 }}
             >
-                <h1 className="sub-nav-title text-white text-shadow-black">{ activeCategory.title }</h1>
-                <p className="text-white text-shadow-black">{descriptionData?.description}</p>
+                <h1 className="sub-nav-title text-white text-shadow-black">{ title }</h1>
+                <p className="text-white text-shadow-black">{description}</p>
             </div>
         );
     };
@@ -92,7 +98,7 @@ const HeroBanner:React.FC<Props> = ({
             style={{
                 'position': 'relative',
             }}
-            data-active-category={activeMainCategoryTitle}
+            // data-active-category={activeMainCategoryTitle}
         >
             <div
                 style={{
