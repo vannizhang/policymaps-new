@@ -11,7 +11,7 @@ export const Tier = {
 
 export const CategoryDescriptions = [
     {
-        "title": "Social Equity and Health",
+        "title": "Health",
         "description": "Understanding the state of humans in crisis and at-risk populations presents decision makers with opportunities to intervene. With access to datasets on homelessness, opioid abuse, housing, infrastructure, poverty, education and more, you are given the chance to ensure a stronger tomorrow for everyone."
     },
     {
@@ -19,7 +19,7 @@ export const CategoryDescriptions = [
         "description": "A better quality of life for all, is what communities strive for. Removing the barriers to affordable housing, jobs, education, health care, and transportation are just some of the factors that need to be overcome. Bringing about understanding through these datasets will demonstrate where stresses exist and can be diminished. "
     },
     {
-        "title": "Transportation and Infrastructure",
+        "title": "Infrastructure",
         "description": "Communities are seeing massive demographic shifts, lifestyle changes, and advances in technology that effect our infrastructure and transportation networks. These datasets provide the opportunity to rebuild, rethink and reimagine how we strengthen our communities."
     },
     {

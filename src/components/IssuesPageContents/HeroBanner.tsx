@@ -40,7 +40,7 @@ const HeroBanner:React.FC<Props> = ({
                 }}
             >
                 <h1 className="sub-nav-title text-white text-shadow-black">{ activeCategory.title }</h1>
-                <p className="text-white text-shadow-black">{descriptionData.description}</p>
+                <p className="text-white text-shadow-black">{descriptionData?.description}</p>
             </div>
         );
     };
