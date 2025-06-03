@@ -97,7 +97,7 @@ const SearchAutoComplete:React.FC<Props> = ({
         } else if(event.key === 'Enter') {
 
             const val = (suggestionCandidateIndex !== -1) 
-                ? suggestions[suggestionCandidateIndex].title
+                ? `"${suggestions[suggestionCandidateIndex].title}"` // wrap the suggestion in quotes
                 : searchTerm;
 
             suggestionOnSelect(val);
@@ -151,7 +151,7 @@ const SearchAutoComplete:React.FC<Props> = ({
             return (
                 <div key={`suggestion-item-${id}`} 
                     className={`suggestion-item font-size--2 ${isActiveCandidate}`} 
-                    onClick={suggestionOnSelect.bind(this, title)}
+                    onClick={suggestionOnSelect.bind(this, `"${title}"`)} // wrap the suggestion in quotes
                 >
                     {/* <img className="item-type-icon margin-right-half" src={iconUrl}></img> */}
                     {label}

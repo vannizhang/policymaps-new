@@ -179,9 +179,12 @@ export const searchItems = () => async (
 
     const { searchTerm, sort, contentType, category } = filters;
 
+    // Remove question mark, backslash, and other uncommon special chars from searchTerm
+    const searchTermCleaned = searchTerm.replace(/[&:]/g, ' ');
+
     try {
         const response = await searchGroupItems({
-            searchTerm,
+            searchTerm: searchTermCleaned,
             contentType,
             sortField: sort,
             mainCategory: category.mainCategory,
