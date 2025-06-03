@@ -83,7 +83,6 @@
     "@types/shortid": "0.0.29",
     "@vannizhang/arcgis-rest-helper": "^1.0.12",
     "axios": "^0.21.1",
-    "calcite-web": "github:Esri/calcite-web#v1.2.5",
     "classnames": "^2.2.6",
     "esri-loader": "^3.6.0",
     "helper-toolkit-ts": "^1.1.14",

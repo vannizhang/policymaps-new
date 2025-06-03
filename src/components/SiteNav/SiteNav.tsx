@@ -1,7 +1,7 @@
 import './style.scss';
 import React from 'react';
-import Drawer, { SiteNavDrawerID } from './Drawer';
-import * as calcite from 'calcite-web/dist/js/calcite-web.min.js'
+// import Drawer, { SiteNavDrawerID } from './Drawer';
+// import * as calcite from 'calcite-web/dist/js/calcite-web.min.js'
 
 export interface NavLinkData {
     label: string;
@@ -53,7 +53,7 @@ const SiteNav: React.FC<Props> = ({
                     alignItems: 'center',
                 }}
                 onClick={()=>{
-                    calcite.bus.emit('drawer:open', { id: SiteNavDrawerID })
+                    // calcite.bus.emit('drawer:open', { id: SiteNavDrawerID })
                 }}
             >
                 <svg viewBox="0 0 32 32" height="32" width="32" fill="#fff">
@@ -101,9 +101,7 @@ const SiteNav: React.FC<Props> = ({
                 </nav>
             </div>
 
-            <Drawer 
-                links={navLinksData}
-            />
+            {/* <Drawer links={navLinksData} /> */}
         </>
     )
 };
