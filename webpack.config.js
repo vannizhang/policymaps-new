@@ -7,6 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { title } = require('process');
 
 const SiteTitle = 'Esri Maps for Public Policy';
 
@@ -134,9 +135,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './overview/index.html',
                 chunks: ['overview'],
-                title: `Overview | ${SiteTitle}`,
+                title: SiteTitle,
                 meta: {
-                    description: 'Esri Maps for Public Policy offers maps, layers, training, and other resources to help policymakers make data-driven decisions.'
+                    description: 'Esri Maps for Public Policy offers maps, layers, training, and other resources to help policymakers make data-driven decisions.',
+                    title: SiteTitle
                 },
                 minify: {
                     html5                          : true,
@@ -158,9 +160,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './browse/index.html',
                 chunks: ['browse'],
-                title: `Explore | ${SiteTitle}`,
+                title: SiteTitle,
                 meta: {
-                    description: 'Access maps and analysis that act as the baseline for your research and policy decisions'
+                    description: 'Access maps and analysis that act as the baseline for your research and policy decisions',
+                    title: SiteTitle
                 },
                 minify: {
                     html5                          : true,
@@ -182,9 +185,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './issues/index.html',
                 chunks: ['issues'],
-                title: `Issues | ${SiteTitle}`,
+                title: SiteTitle,
                 meta: {
-                    description: 'Browse the curated datasets on major topics including economic opportunity, social equity, health, sustainability, and more'
+                    description: 'Browse the curated datasets on major topics including economic opportunity, social equity, health, sustainability, and more',
+                    title: SiteTitle
                 },
                 minify: {
                     html5                          : true,
@@ -206,9 +210,10 @@ module.exports =  (env, options)=> {
                 inject: true,
                 filename: './resources/index.html',
                 chunks: ['resources'],
-                title: `Resources | ${SiteTitle}`,
+                title: SiteTitle,
                 meta: {
-                    description: 'Get education, training, and best practices that help raise your data literacy'
+                    description: 'Get education, training, and best practices that help raise your data literacy',
+                    title: SiteTitle
                 },
                 minify: {
                     html5                          : true,
