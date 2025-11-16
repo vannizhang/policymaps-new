@@ -3,67 +3,67 @@
 		{
             "title": "What can I learn about my community from the <span class='highlight'>2020 Census</span>? ",
 			"tooltip": "Population",
-			"value": "col=87dcc8c8a0224d8290fe65124287fefc,7400d4e56d8343a9854278bac327c243,b0232184dfd44b709071bd33224c19aa,f1984d5f89134f859b4254c50e5f8607,b1eb79253784425ab2eac404010a3c1c&hs=0&viz=87dcc8c8a0224d8290fe65124287fefc&loc=-96.963,40.703,4"
+			"value": "col=87dcc8c8a0224d8290fe65124287fefc,7400d4e56d8343a9854278bac327c243,f1984d5f89134f859b4254c50e5f8607,b1eb79253784425ab2eac404010a3c1c,ed447c37138c4b02a7b1497915be24b2,30d2e10d4d694b3eb4dc4d2e58dbb5a5,889de4fce0024502ae958ba45ca0502e&hs=0&viz=87dcc8c8a0224d8290fe65124287fefc"
+        },
+        {
+            "title":  "What can I learn about my community from <span class='highlight'>2025 Esri Demographics</span>?",
+			"tooltip": "Population",
+			"value": "col=87dcc8c8a0224d8290fe65124287fefc,7400d4e56d8343a9854278bac327c243,f1984d5f89134f859b4254c50e5f8607,b1eb79253784425ab2eac404010a3c1c,ed447c37138c4b02a7b1497915be24b2,30d2e10d4d694b3eb4dc4d2e58dbb5a5,889de4fce0024502ae958ba45ca0502e&hs=0&viz=87dcc8c8a0224d8290fe65124287fefc"
         },
         {
             "title": "What can I learn about the <span class='highlight'>people</span> in my community?",
 			"tooltip": "Population",
-			"value": "loc=-117.183,34.055,10&col=9fd7fbc0f731409abd57cfd15d963683,5841f98da3ac428ea766919430b675a1,66cc32395ee742c795c5c4a5c3390691,405f4e40dee141b7b685e758ef2fb5c4,7a544141327e43cc8c17cf0c4cee6b45,cabbd03603ce405bbacac205034b7143&viz=9fd7fbc0f731409abd57cfd15d963683&hs=1"
+			"value": "col=b59641d2b8bb4ea4b2e2ed43b55af54e,64c1c538910a4d8184593318c95e8571,24809642844b425c9bbd6833c99cf84c,70764b9dd8aa4efaa32f98b1d2d5f9a6,aaf44453b54547cf8f48a48c393553b0,3e81ad03bc5449668d92c579dd012ac8&hs=0&viz=b59641d2b8bb4ea4b2e2ed43b55af54e "
         },
         {
             "title": "What is the state of <span class='highlight'>housing</span> in my community?",
 			"tooltip": "Housing",
-			"value": "loc=-117.975,33.998,9&col=8e3b994782444345953a30e2a6e5ab23,03383d653ab84ad3a474c18506b8bcbc,e8b80011907d471da85b6b781f5f9cf9,453feb26182f4f9c8bea8812a4341ae2,fe4802a9abf349a497bd5d3932b66b2a,7c9a2563b116425b87b838c9178a6a08,fe54ec153a134a6f8746920445c8c571,13f1653df69440e4bfa6833af64f484b&viz=8e3b994782444345953a30e2a6e5ab23"
+			"value": "col=41672388842b425eb3aeff5a41b62cc3,db18170147034feaa8adfa5bdcfd5396,f1984d5f89134f859b4254c50e5f8607,caabfeace3f64cfbb033fe6e5d0c5a19,611294d132cd43c8932cf452e5a01f82,d2ee0038a9bd4e0b86b4f0602b6d3854,1f7a3aed15474e10b06e643ba5d18881&viz=41672388842b425eb3aeff5a41b62cc3&hs=0"
         },
         {
             "title": "What do we know about <span class='highlight'>education</span> in my community?",
 			"tooltip": "Education",
-			"value": "loc=-99.133,39.750,4&col=b15679adc8244399b6dc4a6848452a75,a18519d27d0e45e192aaa32ba4ca0215,17e9e85b565f472c83eb8041eb0a035a,93f9b7c287554236bb96e0faed31974f,36314800e6564c2399fa1d212971335a&viz=b15679adc8244399b6dc4a6848452a75"
+			"value": "col=d638a21b20934f1b80ae7ceda12f77ff,77d4df11bff04ca9bb7633db970c52f6,99b8335faed9416da2c24c4747dbb4d7,9c0adc92a4f84242986d0a9f51d17ad4,59ddf9e1b300493b9491b565b710a5d9,595e4b24ae334048828e7ce0ee9b81dc,230d17e3e9df4daeaa2d679b5eb47870,e061f5840ab94e4185f8e0e6cf299f0d,e3cc5e372396425781b1f6e657b99b89&viz=d638a21b20934f1b80ae7ceda12f77ff&hs=0"
         },
         {
             "title": "What populations are at <span class='highlight'>risk</span> in my community?",
 			"tooltip": "Risk",
-			"value": "loc=-84.397,33.788,10&col=02a82293e2dd475391cb3699b5e82d61,a16b9f8f0d594125aac60179b9bb9741,48a70b524601428ba297e3106b751401,1c892d1be67747c69eee146b7a2c8970,8d47a8ebd86144579098314f9db92cf4,a18519d27d0e45e192aaa32ba4ca0215,23d7e549aa0648c4b9481b2b290cd766,367f0b224a3a40b8a5952f04e55ac106,faa8825f626746b2a39cdd819592f836,2311c537f401434ca460a9d2dcfbd0c9,36dc45f566d846a3a2bdee2fa869a281&viz=02a82293e2dd475391cb3699b5e82d61"
+			"value": "col=2c8fdc6267e4439e968837020e7618f3,20e8596dab344af98e0d2400ff7c0d11,a4ae6c924b364bcfad4365db7ecab059,2e47fc2dd6404a2997e1b6affbc86d40,9372bac30ae3403d925068dfed28ffcf,2c5aa22a94f4412f9ffe6e3ebdd08971,0b250ad15634421da31c888ccfb1ecc4,d137290c485249f2912d210be14db613&hs=0&viz=2c8fdc6267e4439e968837020e7618f3&hs=0"
         },
         {
             "title": "What are typical <span class='highlight'>commutes</span> in my community?",
 			"tooltip": "Commute",
-			"value": "loc=-117.18259,34.05538,10&col=e0094426f3af4826830ae0943b2e259f,cabbd03603ce405bbacac205034b7143,18d3681c4ec2401190595c5816c72cab,891ad8dfcf9d46c6ae9dc92f848df61f,b185e27750604a92bbc2d3ca13f506d3,9afc43dab85349b595b815582609fbdc&viz=e0094426f3af4826830ae0943b2e259f&hs=1"
+			"value": "col=385502ecec9f4e159bf37fd61286a05a,30bbaf143951460ab58c69ea52cac40c,70a9a9d06b2f44f1bcc121657fb7dc53,03d025b8670144bc92a1bbf5b4d7001e,e52cda9a1a1e42f99fe211a0b450bb97,3975367a935e4d058b8ac3fa2b12a88c,dd89e5f286914950a696edadc00c3b24,1674d2db05094b2789e4b229c41372b4&hs=0&viz=385502ecec9f4e159bf37fd61286a05a"
         },
         {
             "title": "How is <span class='highlight'>population growth and decline</span> affecting my community?",
             "tooltip": "Population",
-            "value": "loc=-84.919,42.474,6&col=45bf6d2ac002419090966a8c1e5129d2,af5b01111fd14cf19c1ff9ece7a22adc,ce85a6b7b8b948d18f9f8899bceb242c,72961959612c47fc88a948d1a28978ea,a2c6126960b84d379973673f430771c7,8b3d17dc510b4ce1861c59585192abcd,392451c381ad4109bf04f7bd442bc038&viz=45bf6d2ac002419090966a8c1e5129d2"
-        },
-        {
-            "title": "How is <span class='highlight'>transit</span> helping my community with <span class='highlight'>access to jobs</span>?",
-            "tooltip": "Transit",
-            "value": "loc=-77.051,38.911,10&col=4c1ff156eed9431c9b399cb2cf63a792,cabbd03603ce405bbacac205034b7143,8a896ce35a3c454f959c102a4f7b72e8,5664bea0bf4c4a8ab2ed539045a2f242&viz=4c1ff156eed9431c9b399cb2cf63a792"
+            "value": "col=900e6a92c4b44d74ab50fba5cec000b7,42d6681ca69f492aad82636552fc6278,180f84484bea40a7bf1553c5d98c3a10,c0672e75d5344ea486e929c62a14697b,ab8ced72196f4cda95eb2b8433b21751,66cc32395ee742c795c5c4a5c3390691,a2c6126960b84d379973673f430771c7&hs=0&viz=900e6a92c4b44d74ab50fba5cec000b7"
         },
         {
             "title": "How are the <span class='highlight'>youth</span> connected to <span class='highlight'>school and work</span> in my community? ",
             "tooltip": "Youth",
-            "value": "loc=-99.283,39.268,4&col=bff958dc716f4aba8f34d842ba37e558,93f9b7c287554236bb96e0faed31974f,a18519d27d0e45e192aaa32ba4ca0215,7a544141327e43cc8c17cf0c4cee6b45&viz=bff958dc716f4aba8f34d842ba37e558"
+            "value": "col=bcd3dc1026a945498ef28f68355a5ac6,ec5cc7ffc3f44dc2a4e503e3c2c45b75,04536b3727954e44a9cde23935cce398,449cac352b0f42429821e8ffaa43b358,99b8335faed9416da2c24c4747dbb4d7,1bc81971fded4dbc86001af7502147a6,982fdcce3b0346898d782fedf963f2af&hs=0&viz=bcd3dc1026a945498ef28f68355a5ac6"
         },
         {
             "title": "How is <span class='highlight'>poverty</span> affecting my community?",
             "tooltip": "Poverty",
-            "value": "loc=-81.821,28.299,8&col=1c892d1be67747c69eee146b7a2c8970,66bc59305fb042b59d19f9f84ca3d30f,0aa54ded7f0a41b58e9d7fb2fca6e4ee,679ce588ecba4b679b336d2a35fbf888,8465d3276b2b4147907995165f353349,75dba888ba454e1abe19691d0abdcdff,e286f6079d0e4ddd9ee7e4c955530d1f&viz=1c892d1be67747c69eee146b7a2c8970"
+            "value": "col=0aa54ded7f0a41b58e9d7fb2fca6e4ee,75dba888ba454e1abe19691d0abdcdff,e286f6079d0e4ddd9ee7e4c955530d1f,2b58aa392ea9499db92a0adc5aa3ede1,09acc99388fa470dbbb16837bfec206f,d137290c485249f2912d210be14db613,16f045aae80f47b8a9fc5069dabc52fd&viz=0aa54ded7f0a41b58e9d7fb2fca6e4ee&hs=0"
         },
         {
             "title": "What are <span class='highlight'>public health</span> concerns in my community?",
 			"tooltip": "Health",
-			"value": "loc=-99.113,39.546,4&col=02a82293e2dd475391cb3699b5e82d61,9cc5107d04f340a396e73afd8d18cb3e,153c17de00914039bb28f6f6efe6d322,07f70065653b4386b5c87cbe9b50b314,6f59fdd3bd3d4ef583fb8fee0c9ce6e2,0de7cade7d9e4fbd86f59e59dbb0d246,5a462a15b68d43409188e87b4617680d,a16b9f8f0d594125aac60179b9bb9741&viz=02a82293e2dd475391cb3699b5e82d61"
+			"value": "col=07f70065653b4386b5c87cbe9b50b314,700f40eb660e47799f3e14be3d5071ed,2c5aa22a94f4412f9ffe6e3ebdd08971,aa71c1ac3ccd46f08304ac57517d0e95,20e8596dab344af98e0d2400ff7c0d11,efaebd0597ec4a079b1d5ba327d454b2,f4d7493a6c60401c8f82e2448a7a1e31&hs=0&viz=07f70065653b4386b5c87cbe9b50b314"
         },
         {
             "title": "What do we know about the <span class='highlight'>jobs and workforce</span> in my community?",
 			"tooltip": "Jobs",
-			"value": "loc=-79.997,40.439,10&col=b185e27750604a92bbc2d3ca13f506d3,8d47a8ebd86144579098314f9db92cf4,e0094426f3af4826830ae0943b2e259f,9afc43dab85349b595b815582609fbdc,b8c58b95fd924721aa2af44513b966e8,891ad8dfcf9d46c6ae9dc92f848df61f,18d3681c4ec2401190595c5816c72cab,a97f6424904b465bb489fea84b2872b7,9c6f06e90d0b4d5cafdd2c0951f327e1,b361c4467db248e7ad55b6e7661e5706,b42afac818ab4611b470c7f39d54b0d4,679ce588ecba4b679b336d2a35fbf888&viz=b185e27750604a92bbc2d3ca13f506d3"
+			"value": "col=b185e27750604a92bbc2d3ca13f506d3,2b084a09c84f4f6baaf5d351e4450e61,3556756dc14145c194cca6ed38f67896,f3196c12fbce49188a243d5fa27f5f9e,8a100c9e2f514b1095db8b074814bc24,88134c5671a84dafb88c20a55745768c,4d3ba21e0877439a993957276d3e3b12&viz=b185e27750604a92bbc2d3ca13f506d3&hs=0"
         },
         {
             "title": "What do we know about the <span class='highlight'>veterans</span> in my community?",
 			"tooltip": "Veterans",
-			"value": "loc=-114.918,34.237,6&col=81d2a5142081433c83e69fc59b1f0ec5,33ee7f3c8c4a488bbd3bedb0930a8c76,83bb1c807af94c38b12ed606751bf126,f58b026be2ba43d4bd2f64138294d90a,9f25db0089144535b97f30f66f59a55c,62954e2ee7004b9ea6c990110ec9ab72&viz=81d2a5142081433c83e69fc59b1f0ec5"
+			"value": "col=81d2a5142081433c83e69fc59b1f0ec5,83bb1c807af94c38b12ed606751bf126,092c4b58fa93421daa60b56d5bdcd8e2,77d4df11bff04ca9bb7633db970c52f6,31e9e54d2f454176bfd674b019199a3d,6ad8cd8270d347739ee3786a0e80810e,acf24b8436dd4533859c5fb74d10ffd2,ddc2263d961244c3bb66bfa7c99ed57b,49ae331733bd4f428e8d0461c48dd70f&viz=81d2a5142081433c83e69fc59b1f0ec5&hs=0"
         }
     ]
 }
